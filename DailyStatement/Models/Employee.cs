@@ -32,8 +32,8 @@ namespace DailyStatement.Models
         [Required]
         public bool Activity { get; set; }
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+        //[Timestamp]
+        //public byte[] RowVersion { get; set; }
 
         public List<DailyInfo> DailyInfos { get; set; }
     }

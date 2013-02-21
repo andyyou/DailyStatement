@@ -124,10 +124,28 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DailyController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302210902380_InitialCreate.cs" />
+    <Compile Include="Migrations\201302210902380_InitialCreate.Designer.cs">
+      <DependentUpon>201302210902380_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302210912268_AddWorkContent.cs" />
+    <Compile Include="Migrations\201302210912268_AddWorkContent.Designer.cs">
+      <DependentUpon>201302210912268_AddWorkContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302211021193_AddEmployeeId.cs" />
+    <Compile Include="Migrations\201302211021193_AddEmployeeId.Designer.cs">
+      <DependentUpon>201302211021193_AddEmployeeId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302211025498_RemoveEmployeeRowVersion.cs" />
+    <Compile Include="Migrations\201302211025498_RemoveEmployeeRowVersion.Designer.cs">
+      <DependentUpon>201302211025498_RemoveEmployeeRowVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations.cs" />
     <Compile Include="Models\DailyInfo.cs" />
     <Compile Include="Models\DailyStatementContext.cs" />
@@ -224,12 +242,31 @@
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
+    <Content Include="Views\Daily\Index.cshtml" />
+    <Content Include="Views\Daily\Details.cshtml" />
+    <Content Include="Views\Daily\Create.cshtml" />
+    <Content Include="Views\Daily\Edit.cshtml" />
+    <Content Include="Views\Daily\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201302210902380_InitialCreate.resx">
+      <DependentUpon>201302210902380_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302210912268_AddWorkContent.resx">
+      <DependentUpon>201302210912268_AddWorkContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302211021193_AddEmployeeId.resx">
+      <DependentUpon>201302211021193_AddEmployeeId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302211025498_RemoveEmployeeRowVersion.resx">
+      <DependentUpon>201302211025498_RemoveEmployeeRowVersion.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
