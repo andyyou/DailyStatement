@@ -17,7 +17,5 @@ namespace DailyStatement.Models
         public string Name { get; set; }
 
         public List<DailyInfo> DailyInfos { get; set; }
-
-
     }
 }

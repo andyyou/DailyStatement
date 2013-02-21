@@ -36,8 +36,5 @@ namespace DailyStatement.Models
         public byte[] RowVersion { get; set; }
 
         public List<DailyInfo> DailyInfos { get; set; }
-
-
-
     }
 }

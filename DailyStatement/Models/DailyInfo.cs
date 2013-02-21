@@ -12,7 +12,6 @@ namespace DailyStatement.Models
         [Key]
         public int DailyInfoId { get; set; }
 
-        [Required]
         public WorkCategory Category { get; set; }
 
         [ConcurrencyCheck, Required]
@@ -28,5 +27,7 @@ namespace DailyStatement.Models
 
         public int WorkingHours { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

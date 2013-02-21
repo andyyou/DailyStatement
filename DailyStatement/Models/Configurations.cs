@@ -19,6 +19,7 @@ namespace DailyStatement.Models
         public DailyInfoConfigurations()
         {
             // Fluent API 設定建置在此
+            HasRequired(d => d.Employee).WithMany(e => e.DailyInfos).WillCascadeOnDelete(false);
         }
     }
 
