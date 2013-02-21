@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DailyStatement.Models.DailyInfo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingHours)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingHours)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DailyInfoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DailyInfoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DailyInfoId })
+        </td>
+    </tr>
+}
+
+</table>

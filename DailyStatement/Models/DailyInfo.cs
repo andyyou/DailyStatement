@@ -19,10 +19,14 @@ namespace DailyStatement.Models
 
         [Required, MaxLength(100)]
         public string Customer { get; set; }
+
+        [Required]
+        public string WorkContent { get; set; }
    
         public DateTime CreateDate { get; set; }
 
         [Required]
+        //public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
         public int WorkingHours { get; set; }
