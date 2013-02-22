@@ -13,6 +13,7 @@
         <legend>Employee</legend>
 
         @Html.HiddenFor(model => model.EmployeeId)
+        @Html.HiddenFor(model => model.RowVersion)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Account)

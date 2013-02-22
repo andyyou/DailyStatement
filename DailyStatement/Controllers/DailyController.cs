@@ -77,6 +77,9 @@ namespace DailyStatement.Controllers
         public ActionResult Edit(int id = 0)
         {
             DailyInfo dailyinfo = db.Dailies.Find(id);
+
+            ViewBag.CurrentEmployeeId = dailyinfo.EmployeeId;
+
             if (dailyinfo == null)
             {
                 return HttpNotFound();

@@ -13,6 +13,8 @@
         <legend>DailyInfo</legend>
 
         @Html.HiddenFor(model => model.DailyInfoId)
+        <input id="EmployeeId" name="EmployeeId" type="hidden" value="@ViewBag.CurrentEmployeeId" />
+        @Html.HiddenFor(model => model.RowVersion)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ProjectNo)
@@ -28,6 +30,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Customer)
             @Html.ValidationMessageFor(model => model.Customer)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WorkContent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WorkContent)
+            @Html.ValidationMessageFor(model => model.WorkContent)
         </div>
 
         <div class="editor-label">

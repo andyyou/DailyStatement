@@ -43,10 +43,15 @@ namespace DailyStatement.Controllers
             return View();
         }
 
+        private string GetHashPassword(string password)
+        {
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + password, "SHA1");
+        }
+
         // 進行會員驗證
         private bool ValidateUser(string account, string password)
         {
-            var hash_pw = FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + password, "SHA1");
+            string hash_pw = GetHashPassword(password);
 
             var employee = (from m in db.Employees
                           where m.Account == account && m.Password == hash_pw
@@ -109,6 +114,9 @@ namespace DailyStatement.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Encrypt password by SHA1 with salt
+                employee.Password = GetHashPassword(employee.Password);
+
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -138,6 +146,9 @@ namespace DailyStatement.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Encrypt password by SHA1 with salt
+                employee.Password = GetHashPassword(employee.Password);
+
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -148,27 +159,27 @@ namespace DailyStatement.Controllers
         //
         // GET: /Employee/Delete/5
 
-        public ActionResult Delete(int id = 0)
-        {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
-        }
+        //public ActionResult Delete(int id = 0)
+        //{
+        //    Employee employee = db.Employees.Find(id);
+        //    if (employee == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(employee);
+        //}
 
         //
         // POST: /Employee/Delete/5
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Employee employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Employee employee = db.Employees.Find(id);
+        //    db.Employees.Remove(employee);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
