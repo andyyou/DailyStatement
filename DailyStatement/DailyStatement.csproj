@@ -145,6 +145,10 @@
     <Compile Include="Migrations\201302211025498_RemoveEmployeeRowVersion.Designer.cs">
       <DependentUpon>201302211025498_RemoveEmployeeRowVersion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302220147588_AddVirtualToModel.cs" />
+    <Compile Include="Migrations\201302220147588_AddVirtualToModel.Designer.cs">
+      <DependentUpon>201302220147588_AddVirtualToModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations.cs" />
     <Compile Include="Models\DailyInfo.cs" />
@@ -266,6 +270,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302211025498_RemoveEmployeeRowVersion.resx">
       <DependentUpon>201302211025498_RemoveEmployeeRowVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302220147588_AddVirtualToModel.resx">
+      <DependentUpon>201302220147588_AddVirtualToModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

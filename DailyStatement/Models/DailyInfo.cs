@@ -25,9 +25,8 @@ namespace DailyStatement.Models
    
         public DateTime CreateDate { get; set; }
 
-        [Required]
-        //public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public int EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
 
         public int WorkingHours { get; set; }
 

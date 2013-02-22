@@ -46,7 +46,7 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Create
 
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "Employee")] DailyInfo dailyinfo)
+        public ActionResult Create([Bind(Exclude = "EmployeeId")] DailyInfo dailyinfo)
         {
             dailyinfo.Employee = db.Employees.Where(e => e.EmployeeId == 1).FirstOrDefault();
             
