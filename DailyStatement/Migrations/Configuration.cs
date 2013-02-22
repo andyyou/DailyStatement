@@ -10,7 +10,7 @@ namespace DailyStatement.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(DailyStatement.Models.DailyStatementContext context)
@@ -29,9 +29,9 @@ namespace DailyStatement.Migrations
             //
             
             context.Employees.AddOrUpdate(
-                new Employee { EmployeeId = 1, Account = "calvert", Password = "calverttest", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "1", Name = "Calvert", Email = "Calvert@DomainName.com", RecvNotify = false, Activity = true },
-                new Employee { EmployeeId = 2, Account = "andy", Password = "andytest", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "2", Name = "Andy", Email = "Andy@DomainName.com", RecvNotify = false, Activity = true },
-                new Employee { EmployeeId = 3, Account = "test", Password = "test", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "3", Name = "Test", Email = "test@DomainName.world", RecvNotify = false, Activity = true }
+                new Employee { EmployeeId = 1, Account = "calvert", Password = "44B37596362D06938D38C9D350DDDE304A9AD6B8", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "1", Name = "Calvert", Email = "Calvert@DomainName.com", RecvNotify = false, Activity = true },
+                new Employee { EmployeeId = 2, Account = "andy", Password = "B4A14DECB3CDF70084D1E24C591D8EF8FF8EEB49", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "2", Name = "Andy", Email = "Andy@DomainName.com", RecvNotify = false, Activity = true },
+                new Employee { EmployeeId = 3, Account = "test", Password = "954BB128CEF07F50189E725ADCA40EBD0C0BBB83", CreateDate = DateTime.Now, LastLoginDate = DateTime.Now, Rank = "3", Name = "Test", Email = "test@DomainName.world", RecvNotify = false, Activity = true }
             );
 
             context.Categories.AddOrUpdate(

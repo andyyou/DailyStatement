@@ -17,7 +17,7 @@ namespace DailyStatement
     {
         protected void Application_Start()
         {
-            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<DailyStatementContext, Migrations.Configuration>());
+            //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<DailyStatementContext, Migrations.Configuration>());
 
             AreaRegistration.RegisterAllAreas();
 
