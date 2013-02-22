@@ -16,9 +16,12 @@ namespace DailyStatement.Models
         [Key]
         public int EmployeeId { get; set; }
 
+        [Required]
         [DisplayName("帳號")]
         public string Account { get; set; }
 
+        [Required]
+        [DataType(DataType.Password)]
         [DisplayName("密碼")]
         public string Password { get; set; }
 
