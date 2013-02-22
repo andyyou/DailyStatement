@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DailyStatement.Models;
 
 namespace DailyStatement
 {
@@ -16,6 +17,8 @@ namespace DailyStatement
     {
         protected void Application_Start()
         {
+            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<DailyStatementContext, Migrations.Configuration>());
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
