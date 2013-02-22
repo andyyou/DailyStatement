@@ -91,19 +91,19 @@ namespace DailyStatement.Controllers
         //
         // GET: /Daily/Delete/5
 
-        public ActionResult Delete(int id = 0)
-        {
-            DailyInfo dailyinfo = db.Dailies.Find(id);
-            if (dailyinfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dailyinfo);
-        }
+        //public ActionResult Delete(int id = 0)
+        //{
+        //    DailyInfo dailyinfo = db.Dailies.Find(id);
+        //    if (dailyinfo == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(dailyinfo);
+        //}
 
         //
         // POST: /Daily/Delete/5
-
+        
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
