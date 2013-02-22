@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,22 +13,29 @@ namespace DailyStatement.Models
         [Key]
         public int DailyInfoId { get; set; }
 
+        [DisplayName("工作類型")]
         public WorkCategory Category { get; set; }
 
         [ConcurrencyCheck, Required]
-        public string ProjectNo { get; set; } // 案號如果未成案就給 N
+        [DisplayName("案號")]
+        [Description("若尚未成案，則設為 'N'")]
+        public string ProjectNo { get; set; }
 
         [Required, MaxLength(100)]
+        [DisplayName("客戶名稱")]
         public string Customer { get; set; }
 
         [Required]
+        [DisplayName("工作內容")]
         public string WorkContent { get; set; }
-   
+
+        [DisplayName("日期")]
         public DateTime CreateDate { get; set; }
 
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
 
+        [DisplayName("工時")]
         public int WorkingHours { get; set; }
 
         [Timestamp]
