@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DailyStatement.Models;
+using KendoGridBinder;
 
 namespace DailyStatement.Controllers
 {
@@ -19,6 +20,16 @@ namespace DailyStatement.Controllers
         public ActionResult Index()
         {
             return View(db.Dailies.ToList());
+        }
+
+        public JsonResult Grid(KendoGridRequest request, string keywd)
+        {
+            //var result = db.Dailies.ToList();
+            //return Json(new KendoGrid<DailyInfo>(request, result));
+            var result = SimMemberInfo.SimuDataStore.Where(o =>
+            string.IsNullOrEmpty(keywd) || o.UserName.Contains(keywd));
+            return Json(new KendoGrid<SimMemberInfo>(request, result));
+
         }
 
         //
