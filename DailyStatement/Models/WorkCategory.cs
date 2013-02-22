@@ -16,6 +16,6 @@ namespace DailyStatement.Models
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public List<DailyInfo> DailyInfos { get; set; }
+        public virtual List<DailyInfo> DailyInfos { get; set; }
     }
 }

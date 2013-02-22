@@ -10,7 +10,7 @@ namespace DailyStatement.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(DailyStatement.Models.DailyStatementContext context)

@@ -35,6 +35,6 @@ namespace DailyStatement.Models
         //[Timestamp]
         //public byte[] RowVersion { get; set; }
 
-        public List<DailyInfo> DailyInfos { get; set; }
+        public virtual List<DailyInfo> DailyInfos { get; set; }
     }
 }
