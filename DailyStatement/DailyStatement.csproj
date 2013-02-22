@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201302220730417_AddMetaData.Designer.cs">
       <DependentUpon>201302220730417_AddMetaData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302220953312_AddWorkCategoryId.cs" />
+    <Compile Include="Migrations\201302220953312_AddWorkCategoryId.Designer.cs">
+      <DependentUpon>201302220953312_AddWorkCategoryId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations.cs" />
     <Compile Include="Models\DailyInfo.cs" />
@@ -776,6 +780,7 @@
     <Content Include="Views\Daily\Edit.cshtml" />
     <Content Include="Views\Daily\Delete.cshtml" />
     <Content Include="Views\Employee\Login.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -801,6 +806,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302220730417_AddMetaData.resx">
       <DependentUpon>201302220730417_AddMetaData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302220953312_AddWorkCategoryId.resx">
+      <DependentUpon>201302220953312_AddWorkCategoryId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

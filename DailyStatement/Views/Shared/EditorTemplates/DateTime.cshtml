@@ -1,5 +1,14 @@
-﻿@model System.DateTime
-<input type="datetime" class="text-box single-line"
+﻿@model System.DateTime?
+@*<input type="datetime" class="text-box single-line"
     id="@Html.IdForModel()"
     name="@Html.NameForModel()"
-    value="@Model.ToString("yyyy/MM/dd")" />
+    value="@Model.ToString("yyyy/MM/dd")" />*@
+
+@if (Model.HasValue)
+{
+    @Html.TextBox("",Model.Value.ToString("yyyy/MM/dd"), new { @class = "text datebox", style = "width:120px" })
+}
+else
+{
+    @Html.TextBox("", DateTime.Now.ToString("yyyy/MM/dd"), new { @class = "text datebox", style = "width:120px" })
+}

@@ -14,7 +14,8 @@ namespace DailyStatement.Models
         public int DailyInfoId { get; set; }
 
         [DisplayName("工作類型")]
-        public WorkCategory Category { get; set; }
+        public int? WorkCategoryId { get; set; }
+        public virtual WorkCategory Category { get; set; }
 
         [ConcurrencyCheck, Required]
         [DisplayName("案號")]
