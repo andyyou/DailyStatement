@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dynamic">
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="KendoGridBinder">
+      <HintPath>..\packages\KendoGridBinder.1.6\lib\net40\KendoGridBinder.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -327,6 +333,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Dynamic Expressions.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -765,6 +772,7 @@
     <Content Include="Views\Daily\Create.cshtml" />
     <Content Include="Views\Daily\Edit.cshtml" />
     <Content Include="Views\Daily\Delete.cshtml" />
+    <Content Include="Views\Employee\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
