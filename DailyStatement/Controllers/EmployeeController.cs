@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using KendoGridBinder;
 using DailyStatement.Models;
 
 namespace DailyStatement.Controllers
@@ -18,7 +19,7 @@ namespace DailyStatement.Controllers
         // 密碼雜湊所需的 Salt 亂數值
         private string pwSalt = "qFgaQahNRE8v4oKzSMn2lWurfdVun5T6RW6G";
 
-        // 顯示會員登入頁面
+        // 顯示登入頁面
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -27,7 +28,7 @@ namespace DailyStatement.Controllers
             return View();
         }
 
-        // 執行會員登入
+        // 執行登入
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -43,59 +44,13 @@ namespace DailyStatement.Controllers
             return View();
         }
 
-        private string GetHashPassword(string password)
-        {
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + password, "SHA1");
-        }
-
-        // 進行會員驗證
-        private bool ValidateUser(string account, string password)
-        {
-            string hash_pw = GetHashPassword(password);
-
-            var employee = (from m in db.Employees
-                          where m.Account == account && m.Password == hash_pw
-                          select m).FirstOrDefault();
-
-            // 如果 employee 物件不為 null 則代表會員的帳號、密碼輸入正確
-            if (employee != null)
-            {
-                if (employee.Activity == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "您的帳號已停用，請聯絡管理員！");
-                    return false;
-                }
-            }
-            else
-            {
-                ModelState.AddModelError("", "您輸入的帳號或密碼錯誤");
-                return false;
-            }
-        }
-
         //
         // GET: /Employee/
         
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
-        }
-
-        //
-        // GET: /Employee/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
+            //return View(db.Employees.ToList());
+            return View();
         }
 
         //
@@ -110,12 +65,13 @@ namespace DailyStatement.Controllers
         // POST: /Employee/Create
 
         [HttpPost]
-        public ActionResult Create(Employee employee)
+        public ActionResult Create([Bind(Exclude = "CreateDate")]Employee employee)
         {
             if (ModelState.IsValid)
             {
                 // Encrypt password by SHA1 with salt
                 employee.Password = GetHashPassword(employee.Password);
+                employee.CreateDate = DateTime.Now;
 
                 db.Employees.Add(employee);
                 db.SaveChanges();
@@ -146,9 +102,6 @@ namespace DailyStatement.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Encrypt password by SHA1 with salt
-                employee.Password = GetHashPassword(employee.Password);
-
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -156,35 +109,59 @@ namespace DailyStatement.Controllers
             return View(employee);
         }
 
-        //
-        // GET: /Employee/Delete/5
-
-        //public ActionResult Delete(int id = 0)
-        //{
-        //    Employee employee = db.Employees.Find(id);
-        //    if (employee == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(employee);
-        //}
-
-        //
-        // POST: /Employee/Delete/5
-
-        //[HttpPost, ActionName("Delete")]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Employee employee = db.Employees.Find(id);
-        //    db.Employees.Remove(employee);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// 取得經過雜湊加密後的密碼 
+        /// </summary>
+        /// <param name="password">明文密碼</param>
+        /// <returns>加密密碼</returns>
+        private string GetHashPassword(string password)
+        {
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + password, "SHA1");
+        }
+
+        // 進行會員驗證
+        private bool ValidateUser(string account, string password)
+        {
+            string hash_pw = GetHashPassword(password);
+
+            var employee = (from m in db.Employees
+                            where m.Account == account && m.Password == hash_pw
+                            select m).FirstOrDefault();
+
+            // 如果 employee 物件不為 null 則代表會員的帳號、密碼輸入正確
+            if (employee != null)
+            {
+                if (employee.Activity == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "您的帳號已停用，請聯絡管理員！");
+                    return false;
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "您輸入的帳號或密碼錯誤");
+                return false;
+            }
+        }
+
+        // 回傳所有帳號相關資料
+        public JsonResult Grid(KendoGridRequest request)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var employees = db.Employees.ToList();
+            var grid = new KendoGrid<Employee>(request, employees);
+
+            return Json(grid);
         }
     }
 }

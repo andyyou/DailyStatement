@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>帳號維護</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table>
@@ -71,4 +71,67 @@
     </tr>
 }
 
-</table>
+</table>*@
+
+@section scripts{
+    <script>
+        
+        $(function () {
+            var url = '@Url.Action("Grid")';
+            
+            var dataSource = new kendo.data.DataSource({
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 5,
+                transport: {
+                    read: {
+                        url: url,
+                        type: "post",
+                        dataType: 'json'
+                    }
+                },
+                schema: {
+                    //取出資料陣列
+                    data: function (d) { return d.data; },
+                    //取出資料總筆數(計算頁數用)
+                    total: function (d) { return d.total; },
+                    model: {
+                        id: 'EmployeeId',
+                        fields: {
+                            Account: { type: 'string' },
+                            Name: { type: 'string' },
+                            Email: { type: 'string' },
+                            Rank: { type: 'string' },
+                            RecvNotify: { type: 'bool' },
+                            Activity: { type: 'bool' },
+                            CreateDate: { type: 'date' },
+                            LastLoginDate: { type: 'date' }
+                        }
+                    }
+                }
+            });
+
+
+            $("#grid").kendoGrid({
+                columns: [{ title: "帳號", field: "Account" },
+                    { title: "姓名", field: "Name" },
+                    { title: "電子郵件", field: "Email" },
+                    { title: "權限", field: "Rank", width: 60 },
+                    { title: "接收通知訊息 ", field: "RecvNotify", width: 110 },
+                    { title: "啟用", field: "Activity", width: 60 },
+                    { title: "建立日期", field: "CreateDate", format: "{0:yyyy/MM/dd}", width: 110 },
+                    { title: "最後登入日期", field: "LastLoginDate", format: "{0:yyyy/MM/dd}", width: 110 },
+                    { title: "編輯", template: "<a href='@Url.Action("Edit")/#=EmployeeId#'>編輯</a>", width: 60 }
+                ],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")'>建立新帳號</a>" }],
+                dataSource: dataSource,
+                height: 300,
+                scrollable: true,
+                pageable: true,
+                sortable: true
+            });
+        });
+    </script>
+}
+<div id="grid"></div>
