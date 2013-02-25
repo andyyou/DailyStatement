@@ -185,5 +185,35 @@ namespace DailyStatement.Controllers
 
             return Json(grid);
         }
+
+        // 檢查帳號是否已存在
+        public ActionResult CheckAccountDup(string Account)
+        {
+            var employee = db.Employees.Where(e => e.Account == Account).FirstOrDefault();
+
+            if (employee != null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
+
+        // 檢查電子郵件是否已存在
+        public ActionResult CheckEmailDup(string Email)
+        {
+            var employee = db.Employees.Where(e => e.Email == Email).FirstOrDefault();
+
+            if (employee != null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
     }            
 }
