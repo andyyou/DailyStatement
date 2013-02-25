@@ -82,14 +82,11 @@
         // functions --
         function DeleteWithConfirm(did) {
             
-            alert(did);
             var url = '@Url.Action("Delete", "Daily")';
-            alert(url);
             var destination = url + '/' + did;
-            alert(destination);
             if (window.confirm('確認刪除?')) {
                 $.post(destination, function (data) {
-                }).done(function () { location});
+                }).done(function () { $("#grid").data("kendoGrid").dataSource.read(); });
                 return true;
             } else {
                 return false;
