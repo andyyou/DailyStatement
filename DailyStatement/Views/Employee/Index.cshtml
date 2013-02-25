@@ -103,8 +103,8 @@
                             Name: { type: 'string' },
                             Email: { type: 'string' },
                             Rank: { type: 'string' },
-                            RecvNotify: { type: 'bool' },
-                            Activity: { type: 'bool' },
+                            RecvNotify: { type: 'boolean' },
+                            Activity: { type: 'boolean' },
                             CreateDate: { type: 'date' },
                             LastLoginDate: { type: 'date' }
                         }
@@ -161,7 +161,7 @@
                 toolbar: [
                     {
                         name: "create",
-                        template: "<a href='@Url.Action("Create")' class='btn btn-success pull-right'>建立新帳號</a>"
+                        template: "<a href='@Url.Action("Create")' class='btn btn-success pull-right'>新增帳號</a>"
                     }
                 ],
                 dataSource: dataSource,
