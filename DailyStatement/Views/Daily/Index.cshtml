@@ -61,7 +61,7 @@
                     {
                         title: "操作",
                         field: "DailyInfoId",
-                        template: "<a href='@Url.Action("Edit")/#=DailyInfoId#' class='btn btn-small btn-info'>編輯</a> <a href='@Url.Action("Delete")/#=DailyInfoId#' class='btn btn-small  btn-danger'>刪除</a>", width: 120 
+                        template: "<a href='@Url.Action("Edit")/#=DailyInfoId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' id='#=DailyInfoId#' onclick='return DeleteWithConfirm();'>刪除</button>", width: 120 
                     }
                 ],
                 toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
@@ -74,7 +74,27 @@
                 //    mode: "multiple"
                 // }
             });
+
+           
         });
+
+
+        // functions --
+        function DeleteWithConfirm() {
+            var did = $(this).attr('id');
+            alert();
+            alert(did);
+            var url = '@Url.Action("Delete", "Daily")';
+            alert(url);
+            var destination = url + '/' + did;
+            alert(destination);
+            if (window.confirm('確認刪除?')) {
+                $.post(destination);
+            } else {
+                return false;
+            }
+
+        }
     </script>
     }
 
@@ -90,3 +110,4 @@
         <div id="grid"></div>
     </div>
 </div>
+
