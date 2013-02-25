@@ -33,6 +33,7 @@ namespace DailyStatement.Models
 
         [Column(TypeName="varchar"), MaxLength(50)]
         [DisplayName("權限")]
+        [Description("1: 超級管理員, 2: 一般管理員, 3: 一般人員")]
         public string Rank { get; set; }
 
         [Required, MaxLength(50)]
