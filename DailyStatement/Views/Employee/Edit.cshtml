@@ -4,9 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="row">
+    <div class="span6 offset3">
+<h4>Edit</h4>
 
 @using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -92,13 +96,12 @@
         </div>*@
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="儲存" class="btn btn-small btn-success" /> @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small"})
         </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+</div>
 </div>
 
 @section Scripts {

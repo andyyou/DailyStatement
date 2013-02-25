@@ -38,33 +38,46 @@ namespace DailyStatement.Controllers
             {
                 FormsAuthentication.SetAuthCookie(account, false);
 
-                return RedirectToAction("Index", "Daily");
+                if (String.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction("Index", "Daily");
+                }
+                else
+                {
+                    return RedirectToAction(returnUrl);
+                }
             }
 
             return View();
         }
 
-        //
-        // GET: /Employee/
-        
+        // 執行登出
+        public ActionResult Logout()
+        {
+            // 清除表單驗證的 Cookies
+            FormsAuthentication.SignOut();
+
+            // 清除所有曾經寫入過的 Session 資料
+            Session.Clear();
+
+            return RedirectToAction("Login", "Employee");
+        }
+
+        // 顯示帳號列表頁面
         public ActionResult Index()
         {
-            //return View(db.Employees.ToList());
             return View();
         }
 
-        //
-        // GET: /Employee/Create
-
+        // 顯示帳號建立頁面
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Employee/Create
-
+        // 執行帳號建立
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "CreateDate")]Employee employee)
         {
             if (ModelState.IsValid)
@@ -81,9 +94,7 @@ namespace DailyStatement.Controllers
             return View(employee);
         }
 
-        //
-        // GET: /Employee/Edit/5
-
+        // 顯示編輯帳號頁面
         public ActionResult Edit(int id = 0)
         {
             Employee employee = db.Employees.Find(id);
@@ -94,10 +105,9 @@ namespace DailyStatement.Controllers
             return View(employee);
         }
 
-        //
-        // POST: /Employee/Edit/5
-
+        // 執行編輯帳號
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Employee employee)
         {
             if (ModelState.IsValid)
