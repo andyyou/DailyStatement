@@ -11,6 +11,7 @@ using KendoGridBinder;
 
 namespace DailyStatement.Controllers
 {
+    [Authorize]
     public class DailyController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
@@ -100,7 +101,7 @@ namespace DailyStatement.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "EmployeeId")] DailyInfo dailyinfo)
         {
-            dailyinfo.Employee = db.Employees.Where(e => e.EmployeeId == 1).FirstOrDefault();
+            dailyinfo.Employee = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
             
             if (ModelState.IsValid)
             {
