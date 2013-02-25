@@ -21,28 +21,28 @@
         @Html.ValidationSummary(true)
 
         <fieldset>
-        <legend>請輸入您的帳號、密碼</legend>
+            <legend>請輸入您的帳號、密碼</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Account)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Account)
-            @Html.ValidationMessageFor(model => model.Account)
-        </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Account)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Account)
+                @Html.ValidationMessageFor(model => model.Account)
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
         
-        <p>
-            <button class="btn btn-large btn-primary" type="submit">登入</button>
-        </p>
-    </fieldset>
+            <p>
+                <button class="btn btn-large btn-primary" type="submit">登入</button>
+            </p>
+        </fieldset>
     }
 
 </div> <!-- /container -->
