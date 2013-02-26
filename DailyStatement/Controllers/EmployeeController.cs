@@ -12,7 +12,7 @@ using DailyStatement.ViewModel;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize]
+    [Authorize(Users="admin,michael,alan,vincent")]
     public class EmployeeController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
