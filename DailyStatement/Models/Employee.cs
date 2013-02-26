@@ -18,7 +18,7 @@ namespace DailyStatement.Models
 
         [Required]
         [DisplayName("帳號")]
-        [Remote("CheckAccountDup", "Employee", HttpMethod = "POST", ErrorMessage = "您輸入的帳號已經有人註冊過了！")]
+        [Remote("CheckAccountDup", "Employee", HttpMethod = "POST", ErrorMessage = "您輸入的帳號已經有人註冊過了！", AdditionalFields = "EmployeeId")]
         public string Account { get; set; }
 
         [Required]
@@ -43,7 +43,7 @@ namespace DailyStatement.Models
 
         [Required, EmailAddress, MaxLength(150)]
         [DisplayName("電子郵件")]
-        [Remote("CheckEmailDup", "Employee", HttpMethod = "POST", ErrorMessage = "您輸入的電子郵件已經有人註冊過了！")]
+        [Remote("CheckEmailDup", "Employee", HttpMethod = "POST", ErrorMessage = "您輸入的電子郵件已經有人註冊過了！", AdditionalFields = "EmployeeId")]
         public string Email { get; set; }
 
         [Required]
