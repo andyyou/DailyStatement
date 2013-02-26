@@ -24,9 +24,10 @@
           
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
-              <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
-               
+                <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
+                @if (User.Identity.IsAuthenticated) {
+                <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
+                }
             </ul>
           </div>
           <div class="nav-collapse collapse pull-right">

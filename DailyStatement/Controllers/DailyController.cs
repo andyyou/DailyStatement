@@ -21,25 +21,48 @@ namespace DailyStatement.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Dailies.ToList());
+            return View();
         }
 
         public JsonResult Grid(KendoGridRequest request)
         {
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
             db.Configuration.ProxyCreationEnabled = false;
-            var dailies = (from d in db.Dailies.Include("WorkCategory")
-                          select new DailyInfoForIndex
-                          {
-                              DailyInfoId = d.DailyInfoId,
-                              CreateDate = d.CreateDate,
-                              EmployeeId = d.DailyInfoId,
-                              Customer = d.Customer,
-                              ProjectNo = d.ProjectNo,
-                              WorkContent = d.WorkContent,
-                              WorkingHours = d.WorkingHours,
-                              WorkCategory = d.WorkCategory.Name
-                          }).ToList();
+
+            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+
+            List<DailyInfoForIndex> dailies = new List<DailyInfoForIndex>();
+            if (emp.Rank == "3")
+            {
+                dailies = (from d in db.Dailies.Include("WorkCategory")
+                           where d.EmployeeId == emp.EmployeeId
+                               select new DailyInfoForIndex
+                               {
+                                   DailyInfoId = d.DailyInfoId,
+                                   CreateDate = d.CreateDate,
+                                   EmployeeId = d.DailyInfoId,
+                                   Customer = d.Customer,
+                                   ProjectNo = d.ProjectNo,
+                                   WorkContent = d.WorkContent,
+                                   WorkingHours = d.WorkingHours,
+                                   WorkCategory = d.WorkCategory.Name
+                               }).ToList();
+            }
+            else
+            {
+                dailies = (from d in db.Dailies.Include("WorkCategory")
+                               select new DailyInfoForIndex
+                               {
+                                   DailyInfoId = d.DailyInfoId,
+                                   CreateDate = d.CreateDate,
+                                   EmployeeId = d.DailyInfoId,
+                                   Customer = d.Customer,
+                                   ProjectNo = d.ProjectNo,
+                                   WorkContent = d.WorkContent,
+                                   WorkingHours = d.WorkingHours,
+                                   WorkCategory = d.WorkCategory.Name
+                               }).ToList();
+            }
             
             //var d = new List<DailyInfo> { 
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=1, EmployeeId=1, ProjectNo="000001", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
@@ -141,10 +164,6 @@ namespace DailyStatement.Controllers
             {
                 db.Entry(dailyinfo).State = EntityState.Modified;
                 db.SaveChanges();
-
-   
-               
-
 
                 return RedirectToAction("Index");
             }

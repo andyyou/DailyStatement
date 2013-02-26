@@ -12,7 +12,7 @@ using DailyStatement.ViewModel;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize]
+    [Authorize(Users="admin,michael,alan,vincent")]
     public class EmployeeController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
@@ -46,20 +46,23 @@ namespace DailyStatement.Controllers
             {
                 FormsAuthentication.SetAuthCookie(account, false);
 
-                if (String.IsNullOrEmpty(returnUrl))
-                {
-                    return RedirectToAction("Index", "Daily");
-                }
-                else
-                {
-                    return RedirectToAction(returnUrl);
-                }
+                return RedirectToAction("Index", "Daily");
+
+                //if (String.IsNullOrEmpty(returnUrl))
+                //{
+                //    return RedirectToAction("Index", "Daily");
+                //}
+                //else
+                //{
+                //    return RedirectToAction(returnUrl);
+                //}
             }
 
             return View();
         }
 
         // 執行登出
+        [AllowAnonymous]
         public ActionResult Logout()
         {
             // 清除表單驗證的 Cookies
@@ -68,7 +71,7 @@ namespace DailyStatement.Controllers
             // 清除所有曾經寫入過的 Session 資料
             Session.Clear();
 
-            return RedirectToAction("Login", "Employee");
+            return RedirectToAction("Login");
         }
 
         // 顯示帳號列表頁面
@@ -120,8 +123,15 @@ namespace DailyStatement.Controllers
         // 執行編輯帳號
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Employee employee)
+        public ActionResult Edit(int EmployeeId, string Name, string Email, string Rank, bool RecvNotify, bool Activity)
         {
+            Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
+            employee.Name = Name;
+            employee.Email = Email;
+            employee.Rank = Rank;
+            employee.RecvNotify = RecvNotify;
+            employee.Activity = Activity;
+
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
@@ -161,6 +171,10 @@ namespace DailyStatement.Controllers
             {
                 if (employee.Activity == true)
                 {
+                    // 驗證成功時修改最後登入日期
+                    employee.LastLoginDate = DateTime.Now;
+                    db.SaveChanges();
+
                     return true;
                 }
                 else
@@ -187,9 +201,9 @@ namespace DailyStatement.Controllers
         }
 
         // 檢查帳號是否已存在
-        public ActionResult CheckAccountDup(string Account)
+        public JsonResult CheckAccountDup(string Account, int EmployeeId = 0)
         {
-            var employee = db.Employees.Where(e => e.Account == Account).FirstOrDefault();
+            var employee = db.Employees.Where(e => e.EmployeeId != EmployeeId && e.Account == Account).FirstOrDefault();
 
             if (employee != null)
             {
@@ -202,9 +216,9 @@ namespace DailyStatement.Controllers
         }
 
         // 檢查電子郵件是否已存在
-        public ActionResult CheckEmailDup(string Email)
+        public JsonResult CheckEmailDup(string Email, int EmployeeId = 0)
         {
-            var employee = db.Employees.Where(e => e.Email == Email).FirstOrDefault();
+            var employee = db.Employees.Where(e => e.EmployeeId != EmployeeId && e.Email == Email).FirstOrDefault();
 
             if (employee != null)
             {
