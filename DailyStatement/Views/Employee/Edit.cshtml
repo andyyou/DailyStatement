@@ -29,7 +29,12 @@
             @Html.LabelFor(model => model.Password)
         </div>
         <div class="editor-field">
-            <a href="#">按我更改密碼</a>
+            <div id="change_password" class="hide">
+                <input type="password" name="Password" />&nbsp;
+                <a href="#" id="save_password" class="btn btn-small btn-success">修改</a>&nbsp;
+                <a href="#" id="cancel_password" class="btn btn-small">取消</a>
+            </div>
+            <a href="#" id="btn_change" class="btn btn-small btn-warning">按我更改密碼</a>
         </div>
 
         <div class="editor-label">
@@ -83,4 +88,35 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#btn_change").click(function () {
+            $("#change_password").removeClass("hide");
+            $("#btn_change").addClass("hide");
+        });
+
+        $("#save_password").click(function () {
+            var password = $('input[name="Password"]').val();
+            if (password == "") {
+                alert("請輸入要修改的密碼！");
+                return false;
+            }
+            $.post("@Url.Action("ChangePassword", "Employee")", { EmployeeId: "@Model.EmployeeId", Password: password })
+                .done(function (data) {
+                    $('input[name="Password"]').val("");
+                    alert("密碼修改成功！");
+                })
+                .fail(function () {
+                    alert("密碼修改失敗，請聯絡系統管理員！");
+                });
+
+            $("#change_password").addClass("hide");
+            $("#btn_change").removeClass("hide");
+        });
+        
+        $("#cancel_password").click(function () {
+            $("#change_password").addClass("hide");
+            $("#btn_change").removeClass("hide");
+        });
+    </script>
 }

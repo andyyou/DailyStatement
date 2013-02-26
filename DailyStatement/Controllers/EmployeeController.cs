@@ -141,6 +141,16 @@ namespace DailyStatement.Controllers
             return View(employee);
         }
 
+        [HttpPost]
+        public ActionResult ChangePassword(int EmployeeId, string Password)
+        {
+            var emp = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
+            emp.Password = GetHashPassword(Password);
+            db.SaveChanges();
+
+            return Content("");
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
