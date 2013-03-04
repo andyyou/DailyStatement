@@ -9,8 +9,9 @@ namespace DailyStatement.Models
     public class EmployeeConfigurations:EntityTypeConfiguration<Employee>
     {
         public EmployeeConfigurations()
-        { 
+        {
             // Fluent API 設定建置在此
+            HasRequired(e => e.Rank).WithMany(r => r.Employees).WillCascadeOnDelete(false);
         }
     }
 
@@ -26,6 +27,14 @@ namespace DailyStatement.Models
     public class WorkCategoryConfigurations : EntityTypeConfiguration<WorkCategory>
     {
         public WorkCategoryConfigurations()
+        {
+            // Fluent API 設定建置在此
+        }
+    }
+
+    public class RankConfigurations : EntityTypeConfiguration<Rank>
+    {
+        public RankConfigurations()
         {
             // Fluent API 設定建置在此
         }
