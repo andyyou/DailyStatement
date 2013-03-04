@@ -12,17 +12,10 @@ using DailyStatement.ViewModel;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize(Users="admin,michael,alan,vincent")]
+    [Authorize(Roles = "超級管理員,一般管理員")]
     public class EmployeeController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
-
-        //private List<RankInfoForEmployee> _ranks = new List<RankInfoForEmployee>()
-        //{
-        //    new RankInfoForEmployee() { RankId = 1, Name = "超級管理員" },
-        //    new RankInfoForEmployee() { RankId = 2, Name = "一般管理員" },
-        //    new RankInfoForEmployee() { RankId = 3, Name = "一般人員" }
-        //};
 
         // 密碼雜湊所需的 Salt 亂數值
         private string pwSalt = "qFgaQahNRE8v4oKzSMn2lWurfdVun5T6RW6G";
@@ -31,6 +24,8 @@ namespace DailyStatement.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Daily");
+
             ViewBag.ReturnUrl = returnUrl;
 
             return View();
