@@ -12,17 +12,10 @@ using DailyStatement.ViewModel;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize(Users="admin,michael,alan,vincent")]
+    [Authorize(Roles = "超級管理員,一般管理員")]
     public class EmployeeController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
-
-        private List<RankInfoForEmployee> _ranks = new List<RankInfoForEmployee>()
-        {
-            new RankInfoForEmployee() { RankId = 1, Name = "超級管理員" },
-            new RankInfoForEmployee() { RankId = 2, Name = "一般管理員" },
-            new RankInfoForEmployee() { RankId = 3, Name = "一般人員" }
-        };
 
         // 密碼雜湊所需的 Salt 亂數值
         private string pwSalt = "qFgaQahNRE8v4oKzSMn2lWurfdVun5T6RW6G";
@@ -31,6 +24,8 @@ namespace DailyStatement.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Daily");
+
             ViewBag.ReturnUrl = returnUrl;
 
             return View();
@@ -83,7 +78,7 @@ namespace DailyStatement.Controllers
         // 顯示帳號建立頁面
         public ActionResult Create()
         {
-            ViewData["Ranks"] = new SelectList(_ranks, "RankId", "Name", 3);
+            ViewData["Ranks"] = new SelectList(db.Ranks.ToList(), "RankId", "Name", 3);
 
             return View();
         }
@@ -115,7 +110,7 @@ namespace DailyStatement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewData["Ranks"] = new SelectList(_ranks, "RankId", "Name", "");
+            ViewData["Ranks"] = new SelectList(db.Ranks.ToList(), "RankId", "Name", employee.RankId);
 
             return View(employee);
         }
@@ -123,12 +118,12 @@ namespace DailyStatement.Controllers
         // 執行編輯帳號
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int EmployeeId, string Name, string Email, string Rank, bool RecvNotify, bool Activity)
+        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, bool RecvNotify, bool Activity)
         {
             Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
             employee.Name = Name;
             employee.Email = Email;
-            employee.Rank = Rank;
+            employee.RankId = RankId;
             employee.RecvNotify = RecvNotify;
             employee.Activity = Activity;
 
@@ -204,8 +199,21 @@ namespace DailyStatement.Controllers
         public JsonResult Grid(KendoGridRequest request)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            var employees = db.Employees.ToList();
-            var grid = new KendoGrid<Employee>(request, employees);
+            var employees = (from e in db.Employees.Include("Rank")
+                             select new RankInfoForEmployee
+                             {
+                                 EmployeeId = e.EmployeeId,
+                                 Account = e.Account,
+                                 Name = e.Name,
+                                 Email = e.Email,
+                                 Rank = e.Rank.Name,
+                                 RecvNotify = e.RecvNotify,
+                                 Activity = e.Activity,
+                                 CreateDate = e.CreateDate,
+                                 LastLoginDate = e.LastLoginDate
+                             }).ToList();
+
+            var grid = new KendoGrid<RankInfoForEmployee>(request, employees);
 
             return Json(grid);
         }
