@@ -32,10 +32,11 @@ namespace DailyStatement.Models
         [DisplayName("最後登入日期")]
         public DateTime? LastLoginDate { get; set; }
 
-        [Column(TypeName="varchar"), MaxLength(50)]
+        public int RankId { get; set; }
+
         [DisplayName("權限")]
         [Description("1: 超級管理員, 2: 一般管理員, 3: 一般人員")]
-        public string Rank { get; set; }
+        public Rank Rank { get; set; }
 
         [Required, MaxLength(50)]
         [DisplayName("姓名")]

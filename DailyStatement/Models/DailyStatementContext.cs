@@ -20,13 +20,14 @@ namespace DailyStatement.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<WorkCategory> Categories { get; set; }
         public DbSet<DailyInfo> Dailies { get; set; }
+        public DbSet<Rank> Ranks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new DailyInfoConfigurations());
             modelBuilder.Configurations.Add(new WorkCategoryConfigurations());
             modelBuilder.Configurations.Add(new EmployeeConfigurations());
-
+            modelBuilder.Configurations.Add(new RankConfigurations());
         }
     }
 }
