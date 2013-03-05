@@ -29,10 +29,10 @@ namespace DailyStatement.Controllers
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
             db.Configuration.ProxyCreationEnabled = false;
 
-            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+            var emp = db.Employees.Include("Rank").Where(e => e.Account == User.Identity.Name).FirstOrDefault();
 
             List<DailyInfoForIndex> dailies = new List<DailyInfoForIndex>();
-            if (emp.Rank == "3")
+            if (emp.Rank.Name == "一般人員")
             {
                 dailies = (from d in db.Dailies.Include("WorkCategory")
                            where d.EmployeeId == emp.EmployeeId
