@@ -110,7 +110,7 @@ namespace DailyStatement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewData["Ranks"] = new SelectList(db.Ranks.ToList(), "RankId", "Name", "");
+            ViewData["Ranks"] = new SelectList(db.Ranks.ToList(), "RankId", "Name", employee.RankId);
 
             return View(employee);
         }
@@ -118,12 +118,12 @@ namespace DailyStatement.Controllers
         // 執行編輯帳號
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int EmployeeId, string Name, string Email, string Rank, bool RecvNotify, bool Activity)
+        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, bool RecvNotify, bool Activity)
         {
             Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
             employee.Name = Name;
             employee.Email = Email;
-            employee.Rank.Name = Rank;
+            employee.RankId = RankId;
             employee.RecvNotify = RecvNotify;
             employee.Activity = Activity;
 

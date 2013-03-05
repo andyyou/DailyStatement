@@ -57,8 +57,8 @@
             @Html.LabelFor(model => model.Rank)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Rank, ViewData["Ranks"] as SelectList)
-            @Html.ValidationMessageFor(model => model.Rank)
+            @Html.DropDownListFor(model => model.RankId, ViewData["Ranks"] as SelectList)
+            @Html.ValidationMessageFor(model => model.RankId)
         </div>
 
         <div class="editor-label">
