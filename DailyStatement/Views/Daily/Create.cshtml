@@ -70,10 +70,10 @@
             @Html.LabelFor(model => model.Employee.Name)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("EmployeeList", ViewData["EmployeeList"] as SelectList)
-            @Html.DropDownList("employeee",(SelectList)ViewBag.Employeee)
+            @Html.DropDownList("EmployeeList", (SelectList)ViewData["EmployeeList"])
         </div>
         }
+
         <p>
             <input type="submit" value="確認" class="btn btn-small btn-success" />  @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small" })
         </p>
@@ -86,6 +86,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
+            $('#EmployeeList').val(@ViewData["empId"]);
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
