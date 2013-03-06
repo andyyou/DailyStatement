@@ -93,8 +93,8 @@ namespace DailyStatement.Controllers
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
             if (!User.IsInRole("一般人員"))
             {
-                ViewData["empId"] = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
-                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name");
+                int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
+                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", empId);
             }
 
             return View();
@@ -142,7 +142,7 @@ namespace DailyStatement.Controllers
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
             if (!User.IsInRole("一般人員"))
             {
-                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name");
+                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
             }
             
             return View(dailyinfo);

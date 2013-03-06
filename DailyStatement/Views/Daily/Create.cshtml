@@ -70,7 +70,7 @@
             @Html.LabelFor(model => model.Employee.Name)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("EmployeeList", (SelectList)ViewData["EmployeeList"])
+            @Html.DropDownList("EmployeeList")
         </div>
         }
 
@@ -86,7 +86,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
-            $('#EmployeeList').val(@ViewData["empId"]);
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"

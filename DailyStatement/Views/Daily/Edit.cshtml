@@ -14,7 +14,6 @@
     <fieldset>
 
         @Html.HiddenFor(model => model.DailyInfoId)
-        @*<input id="EmployeeId" name="EmployeeId" type="hidden" value="@ViewBag.CurrentEmployeeId" />*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ProjectNo)
@@ -73,7 +72,7 @@
             @Html.LabelFor(model => model.Employee.Name)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("EmployeeList", (SelectList)ViewData["EmployeeList"])
+            @Html.DropDownList("EmployeeList")
         </div>
         }
 
@@ -89,7 +88,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
-            $('#EmployeeList').val(@ViewBag.CurrentEmployeeId);
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
