@@ -91,6 +91,12 @@ namespace DailyStatement.Controllers
         public ActionResult Create()
         {
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
+            if (!User.IsInRole("一般人員"))
+            {
+                int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
+                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", empId);
+            }
+
             return View();
         }
 
@@ -98,10 +104,17 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Create
 
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "EmployeeId")] DailyInfo dailyinfo)
+        public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
         {
-            dailyinfo.Employee = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
-            
+            DailyInfo dailyinfo = new DailyInfo();
+            dailyinfo.ProjectNo = ProjectNo;
+            dailyinfo.WorkCategoryId = WorkCategoryId;
+            dailyinfo.Customer = Customer;
+            dailyinfo.WorkContent = WorkContent;
+            dailyinfo.CreateDate = CreateDate;
+            dailyinfo.WorkingHours = WorkingHours;
+            dailyinfo.Employee = db.Employees.Where(e => (EmployeeList == null && e.Account == User.Identity.Name) || (EmployeeList != null && e.EmployeeId == EmployeeList)).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Dailies.Add(dailyinfo);
@@ -127,6 +140,11 @@ namespace DailyStatement.Controllers
             }
 
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
+            if (!User.IsInRole("一般人員"))
+            {
+                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
+            }
+            
             return View(dailyinfo);
         }
 
@@ -134,8 +152,21 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(DailyInfo dailyinfo)
+        //public ActionResult Edit(DailyInfo dailyinfo)
+        public ActionResult Edit(int DailyInfoId, string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
         {
+            DailyInfo dailyinfo = db.Dailies.Where(d => d.DailyInfoId == DailyInfoId).FirstOrDefault();
+            dailyinfo.ProjectNo = ProjectNo;
+            dailyinfo.WorkCategoryId = WorkCategoryId;
+            dailyinfo.Customer = Customer;
+            dailyinfo.WorkContent = WorkContent;
+            dailyinfo.CreateDate = CreateDate;
+            dailyinfo.WorkingHours = WorkingHours;
+            if (EmployeeList != null)
+            {
+                dailyinfo.EmployeeId = Convert.ToInt32(EmployeeList);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(dailyinfo).State = EntityState.Modified;
