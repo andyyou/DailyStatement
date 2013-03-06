@@ -63,7 +63,17 @@
             @Html.EditorFor(model => model.WorkingHours)
             @Html.ValidationMessageFor(model => model.WorkingHours)
         </div>
-
+        
+        @if(User.IsInRole("超級管理員") || User.IsInRole("一般管理員"))
+        {
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Employee.Name)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("EmployeeList", ViewData["EmployeeList"] as SelectList)
+            @Html.DropDownList("employeee",(SelectList)ViewBag.Employeee)
+        </div>
+        }
         <p>
             <input type="submit" value="確認" class="btn btn-small btn-success" />  @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small" })
         </p>

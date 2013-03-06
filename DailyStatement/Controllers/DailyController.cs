@@ -90,6 +90,13 @@ namespace DailyStatement.Controllers
         public ActionResult Create()
         {
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
+            if (!User.IsInRole("一般人員"))
+            {
+                int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
+                ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", empId);
+                ViewBag.Employeee = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", 5);
+            }
+
             return View();
         }
 
@@ -97,10 +104,19 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Create
 
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "EmployeeId")] DailyInfo dailyinfo)
+        //public ActionResult Create([Bind(Exclude = "EmployeeId")] DailyInfo dailyinfo, int? employee)
+        public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
         {
-            dailyinfo.Employee = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
-            
+            //Employee emp = db.Employees.Where(e => (EmployeeList == null && e.Account == User.Identity.Name) || (EmployeeList != null && e.EmployeeId == EmployeeList)).FirstOrDefault();
+            DailyInfo dailyinfo = new DailyInfo();
+            dailyinfo.ProjectNo = ProjectNo;
+            dailyinfo.WorkCategoryId = WorkCategoryId;
+            dailyinfo.Customer = Customer;
+            dailyinfo.WorkContent = WorkContent;
+            dailyinfo.CreateDate = CreateDate;
+            dailyinfo.WorkingHours = WorkingHours;
+            dailyinfo.Employee = db.Employees.Where(e => (EmployeeList == null && e.Account == User.Identity.Name) || (EmployeeList != null && e.EmployeeId == EmployeeList)).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Dailies.Add(dailyinfo);
