@@ -21,7 +21,6 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="@Url.Action("Index","Daily")"><img src="@Url.Content("~/Content/images/w_logo_l.png")" /></a>
-          
           <div class="nav-collapse collapse">
             <ul class="nav">
                 <li class="divider-vertical"></li>
@@ -54,13 +53,8 @@
 
     <div class="container">
       @RenderBody()
-
-      <div class="footer">
-        <p>&copy; Wintriss 2013 & Design By Apputu</p>
-      </div>
     </div>
     <!-- /container -->
-    
     @RenderSection("scripts", required: false)
 </body>
 </html>
