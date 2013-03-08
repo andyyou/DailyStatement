@@ -18,7 +18,6 @@ namespace DailyStatement.Controllers
     public class DailyController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
-
         //
         // GET: /Daily/
 
@@ -235,11 +234,9 @@ namespace DailyStatement.Controllers
             {
                 months.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
-            ViewBag.Months = new SelectList(months,"Text","Value");
-            if (!User.IsInRole("一般人員"))
-            {
-                ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name");
-            }
+            ViewBag.Months = new SelectList(months, "Text", "Value");
+
+            ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
             return View();
         }
 
@@ -308,6 +305,7 @@ namespace DailyStatement.Controllers
 
             return View(report);
         }
+        
 
         public ActionResult GenerateWeekReport()
         {
@@ -337,6 +335,17 @@ namespace DailyStatement.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        private int UserId(string account)
+        {
+            var emp = db.Employees.Where(e => e.Account == account).SingleOrDefault();
+            if (emp == null)
+            {
+                return 0;
+            }
+            return emp.EmployeeId;
+
         }
     }
 }

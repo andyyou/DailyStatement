@@ -69,7 +69,10 @@
                 dataSource: dataSource,
                 height: 700,
                 scrollable: true,
-                pageable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [15,30,50]
+                },
                 // editable: true,
                 sortable:true
             });
@@ -95,15 +98,9 @@
     </script>
     }
 
-<h4>工作時數日誌</h4>
-
-<div class="row">
-    <div class="span12 pull-right">
-        @* Html.ActionLink("新增", "Create", "Daily", new { @class="btn btn-success pull-right", id="btn-create", style="margin-bottom:2px;"})*@
-    </div>
-</div>
 <div class="row">
     <div class="span12">
+        <h4>工作時數日誌</h4>
         <div id="grid"></div>
     </div>
 </div>

@@ -200,6 +200,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\w_logo.png" />
+    <Content Include="Content\images\w_logo_d.png" />
+    <Content Include="Content\images\w_logo_l.png" />
     <Content Include="Content\kendo\Black\editor.png" />
     <Content Include="Content\kendo\Black\imagebrowser.png" />
     <Content Include="Content\kendo\Black\loading-image.gif" />
@@ -366,6 +369,7 @@
     <Content Include="Dynamic Expressions.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <Content Include="App_Code\Functions\Employee.cshtml" />
     <None Include="Properties\PublishProfiles\DailyStatement.pubxml" />
     <None Include="Properties\PublishProfiles\設定檔.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
