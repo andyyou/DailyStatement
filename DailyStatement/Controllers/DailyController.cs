@@ -238,8 +238,8 @@ namespace DailyStatement.Controllers
             return View();
         }
 
-        
 
+        [ValidateAntiForgeryToken]
         public ActionResult ReportWeekForSingle(int employeeId, DateTime formDate, DateTime toDate )
         {
             string query = String.Format(@"Select A.ProjectNo + ' - ' +
