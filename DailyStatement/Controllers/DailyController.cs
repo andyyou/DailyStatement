@@ -9,6 +9,8 @@ using DailyStatement.Models;
 using DailyStatement.ViewModel;
 using KendoGridBinder;
 using System.Globalization;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
 
 namespace DailyStatement.Controllers
 {
@@ -305,6 +307,30 @@ namespace DailyStatement.Controllers
             }
 
             return View(report);
+        }
+
+        public ActionResult GenerateWeekReport()
+        {
+            ReportClass rpt = new ReportClass();
+            rpt.FileName = Server.MapPath("~/Report/WeekReport.rpt");
+            rpt.Load();
+            rpt.SetParameterValue("EmployeeAccount", User.Identity.Name);
+            rpt.SetParameterValue("WeekOfYear", "9");
+
+            CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
+            System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
+            builder.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+
+            foreach (CrystalDecisions.CrystalReports.Engine.Table table in rpt.Database.Tables)
+            {
+                dbLoginInfo.ConnectionInfo.ServerName = builder["Data Source"].ToString();
+                dbLoginInfo.ConnectionInfo.DatabaseName = builder["Initial Catalog"].ToString();
+                dbLoginInfo.ConnectionInfo.UserID = builder["User ID"].ToString();
+                dbLoginInfo.ConnectionInfo.Password = builder["Password"].ToString();
+                table.ApplyLogOnInfo(dbLoginInfo);
+            }
+            Stream stream = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
         }
 
         protected override void Dispose(bool disposing)
