@@ -129,6 +129,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201303080231011_AlterDailyInfo.cs" />
+    <Compile Include="Migrations\201303080231011_AlterDailyInfo.Designer.cs">
+      <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Report\WeekReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -849,6 +853,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303040525242_ModifyEmployeeTable.resx">
       <DependentUpon>201303040525242_ModifyEmployeeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303080231011_AlterDailyInfo.resx">
+      <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\WeekReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

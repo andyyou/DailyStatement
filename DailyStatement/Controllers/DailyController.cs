@@ -307,13 +307,15 @@ namespace DailyStatement.Controllers
         }
         
 
-        public ActionResult GenerateWeekReport()
+        public ActionResult GenerateWeekReport(string account, string weekOfYear, string fromDate, string toDate)
         {
             ReportClass rpt = new ReportClass();
             rpt.FileName = Server.MapPath("~/Report/WeekReport.rpt");
             rpt.Load();
-            rpt.SetParameterValue("EmployeeAccount", User.Identity.Name);
-            rpt.SetParameterValue("WeekOfYear", "9");
+            rpt.SetParameterValue("EmployeeAccount", account);
+            rpt.SetParameterValue("WeekOfYear", weekOfYear);
+            rpt.SetParameterValue("FromDate", fromDate);
+            rpt.SetParameterValue("ToDate", toDate);
 
             CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
             System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
@@ -328,7 +330,8 @@ namespace DailyStatement.Controllers
                 table.ApplyLogOnInfo(dbLoginInfo);
             }
             Stream stream = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            return File(stream, "application/pdf");
+            string fileName = User.Identity.Name + "WeekReport";
+            return File(stream, "application/pdf", fileName);
         }
 
         protected override void Dispose(bool disposing)
