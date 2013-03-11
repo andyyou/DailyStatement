@@ -138,5 +138,12 @@
 
     <div class="span12">
         @Html.ActionLink("返回", "ReportSearch", null, new { @class="btn btn-small pull-right"})
+        <form action="/Daily/GenerateWeekReport" method="post">
+            <input name="employeeId" type="hidden" value="@ViewBag.EmployeeId" />
+            <input name="weekOfYear" type="hidden" value="@ViewBag.WeekNum" />
+            <input name="fromDate" type="hidden" value="@ViewBag.FromDate" />
+            <input name="toDate" type="hidden" value="@ViewBag.ToDate" />
+            <input type="submit" value="列印" class="btn btn-small pull-right" />
+        </form>
     </div>
 </div>

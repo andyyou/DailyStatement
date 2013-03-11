@@ -66,7 +66,7 @@
                 var d = weeksOfMonth[$(this).val()];
                 var start = d['start'].getFullYear() + '/' + (d['start'].getMonth() + 1) + '/' + d['start'].getDate();
                 var end = d['end'].getFullYear() + '/' + (d['end'].getMonth() + 1) + '/' + d['end'].getDate();
-                $('input[name=formDate]').val(start);
+                $('input[name=fromDate]').val(start);
                 $('input[name=toDate]').val(end);
 
             });
@@ -86,7 +86,7 @@
             <div style="width:auto;display:block;">
             <fieldset style="width:300px;margin:0 auto;">
                 
-                @Html.Hidden("formDate")
+                @Html.Hidden("fromDate")
                 @Html.Hidden("toDate")
 
                 <div class="editor-label">

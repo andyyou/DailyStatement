@@ -32,7 +32,7 @@ namespace DailyStatement.Migrations
                     EmployeeId = 1,
                     Account = "admin",
                     Password = "F50102B11D7088627E8C6DC39C0DFC7C181D2D0B",
-                    Name = "Admin",
+                    Name = "預設管理員(Admin)",
                     Email = "admin@winspection.com",
                     RecvNotify = false,
                     Activity = true,

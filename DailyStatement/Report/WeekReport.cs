@@ -162,7 +162,7 @@ namespace DailyStatement.Report {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_EmployeeAccount {
+        public CrystalDecisions.Shared.IParameterField Parameter_EmployeeId {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }

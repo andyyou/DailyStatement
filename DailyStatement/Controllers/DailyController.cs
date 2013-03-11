@@ -242,7 +242,7 @@ namespace DailyStatement.Controllers
 
 
         [ValidateAntiForgeryToken]
-        public ActionResult ReportWeekForSingle(int employeeId, DateTime formDate, DateTime toDate )
+        public ActionResult ReportWeekForSingle(int employeeId, DateTime fromDate, DateTime toDate )
         {
             string query = String.Format(@"Select A.ProjectNo + ' - ' +
                                         (Select top 1 B.customer From DailyInfoes B where B.ProjectNo = A.ProjectNo) as [WorkName],
@@ -256,16 +256,19 @@ namespace DailyStatement.Controllers
                                         From DailyInfoes A
 	                                    Where EmployeeId = {0}
 	                                    AND CreateDate Between '{1}' AND '{2}'
-	                                    Group By EmployeeId, ProjectNo", employeeId, formDate.ToShortDateString(), toDate.ToShortDateString());
+	                                    Group By EmployeeId, ProjectNo", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
             var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
-            ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            ViewBag.EmployeeId = employeeId;
             ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
             CultureInfo ci = CultureInfo.CurrentCulture;
-            int weekNum = ci.Calendar.GetWeekOfYear(formDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            int weekNum = ci.Calendar.GetWeekOfYear(fromDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             ViewBag.WeekNum = weekNum;
-            ViewBag.Date = formDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
-            var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            ViewBag.Date = fromDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
+            var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
 
             if (reportList != null)
             {
@@ -305,14 +308,14 @@ namespace DailyStatement.Controllers
 
             return View(report);
         }
-        
 
-        public ActionResult GenerateWeekReport(string account, string weekOfYear, string fromDate, string toDate)
+
+        public ActionResult GenerateWeekReport(int employeeId, string weekOfYear, DateTime fromDate, DateTime toDate)
         {
             ReportClass rpt = new ReportClass();
             rpt.FileName = Server.MapPath("~/Report/WeekReport.rpt");
             rpt.Load();
-            rpt.SetParameterValue("EmployeeAccount", account);
+            rpt.SetParameterValue("EmployeeId", employeeId);
             rpt.SetParameterValue("WeekOfYear", weekOfYear);
             rpt.SetParameterValue("FromDate", fromDate);
             rpt.SetParameterValue("ToDate", toDate);
@@ -330,8 +333,8 @@ namespace DailyStatement.Controllers
                 table.ApplyLogOnInfo(dbLoginInfo);
             }
             Stream stream = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            string fileName = User.Identity.Name + "WeekReport";
-            return File(stream, "application/pdf", fileName);
+            string fileName = String.Format("{0}{1}{2}.pdf", employeeId, fromDate, toDate);
+            return File(stream, "application/pdf");
         }
 
         protected override void Dispose(bool disposing)
