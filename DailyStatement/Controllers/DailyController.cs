@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DailyStatement.Models;
 using DailyStatement.ViewModel;
 using KendoGridBinder;
@@ -23,11 +24,13 @@ namespace DailyStatement.Controllers
         //
         // GET: /Daily/
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public JsonResult Grid(KendoGridRequest request)
         {
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
@@ -72,25 +75,25 @@ namespace DailyStatement.Controllers
 
             var grid = new KendoGrid<DailyInfoForIndex>(request, dailies);
             return Json(grid);
-
         }
 
         //
         // GET: /Daily/Details/5
 
-        public ActionResult Details(int id = 0)
-        {
-            DailyInfo dailyinfo = db.Dailies.Find(id);
-            if (dailyinfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dailyinfo);
-        }
+        //public ActionResult Details(int id = 0)
+        //{
+        //    DailyInfo dailyinfo = db.Dailies.Find(id);
+        //    if (dailyinfo == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(dailyinfo);
+        //}
 
         //
         // GET: /Daily/Create
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Create()
         {
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
@@ -107,6 +110,7 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Create
 
         [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
         {
             DailyInfo dailyinfo = new DailyInfo();
@@ -131,6 +135,7 @@ namespace DailyStatement.Controllers
         //
         // GET: /Daily/Edit/5
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Edit(int id = 0)
         {
             DailyInfo dailyinfo = db.Dailies.Find(id);
@@ -155,7 +160,7 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Edit/5
 
         [HttpPost]
-        //public ActionResult Edit(DailyInfo dailyinfo)
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Edit(int DailyInfoId, string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
         {
             DailyInfo dailyinfo = db.Dailies.Where(d => d.DailyInfoId == DailyInfoId).FirstOrDefault();
@@ -197,6 +202,7 @@ namespace DailyStatement.Controllers
         // POST: /Daily/Delete/5
         
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult DeleteConfirmed(int id)
         {
             DailyInfo dailyinfo = db.Dailies.Find(id);
@@ -205,6 +211,7 @@ namespace DailyStatement.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult EmployeeList()
         {
             return View(db.Employees.ToList());
@@ -213,6 +220,7 @@ namespace DailyStatement.Controllers
 
         // UNDONE: 目前先不採用
         [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public JsonResult GetEmployeeNameList(KendoGridRequest request)
         {
             db.Configuration.ProxyCreationEnabled = false;
@@ -229,6 +237,7 @@ namespace DailyStatement.Controllers
             }
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         public ActionResult ReportSearch()
         {
             List<SelectListItem> months = new List<SelectListItem>();
@@ -244,6 +253,7 @@ namespace DailyStatement.Controllers
 
 
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         public ActionResult ReportWeekForSingle(int employeeId, DateTime fromDate, DateTime toDate )
         {
             string query = String.Format(@"Select A.ProjectNo + ' - ' +
@@ -304,14 +314,12 @@ namespace DailyStatement.Controllers
                             break;
                     }
                 }
-
-               
             }
 
             return View(report);
         }
 
-
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         public ActionResult GenerateWeekReport(int employeeId, string weekOfYear, DateTime fromDate, DateTime toDate)
         {
             try
@@ -356,12 +364,14 @@ namespace DailyStatement.Controllers
             }
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         private int UserId(string account)
         {
             var emp = db.Employees.Where(e => e.Account == account).SingleOrDefault();
@@ -370,7 +380,6 @@ namespace DailyStatement.Controllers
                 return 0;
             }
             return emp.EmployeeId;
-
         }
     }
 }
