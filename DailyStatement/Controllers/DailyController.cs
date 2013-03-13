@@ -9,6 +9,10 @@ using DailyStatement.Models;
 using DailyStatement.ViewModel;
 using KendoGridBinder;
 using System.Globalization;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+using System.Data.SqlClient;
+using CrystalDecisions.Shared;
 
 namespace DailyStatement.Controllers
 {
@@ -240,7 +244,7 @@ namespace DailyStatement.Controllers
 
 
         [ValidateAntiForgeryToken]
-        public ActionResult ReportWeekForSingle(int employeeId, DateTime formDate, DateTime toDate )
+        public ActionResult ReportWeekForSingle(int employeeId, DateTime fromDate, DateTime toDate )
         {
             string query = String.Format(@"Select A.ProjectNo + ' - ' +
                                         (Select top 1 B.customer From DailyInfoes B where B.ProjectNo = A.ProjectNo) as [WorkName],
@@ -254,16 +258,19 @@ namespace DailyStatement.Controllers
                                         From DailyInfoes A
 	                                    Where EmployeeId = {0}
 	                                    AND CreateDate Between '{1}' AND '{2}'
-	                                    Group By EmployeeId, ProjectNo", employeeId, formDate.ToShortDateString(), toDate.ToShortDateString());
+	                                    Group By EmployeeId, ProjectNo", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
             var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
-            ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            ViewBag.EmployeeId = employeeId;
             ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
             CultureInfo ci = CultureInfo.CurrentCulture;
-            int weekNum = ci.Calendar.GetWeekOfYear(formDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            int weekNum = ci.Calendar.GetWeekOfYear(fromDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             ViewBag.WeekNum = weekNum;
-            ViewBag.Date = formDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
-            var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= formDate && d.CreateDate <= toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            ViewBag.Date = fromDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
+            var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
 
             if (reportList != null)
             {
@@ -303,7 +310,51 @@ namespace DailyStatement.Controllers
 
             return View(report);
         }
-        
+
+
+        public ActionResult GenerateWeekReport(int employeeId, string weekOfYear, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                ReportDocument rpt = new ReportDocument();
+                rpt.Load(Server.MapPath("~/Report/WeekReport.rpt"));
+
+                DailyStatementDS ds = new DailyStatementDS();
+
+                string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+                string condition = "SELECT * FROM [DailyStatement].[dbo].[DailyInfoes]";
+                SqlDataAdapter da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.DailyInfoes);
+                condition = "SELECT * FROM [DailyStatement].[dbo].[Employees]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Employees);
+                // Due to SetParameterValue always return error, so use datatable to store parameter
+                ds.Tables["Parameter"].Rows.Add(employeeId, fromDate, toDate, weekOfYear);
+                
+                rpt.SetDataSource(ds);
+
+                //CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
+                //System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
+                //builder.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+
+                //foreach (CrystalDecisions.CrystalReports.Engine.Table table in rpt.Database.Tables)
+                //{
+                //    dbLoginInfo.ConnectionInfo.ServerName = builder["Data Source"].ToString();
+                //    dbLoginInfo.ConnectionInfo.DatabaseName = builder["Initial Catalog"].ToString();
+                //    dbLoginInfo.ConnectionInfo.UserID = builder["User ID"].ToString();
+                //    dbLoginInfo.ConnectionInfo.Password = builder["Password"].ToString();
+                //    table.ApplyLogOnInfo(dbLoginInfo);
+                //}
+
+                Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+                string fileName = String.Format("{0}{1}{2}.pdf", employeeId, fromDate, toDate);
+                return File(stream, "application/pdf");
+            }
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {
