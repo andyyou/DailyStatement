@@ -24,14 +24,17 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
                 <li class="divider-vertical"></li>
-                 @if (User.Identity.IsAuthenticated)
-                 {
+                @if (User.Identity.IsAuthenticated)
+                {
+                if (!User.IsInRole("助理"))
+                {
                 <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
+                }
                 <li><a href="@Url.Action("ReportSearch","Daily")">Report</a></li>
-                 }
-                @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員")))
+                if (User.IsInRole("超級管理員") || User.IsInRole("一般管理員"))
                 {
                 <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
+                }
                 }
             </ul>
           </div>

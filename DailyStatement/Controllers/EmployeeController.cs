@@ -24,7 +24,17 @@ namespace DailyStatement.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Daily");
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("助理"))
+                {
+                    return RedirectToAction("ReportSearch", "Daily");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Daily");
+                }
+            }
 
             ViewBag.ReturnUrl = returnUrl;
 
