@@ -322,10 +322,10 @@ namespace DailyStatement.Controllers
                 DailyStatementDS ds = new DailyStatementDS();
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
-                string condition = "SELECT * FROM [DailyStatement].[dbo].[DailyInfoes]";
+                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE [EmployeeId] = {0} AND ([CreateDate] >= '{1}' AND [CreateDate] <= '{2}')", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
-                condition = "SELECT * FROM [DailyStatement].[dbo].[Employees]";
+                condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[Employees] WHERE [EmployeeId] = {0}", employeeId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Employees);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
