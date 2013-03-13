@@ -135,6 +135,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyStatementDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyStatementDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201303080231011_AlterDailyInfo.cs" />
     <Compile Include="Migrations\201303080231011_AlterDailyInfo.Designer.cs">
       <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
@@ -381,6 +386,17 @@
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
     <Content Include="App_Code\Functions\Employee.cshtml" />
+    <Content Include="DailyStatementDS.xsc">
+      <DependentUpon>DailyStatementDS.xsd</DependentUpon>
+    </Content>
+    <None Include="DailyStatementDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DailyStatementDS.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DailyStatementDS.xss">
+      <DependentUpon>DailyStatementDS.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\DailyStatement.pubxml" />
     <None Include="Properties\PublishProfiles\設定檔.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

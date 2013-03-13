@@ -11,6 +11,8 @@ using KendoGridBinder;
 using System.Globalization;
 using CrystalDecisions.CrystalReports.Engine;
 using System.IO;
+using System.Data.SqlClient;
+using CrystalDecisions.Shared;
 
 namespace DailyStatement.Controllers
 {
@@ -312,29 +314,46 @@ namespace DailyStatement.Controllers
 
         public ActionResult GenerateWeekReport(int employeeId, string weekOfYear, DateTime fromDate, DateTime toDate)
         {
-            ReportClass rpt = new ReportClass();
-            rpt.FileName = Server.MapPath("~/Report/WeekReport.rpt");
-            rpt.Load();
-            rpt.SetParameterValue("EmployeeId", employeeId);
-            rpt.SetParameterValue("WeekOfYear", weekOfYear);
-            rpt.SetParameterValue("FromDate", fromDate);
-            rpt.SetParameterValue("ToDate", toDate);
-
-            CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
-            System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
-            builder.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
-
-            foreach (CrystalDecisions.CrystalReports.Engine.Table table in rpt.Database.Tables)
+            try
             {
-                dbLoginInfo.ConnectionInfo.ServerName = builder["Data Source"].ToString();
-                dbLoginInfo.ConnectionInfo.DatabaseName = builder["Initial Catalog"].ToString();
-                dbLoginInfo.ConnectionInfo.UserID = builder["User ID"].ToString();
-                dbLoginInfo.ConnectionInfo.Password = builder["Password"].ToString();
-                table.ApplyLogOnInfo(dbLoginInfo);
+                ReportDocument rpt = new ReportDocument();
+                rpt.Load(Server.MapPath("~/Report/WeekReport.rpt"));
+
+                DailyStatementDS ds = new DailyStatementDS();
+
+                string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+                string condition = "SELECT * FROM [DailyStatement].[dbo].[DailyInfoes]";
+                SqlDataAdapter da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.DailyInfoes);
+                condition = "SELECT * FROM [DailyStatement].[dbo].[Employees]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Employees);
+                // Due to SetParameterValue always return error, so use datatable to store parameter
+                ds.Tables["Parameter"].Rows.Add(employeeId, fromDate, toDate, weekOfYear);
+                
+                rpt.SetDataSource(ds);
+
+                //CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
+                //System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
+                //builder.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+
+                //foreach (CrystalDecisions.CrystalReports.Engine.Table table in rpt.Database.Tables)
+                //{
+                //    dbLoginInfo.ConnectionInfo.ServerName = builder["Data Source"].ToString();
+                //    dbLoginInfo.ConnectionInfo.DatabaseName = builder["Initial Catalog"].ToString();
+                //    dbLoginInfo.ConnectionInfo.UserID = builder["User ID"].ToString();
+                //    dbLoginInfo.ConnectionInfo.Password = builder["Password"].ToString();
+                //    table.ApplyLogOnInfo(dbLoginInfo);
+                //}
+
+                Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+                string fileName = String.Format("{0}{1}{2}.pdf", employeeId, fromDate, toDate);
+                return File(stream, "application/pdf");
             }
-            Stream stream = rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            string fileName = String.Format("{0}{1}{2}.pdf", employeeId, fromDate, toDate);
-            return File(stream, "application/pdf");
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
         }
 
         protected override void Dispose(bool disposing)

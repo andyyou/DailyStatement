@@ -5,7 +5,7 @@
 @section scripts{
     <script>
         $(function(){
-            var window = $("form").kendoWindow({
+            @*var window = $("form").kendoWindow({
                 draggable: true,
                 resizable: false,
                 width: 310,
@@ -13,17 +13,16 @@
                 title: "Identity",
                 actions: ["Refresh"]
 
-            });
+            });*@
         });
             
     </script>
     }
 <div class="container">
-<div class="offset4">
+<div>
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        
         <div style="width:auto;display:block;">
         <fieldset style="width:220px;margin:0 auto;">
             <div class="editor-label">
@@ -45,7 +44,6 @@
                 @Html.ValidationSummary(true)
                 <div class="span1"><a href="#">忘記密碼</a></div>
                 <div class="pull-right span1">
-
                     <button class="btn btn-primary" type="submit">登入</button>
                 </div>
             </div>

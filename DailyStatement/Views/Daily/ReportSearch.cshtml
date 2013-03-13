@@ -3,19 +3,18 @@
 }
 @section scripts
 {
-    
     <script>
         // functions
         
         // jQuery
         $(function () {
             var weeksOfMonth;
-             @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員")))
-             {
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員")))
+            {
                 @:$('#employeeId').attr('disabled', false);
-             }
+            }
 
-            var window = $("#dialog").kendoWindow({
+            @*var window = $("#dialog").kendoWindow({
                 draggable: true,
                 resizable: false,
                 width: 360,
@@ -23,10 +22,8 @@
                 title: "Query",
                 actions: ["Refresh"]
                
-            });
+            });*@
             
-            
-
             $('#months').change(function () {
                 weeksOfMonth = {};
                 var today = new Date();
@@ -38,7 +35,6 @@
                 // get first week
                 // weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
                 for (i = firstWeekEndDay, j = 1; i < daysInMonth; i = i + 7, j++) {
-                    
                     if (i + 7 > daysInMonth) {
                         if (month < 12) {
                             var nextFirstDayOfMonth = new Date(year, month, 1).getDay();
@@ -50,7 +46,6 @@
                     } else {
                         weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
                     }
-                    
                 }
                 $('#weeks').find('option').remove();
                 $.each(weeksOfMonth, function (key, value) {
@@ -74,11 +69,10 @@
             $('#months').val(today.getMonth() + 1).trigger('change');
         });
     </script>
-    }
-
+}
 
 <div class="row">
-    <div class="offset4">
+    <div>
         @using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id = "dialog" }))
         { 
             @Html.AntiForgeryToken()
@@ -116,12 +110,7 @@
                 </div>
                 </fieldset>
             </div>
-            
-            
-           
-
-}
-
+        }
     </div>
 </div>
 
