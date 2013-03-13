@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "ReportWeekForSingle";
 }
+@section scripts
+{
+    <script>
+        @if(ViewBag.TotalOfAll != 0)
+        {
+            @:$('#print').attr('disabled', false);
+        }
+    </script>
+}
 <style>
     .bg-mark {
          background:#eee;
@@ -34,7 +43,7 @@
             </thead>
             <tbody>
                 
-                @foreach(var record in Model)
+                @foreach (var record in Model)
                 {
                 <tr >
                     <td>@record.WorkName</td>
@@ -137,6 +146,13 @@
     </div>
 
     <div class="span12">
-        @Html.ActionLink("返回", "ReportSearch", null, new { @class="btn btn-small pull-right"})
+        @Html.ActionLink("返回", "ReportSearch", null, new { @class = "btn btn-small pull-right" })
+        <form action="/Daily/GenerateWeekReport" method="post">
+            <input name="employeeId" type="hidden" value="@ViewBag.EmployeeId" />
+            <input name="weekOfYear" type="hidden" value="@ViewBag.WeekNum" />
+            <input name="fromDate" type="hidden" value="@ViewBag.FromDate" />
+            <input name="toDate" type="hidden" value="@ViewBag.ToDate" />
+            <input id="print" type="submit" value="列印" class="btn btn-small pull-right" disabled="disabled" />
+        </form>
     </div>
 </div>
