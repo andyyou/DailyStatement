@@ -319,6 +319,7 @@ namespace DailyStatement.Controllers
             return View(report);
         }
 
+        [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         public ActionResult GenerateWeekReport(int employeeId, string weekOfYear, DateTime fromDate, DateTime toDate)
         {
@@ -337,7 +338,7 @@ namespace DailyStatement.Controllers
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Employees);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.Tables["Parameter"].Rows.Add(employeeId, fromDate, toDate, weekOfYear);
+                ds.ParameterForWeekRpt.Rows.Add(employeeId, fromDate, toDate, weekOfYear);
                 
                 rpt.SetDataSource(ds);
 
@@ -355,7 +356,43 @@ namespace DailyStatement.Controllers
                 //}
 
                 Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
-                string fileName = String.Format("{0}{1}{2}.pdf", employeeId, fromDate, toDate);
+                return File(stream, "application/pdf");
+            }
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
+        }
+
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult GenerateProjectReport(string projectNo = "", int WorkCategoryId = 0)
+        {
+            try
+            {
+                ReportDocument rpt = new ReportDocument();
+                rpt.Load(Server.MapPath("~/Report/ProjectReport.rpt"));
+
+                DailyStatementDS ds = new DailyStatementDS();
+
+                string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+                // Get data from DailyInfoes
+                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}') AND (({1} = 0 AND [WorkCategoryId] >= 0) OR [WorkCategoryId] = {1})", projectNo, WorkCategoryId);
+                SqlDataAdapter da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.DailyInfoes);
+                // Get data from Employees
+                condition = "SELECT * FROM [DailyStatement].[dbo].[Employees]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Employees);
+                // Get data from WorkCategories
+                condition = "SELECT * FROM [DailyStatement].[dbo].[WorkCategories]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.WorkCategories);
+                // Due to SetParameterValue always return error, so use datatable to store parameter
+                ds.ParameterForProjectRpt.Rows.Add(projectNo, WorkCategoryId);
+
+                rpt.SetDataSource(ds);
+
+                Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
                 return File(stream, "application/pdf");
             }
             catch (Exception e)
