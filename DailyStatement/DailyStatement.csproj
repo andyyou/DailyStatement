@@ -144,6 +144,12 @@
     <Compile Include="Migrations\201303080231011_AlterDailyInfo.Designer.cs">
       <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Report\ProjectReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Report\WeekReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -879,6 +885,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303080231011_AlterDailyInfo.resx">
       <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ProjectReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProjectReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\WeekReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
