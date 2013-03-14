@@ -112,6 +112,37 @@
             </div>
         }
     </div>
+
+    <div>
+        @using (Html.BeginForm("ReportForProject", "Daily", FormMethod.Post, new { id = "dialog" }))
+        { 
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div style="width:auto;display:block;">
+            <fieldset style="width:300px;margin:0 auto;">
+                
+                <div class="editor-label">
+                    Project No: 
+                </div>
+                <div class="editor-field">
+                    
+                </div>
+                <div class="editor-label">
+                    Work Category:
+                </div>
+                <div class="editor-field">
+                    
+                </div>
+                <div class="row">
+                    <div class="pull-right span2">
+                        <input type="submit" value="查詢" class="btn btn-small btn-success" />
+                        @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+        }
+    </div>
 </div>
 
 

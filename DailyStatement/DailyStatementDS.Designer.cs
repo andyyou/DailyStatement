@@ -28,9 +28,15 @@ namespace DailyStatement {
         
         private EmployeesDataTable tableEmployees;
         
-        private ParameterDataTable tableParameter;
+        private WorkCategoriesDataTable tableWorkCategories;
         
-        private global::System.Data.DataRelation relationEmployees_DailyInfoes;
+        private ParameterForWeekRptDataTable tableParameterForWeekRpt;
+        
+        private ParameterForProjectRptDataTable tableParameterForProjectRpt;
+        
+        private global::System.Data.DataRelation relationDailyInfoes_Employees;
+        
+        private global::System.Data.DataRelation relationDailyInfoes_WorkCategories;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -66,8 +72,14 @@ namespace DailyStatement {
                 if ((ds.Tables["Employees"] != null)) {
                     base.Tables.Add(new EmployeesDataTable(ds.Tables["Employees"]));
                 }
-                if ((ds.Tables["Parameter"] != null)) {
-                    base.Tables.Add(new ParameterDataTable(ds.Tables["Parameter"]));
+                if ((ds.Tables["WorkCategories"] != null)) {
+                    base.Tables.Add(new WorkCategoriesDataTable(ds.Tables["WorkCategories"]));
+                }
+                if ((ds.Tables["ParameterForWeekRpt"] != null)) {
+                    base.Tables.Add(new ParameterForWeekRptDataTable(ds.Tables["ParameterForWeekRpt"]));
+                }
+                if ((ds.Tables["ParameterForProjectRpt"] != null)) {
+                    base.Tables.Add(new ParameterForProjectRptDataTable(ds.Tables["ParameterForProjectRpt"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -111,9 +123,29 @@ namespace DailyStatement {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ParameterDataTable Parameter {
+        public WorkCategoriesDataTable WorkCategories {
             get {
-                return this.tableParameter;
+                return this.tableWorkCategories;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ParameterForWeekRptDataTable ParameterForWeekRpt {
+            get {
+                return this.tableParameterForWeekRpt;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ParameterForProjectRptDataTable ParameterForProjectRpt {
+            get {
+                return this.tableParameterForProjectRpt;
             }
         }
         
@@ -190,8 +222,14 @@ namespace DailyStatement {
                 if ((ds.Tables["Employees"] != null)) {
                     base.Tables.Add(new EmployeesDataTable(ds.Tables["Employees"]));
                 }
-                if ((ds.Tables["Parameter"] != null)) {
-                    base.Tables.Add(new ParameterDataTable(ds.Tables["Parameter"]));
+                if ((ds.Tables["WorkCategories"] != null)) {
+                    base.Tables.Add(new WorkCategoriesDataTable(ds.Tables["WorkCategories"]));
+                }
+                if ((ds.Tables["ParameterForWeekRpt"] != null)) {
+                    base.Tables.Add(new ParameterForWeekRptDataTable(ds.Tables["ParameterForWeekRpt"]));
+                }
+                if ((ds.Tables["ParameterForProjectRpt"] != null)) {
+                    base.Tables.Add(new ParameterForProjectRptDataTable(ds.Tables["ParameterForProjectRpt"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -238,13 +276,26 @@ namespace DailyStatement {
                     this.tableEmployees.InitVars();
                 }
             }
-            this.tableParameter = ((ParameterDataTable)(base.Tables["Parameter"]));
+            this.tableWorkCategories = ((WorkCategoriesDataTable)(base.Tables["WorkCategories"]));
             if ((initTable == true)) {
-                if ((this.tableParameter != null)) {
-                    this.tableParameter.InitVars();
+                if ((this.tableWorkCategories != null)) {
+                    this.tableWorkCategories.InitVars();
                 }
             }
-            this.relationEmployees_DailyInfoes = this.Relations["Employees_DailyInfoes"];
+            this.tableParameterForWeekRpt = ((ParameterForWeekRptDataTable)(base.Tables["ParameterForWeekRpt"]));
+            if ((initTable == true)) {
+                if ((this.tableParameterForWeekRpt != null)) {
+                    this.tableParameterForWeekRpt.InitVars();
+                }
+            }
+            this.tableParameterForProjectRpt = ((ParameterForProjectRptDataTable)(base.Tables["ParameterForProjectRpt"]));
+            if ((initTable == true)) {
+                if ((this.tableParameterForProjectRpt != null)) {
+                    this.tableParameterForProjectRpt.InitVars();
+                }
+            }
+            this.relationDailyInfoes_Employees = this.Relations["DailyInfoes_Employees"];
+            this.relationDailyInfoes_WorkCategories = this.Relations["DailyInfoes_WorkCategories"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -259,12 +310,20 @@ namespace DailyStatement {
             base.Tables.Add(this.tableDailyInfoes);
             this.tableEmployees = new EmployeesDataTable();
             base.Tables.Add(this.tableEmployees);
-            this.tableParameter = new ParameterDataTable();
-            base.Tables.Add(this.tableParameter);
-            this.relationEmployees_DailyInfoes = new global::System.Data.DataRelation("Employees_DailyInfoes", new global::System.Data.DataColumn[] {
-                        this.tableEmployees.EmployeeIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDailyInfoes.EmployeeIdColumn}, false);
-            this.Relations.Add(this.relationEmployees_DailyInfoes);
+            this.tableWorkCategories = new WorkCategoriesDataTable();
+            base.Tables.Add(this.tableWorkCategories);
+            this.tableParameterForWeekRpt = new ParameterForWeekRptDataTable();
+            base.Tables.Add(this.tableParameterForWeekRpt);
+            this.tableParameterForProjectRpt = new ParameterForProjectRptDataTable();
+            base.Tables.Add(this.tableParameterForProjectRpt);
+            this.relationDailyInfoes_Employees = new global::System.Data.DataRelation("DailyInfoes_Employees", new global::System.Data.DataColumn[] {
+                        this.tableDailyInfoes.EmployeeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableEmployees.EmployeeIdColumn}, false);
+            this.Relations.Add(this.relationDailyInfoes_Employees);
+            this.relationDailyInfoes_WorkCategories = new global::System.Data.DataRelation("DailyInfoes_WorkCategories", new global::System.Data.DataColumn[] {
+                        this.tableDailyInfoes.WorkCategoryIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableWorkCategories.WorkCategoryIdColumn}, false);
+            this.Relations.Add(this.relationDailyInfoes_WorkCategories);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -281,7 +340,19 @@ namespace DailyStatement {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeParameter() {
+        private bool ShouldSerializeWorkCategories() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeParameterForWeekRpt() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeParameterForProjectRpt() {
             return false;
         }
         
@@ -347,7 +418,13 @@ namespace DailyStatement {
         public delegate void EmployeesRowChangeEventHandler(object sender, EmployeesRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void ParameterRowChangeEventHandler(object sender, ParameterRowChangeEvent e);
+        public delegate void WorkCategoriesRowChangeEventHandler(object sender, WorkCategoriesRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void ParameterForWeekRptRowChangeEventHandler(object sender, ParameterForWeekRptRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void ParameterForProjectRptRowChangeEventHandler(object sender, ParameterForProjectRptRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -516,7 +593,7 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyInfoesRow AddDailyInfoesRow(int DailyInfoId, string ProjectNo, string Customer, System.DateTime CreateDate, int WorkingHours, byte[] RowVersion, int WorkCategoryId, EmployeesRow parentEmployeesRowByEmployees_DailyInfoes, string WorkContent) {
+            public DailyInfoesRow AddDailyInfoesRow(int DailyInfoId, string ProjectNo, string Customer, System.DateTime CreateDate, int WorkingHours, byte[] RowVersion, int WorkCategoryId, int EmployeeId, string WorkContent) {
                 DailyInfoesRow rowDailyInfoesRow = ((DailyInfoesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DailyInfoId,
@@ -526,11 +603,8 @@ namespace DailyStatement {
                         WorkingHours,
                         RowVersion,
                         WorkCategoryId,
-                        null,
+                        EmployeeId,
                         WorkContent};
-                if ((parentEmployeesRowByEmployees_DailyInfoes != null)) {
-                    columnValuesArray[7] = parentEmployeesRowByEmployees_DailyInfoes[0];
-                }
                 rowDailyInfoesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDailyInfoesRow);
                 return rowDailyInfoesRow;
@@ -909,10 +983,10 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EmployeesRow AddEmployeesRow(int EmployeeId, string Account, string Password, System.DateTime CreateDate, System.DateTime LastLoginDate, string Name, string Email, bool RecvNotify, bool Activity, byte[] RowVersion, int RankId) {
+            public EmployeesRow AddEmployeesRow(DailyInfoesRow parentDailyInfoesRowByDailyInfoes_Employees, string Account, string Password, System.DateTime CreateDate, System.DateTime LastLoginDate, string Name, string Email, bool RecvNotify, bool Activity, byte[] RowVersion, int RankId) {
                 EmployeesRow rowEmployeesRow = ((EmployeesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        EmployeeId,
+                        null,
                         Account,
                         Password,
                         CreateDate,
@@ -923,6 +997,9 @@ namespace DailyStatement {
                         Activity,
                         RowVersion,
                         RankId};
+                if ((parentDailyInfoesRowByDailyInfoes_Employees != null)) {
+                    columnValuesArray[0] = parentDailyInfoesRowByDailyInfoes_Employees[7];
+                }
                 rowEmployeesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEmployeesRow);
                 return rowEmployeesRow;
@@ -1127,20 +1204,16 @@ namespace DailyStatement {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ParameterDataTable : global::System.Data.TypedTableBase<ParameterRow> {
+        public partial class WorkCategoriesDataTable : global::System.Data.TypedTableBase<WorkCategoriesRow> {
             
-            private global::System.Data.DataColumn columnEmployeeId;
+            private global::System.Data.DataColumn columnWorkCategoryId;
             
-            private global::System.Data.DataColumn columnFromDate;
-            
-            private global::System.Data.DataColumn columnToDate;
-            
-            private global::System.Data.DataColumn columnWeekOfYear;
+            private global::System.Data.DataColumn columnName;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterDataTable() {
-                this.TableName = "Parameter";
+            public WorkCategoriesDataTable() {
+                this.TableName = "WorkCategories";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -1148,7 +1221,7 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ParameterDataTable(global::System.Data.DataTable table) {
+            internal WorkCategoriesDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -1165,7 +1238,280 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected ParameterDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected WorkCategoriesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WorkCategoryIdColumn {
+                get {
+                    return this.columnWorkCategoryId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NameColumn {
+                get {
+                    return this.columnName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public WorkCategoriesRow this[int index] {
+                get {
+                    return ((WorkCategoriesRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event WorkCategoriesRowChangeEventHandler WorkCategoriesRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event WorkCategoriesRowChangeEventHandler WorkCategoriesRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event WorkCategoriesRowChangeEventHandler WorkCategoriesRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event WorkCategoriesRowChangeEventHandler WorkCategoriesRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddWorkCategoriesRow(WorkCategoriesRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public WorkCategoriesRow AddWorkCategoriesRow(DailyInfoesRow parentDailyInfoesRowByDailyInfoes_WorkCategories, string Name) {
+                WorkCategoriesRow rowWorkCategoriesRow = ((WorkCategoriesRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Name};
+                if ((parentDailyInfoesRowByDailyInfoes_WorkCategories != null)) {
+                    columnValuesArray[0] = parentDailyInfoesRowByDailyInfoes_WorkCategories[6];
+                }
+                rowWorkCategoriesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowWorkCategoriesRow);
+                return rowWorkCategoriesRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                WorkCategoriesDataTable cln = ((WorkCategoriesDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new WorkCategoriesDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnWorkCategoryId = base.Columns["WorkCategoryId"];
+                this.columnName = base.Columns["Name"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnWorkCategoryId = new global::System.Data.DataColumn("WorkCategoryId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWorkCategoryId);
+                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnName);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnWorkCategoryId}, false));
+                this.columnWorkCategoryId.AllowDBNull = false;
+                this.columnWorkCategoryId.Unique = true;
+                this.columnName.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public WorkCategoriesRow NewWorkCategoriesRow() {
+                return ((WorkCategoriesRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new WorkCategoriesRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(WorkCategoriesRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.WorkCategoriesRowChanged != null)) {
+                    this.WorkCategoriesRowChanged(this, new WorkCategoriesRowChangeEvent(((WorkCategoriesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.WorkCategoriesRowChanging != null)) {
+                    this.WorkCategoriesRowChanging(this, new WorkCategoriesRowChangeEvent(((WorkCategoriesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.WorkCategoriesRowDeleted != null)) {
+                    this.WorkCategoriesRowDeleted(this, new WorkCategoriesRowChangeEvent(((WorkCategoriesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.WorkCategoriesRowDeleting != null)) {
+                    this.WorkCategoriesRowDeleting(this, new WorkCategoriesRowChangeEvent(((WorkCategoriesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveWorkCategoriesRow(WorkCategoriesRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DailyStatementDS ds = new DailyStatementDS();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "WorkCategoriesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class ParameterForWeekRptDataTable : global::System.Data.TypedTableBase<ParameterForWeekRptRow> {
+            
+            private global::System.Data.DataColumn columnEmployeeId;
+            
+            private global::System.Data.DataColumn columnFromDate;
+            
+            private global::System.Data.DataColumn columnToDate;
+            
+            private global::System.Data.DataColumn columnWeekOfYear;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForWeekRptDataTable() {
+                this.TableName = "ParameterForWeekRpt";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ParameterForWeekRptDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected ParameterForWeekRptDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -1213,48 +1559,48 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterRow this[int index] {
+            public ParameterForWeekRptRow this[int index] {
                 get {
-                    return ((ParameterRow)(this.Rows[index]));
+                    return ((ParameterForWeekRptRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ParameterRowChangeEventHandler ParameterRowChanging;
+            public event ParameterForWeekRptRowChangeEventHandler ParameterForWeekRptRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ParameterRowChangeEventHandler ParameterRowChanged;
+            public event ParameterForWeekRptRowChangeEventHandler ParameterForWeekRptRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ParameterRowChangeEventHandler ParameterRowDeleting;
+            public event ParameterForWeekRptRowChangeEventHandler ParameterForWeekRptRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ParameterRowChangeEventHandler ParameterRowDeleted;
+            public event ParameterForWeekRptRowChangeEventHandler ParameterForWeekRptRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddParameterRow(ParameterRow row) {
+            public void AddParameterForWeekRptRow(ParameterForWeekRptRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterRow AddParameterRow(int EmployeeId, System.DateTime FromDate, System.DateTime ToDate, string WeekOfYear) {
-                ParameterRow rowParameterRow = ((ParameterRow)(this.NewRow()));
+            public ParameterForWeekRptRow AddParameterForWeekRptRow(int EmployeeId, System.DateTime FromDate, System.DateTime ToDate, string WeekOfYear) {
+                ParameterForWeekRptRow rowParameterForWeekRptRow = ((ParameterForWeekRptRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         EmployeeId,
                         FromDate,
                         ToDate,
                         WeekOfYear};
-                rowParameterRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowParameterRow);
-                return rowParameterRow;
+                rowParameterForWeekRptRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowParameterForWeekRptRow);
+                return rowParameterForWeekRptRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                ParameterDataTable cln = ((ParameterDataTable)(base.Clone()));
+                ParameterForWeekRptDataTable cln = ((ParameterForWeekRptDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1262,7 +1608,7 @@ namespace DailyStatement {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new ParameterDataTable();
+                return new ParameterForWeekRptDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1289,28 +1635,28 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterRow NewParameterRow() {
-                return ((ParameterRow)(this.NewRow()));
+            public ParameterForWeekRptRow NewParameterForWeekRptRow() {
+                return ((ParameterForWeekRptRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new ParameterRow(builder);
+                return new ParameterForWeekRptRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(ParameterRow);
+                return typeof(ParameterForWeekRptRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.ParameterRowChanged != null)) {
-                    this.ParameterRowChanged(this, new ParameterRowChangeEvent(((ParameterRow)(e.Row)), e.Action));
+                if ((this.ParameterForWeekRptRowChanged != null)) {
+                    this.ParameterForWeekRptRowChanged(this, new ParameterForWeekRptRowChangeEvent(((ParameterForWeekRptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1318,8 +1664,8 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.ParameterRowChanging != null)) {
-                    this.ParameterRowChanging(this, new ParameterRowChangeEvent(((ParameterRow)(e.Row)), e.Action));
+                if ((this.ParameterForWeekRptRowChanging != null)) {
+                    this.ParameterForWeekRptRowChanging(this, new ParameterForWeekRptRowChangeEvent(((ParameterForWeekRptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1327,8 +1673,8 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.ParameterRowDeleted != null)) {
-                    this.ParameterRowDeleted(this, new ParameterRowChangeEvent(((ParameterRow)(e.Row)), e.Action));
+                if ((this.ParameterForWeekRptRowDeleted != null)) {
+                    this.ParameterForWeekRptRowDeleted(this, new ParameterForWeekRptRowChangeEvent(((ParameterForWeekRptRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1336,14 +1682,14 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.ParameterRowDeleting != null)) {
-                    this.ParameterRowDeleting(this, new ParameterRowChangeEvent(((ParameterRow)(e.Row)), e.Action));
+                if ((this.ParameterForWeekRptRowDeleting != null)) {
+                    this.ParameterForWeekRptRowDeleting(this, new ParameterForWeekRptRowChangeEvent(((ParameterForWeekRptRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveParameterRow(ParameterRow row) {
+            public void RemoveParameterForWeekRptRow(ParameterForWeekRptRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -1370,7 +1716,268 @@ namespace DailyStatement {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "ParameterDataTable";
+                attribute2.FixedValue = "ParameterForWeekRptDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class ParameterForProjectRptDataTable : global::System.Data.TypedTableBase<ParameterForProjectRptRow> {
+            
+            private global::System.Data.DataColumn columnProjectNo;
+            
+            private global::System.Data.DataColumn columnWorkCategoryId;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptDataTable() {
+                this.TableName = "ParameterForProjectRpt";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ParameterForProjectRptDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected ParameterForProjectRptDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProjectNoColumn {
+                get {
+                    return this.columnProjectNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WorkCategoryIdColumn {
+                get {
+                    return this.columnWorkCategoryId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptRow this[int index] {
+                get {
+                    return ((ParameterForProjectRptRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ParameterForProjectRptRowChangeEventHandler ParameterForProjectRptRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ParameterForProjectRptRowChangeEventHandler ParameterForProjectRptRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ParameterForProjectRptRowChangeEventHandler ParameterForProjectRptRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ParameterForProjectRptRowChangeEventHandler ParameterForProjectRptRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddParameterForProjectRptRow(ParameterForProjectRptRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptRow AddParameterForProjectRptRow(string ProjectNo, int WorkCategoryId) {
+                ParameterForProjectRptRow rowParameterForProjectRptRow = ((ParameterForProjectRptRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        ProjectNo,
+                        WorkCategoryId};
+                rowParameterForProjectRptRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowParameterForProjectRptRow);
+                return rowParameterForProjectRptRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                ParameterForProjectRptDataTable cln = ((ParameterForProjectRptDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new ParameterForProjectRptDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnProjectNo = base.Columns["ProjectNo"];
+                this.columnWorkCategoryId = base.Columns["WorkCategoryId"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnProjectNo = new global::System.Data.DataColumn("ProjectNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProjectNo);
+                this.columnWorkCategoryId = new global::System.Data.DataColumn("WorkCategoryId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWorkCategoryId);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptRow NewParameterForProjectRptRow() {
+                return ((ParameterForProjectRptRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new ParameterForProjectRptRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(ParameterForProjectRptRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ParameterForProjectRptRowChanged != null)) {
+                    this.ParameterForProjectRptRowChanged(this, new ParameterForProjectRptRowChangeEvent(((ParameterForProjectRptRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ParameterForProjectRptRowChanging != null)) {
+                    this.ParameterForProjectRptRowChanging(this, new ParameterForProjectRptRowChangeEvent(((ParameterForProjectRptRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ParameterForProjectRptRowDeleted != null)) {
+                    this.ParameterForProjectRptRowDeleted(this, new ParameterForProjectRptRowChangeEvent(((ParameterForProjectRptRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ParameterForProjectRptRowDeleting != null)) {
+                    this.ParameterForProjectRptRowDeleting(this, new ParameterForProjectRptRowChangeEvent(((ParameterForProjectRptRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveParameterForProjectRptRow(ParameterForProjectRptRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DailyStatementDS ds = new DailyStatementDS();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "ParameterForProjectRptDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1531,17 +2138,6 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EmployeesRow EmployeesRow {
-                get {
-                    return ((EmployeesRow)(this.GetParentRow(this.Table.ParentRelations["Employees_DailyInfoes"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["Employees_DailyInfoes"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsWorkCategoryIdNull() {
                 return this.IsNull(this.tableDailyInfoes.WorkCategoryIdColumn);
             }
@@ -1550,6 +2146,28 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetWorkCategoryIdNull() {
                 this[this.tableDailyInfoes.WorkCategoryIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public EmployeesRow[] GetEmployeesRows() {
+                if ((this.Table.ChildRelations["DailyInfoes_Employees"] == null)) {
+                    return new EmployeesRow[0];
+                }
+                else {
+                    return ((EmployeesRow[])(base.GetChildRows(this.Table.ChildRelations["DailyInfoes_Employees"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public WorkCategoriesRow[] GetWorkCategoriesRows() {
+                if ((this.Table.ChildRelations["DailyInfoes_WorkCategories"] == null)) {
+                    return new WorkCategoriesRow[0];
+                }
+                else {
+                    return ((WorkCategoriesRow[])(base.GetChildRows(this.Table.ChildRelations["DailyInfoes_WorkCategories"])));
+                }
             }
         }
         
@@ -1695,6 +2313,17 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public DailyInfoesRow DailyInfoesRow {
+                get {
+                    return ((DailyInfoesRow)(this.GetParentRow(this.Table.ParentRelations["DailyInfoes_Employees"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["DailyInfoes_Employees"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsLastLoginDateNull() {
                 return this.IsNull(this.tableEmployees.LastLoginDateColumn);
             }
@@ -1704,15 +2333,52 @@ namespace DailyStatement {
             public void SetLastLoginDateNull() {
                 this[this.tableEmployees.LastLoginDateColumn] = global::System.Convert.DBNull;
             }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class WorkCategoriesRow : global::System.Data.DataRow {
+            
+            private WorkCategoriesDataTable tableWorkCategories;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyInfoesRow[] GetDailyInfoesRows() {
-                if ((this.Table.ChildRelations["Employees_DailyInfoes"] == null)) {
-                    return new DailyInfoesRow[0];
+            internal WorkCategoriesRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableWorkCategories = ((WorkCategoriesDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int WorkCategoryId {
+                get {
+                    return ((int)(this[this.tableWorkCategories.WorkCategoryIdColumn]));
                 }
-                else {
-                    return ((DailyInfoesRow[])(base.GetChildRows(this.Table.ChildRelations["Employees_DailyInfoes"])));
+                set {
+                    this[this.tableWorkCategories.WorkCategoryIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Name {
+                get {
+                    return ((string)(this[this.tableWorkCategories.NameColumn]));
+                }
+                set {
+                    this[this.tableWorkCategories.NameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public DailyInfoesRow DailyInfoesRow {
+                get {
+                    return ((DailyInfoesRow)(this.GetParentRow(this.Table.ParentRelations["DailyInfoes_WorkCategories"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["DailyInfoes_WorkCategories"]);
                 }
             }
         }
@@ -1720,15 +2386,15 @@ namespace DailyStatement {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class ParameterRow : global::System.Data.DataRow {
+        public partial class ParameterForWeekRptRow : global::System.Data.DataRow {
             
-            private ParameterDataTable tableParameter;
+            private ParameterForWeekRptDataTable tableParameterForWeekRpt;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ParameterRow(global::System.Data.DataRowBuilder rb) : 
+            internal ParameterForWeekRptRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableParameter = ((ParameterDataTable)(this.Table));
+                this.tableParameterForWeekRpt = ((ParameterForWeekRptDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1736,14 +2402,14 @@ namespace DailyStatement {
             public int EmployeeId {
                 get {
                     try {
-                        return ((int)(this[this.tableParameter.EmployeeIdColumn]));
+                        return ((int)(this[this.tableParameterForWeekRpt.EmployeeIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Parameter\' 中資料行 \'EmployeeId\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForWeekRpt\' 中資料行 \'EmployeeId\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableParameter.EmployeeIdColumn] = value;
+                    this[this.tableParameterForWeekRpt.EmployeeIdColumn] = value;
                 }
             }
             
@@ -1752,14 +2418,14 @@ namespace DailyStatement {
             public System.DateTime FromDate {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableParameter.FromDateColumn]));
+                        return ((global::System.DateTime)(this[this.tableParameterForWeekRpt.FromDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Parameter\' 中資料行 \'FromDate\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForWeekRpt\' 中資料行 \'FromDate\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableParameter.FromDateColumn] = value;
+                    this[this.tableParameterForWeekRpt.FromDateColumn] = value;
                 }
             }
             
@@ -1768,14 +2434,14 @@ namespace DailyStatement {
             public System.DateTime ToDate {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableParameter.ToDateColumn]));
+                        return ((global::System.DateTime)(this[this.tableParameterForWeekRpt.ToDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Parameter\' 中資料行 \'ToDate\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForWeekRpt\' 中資料行 \'ToDate\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableParameter.ToDateColumn] = value;
+                    this[this.tableParameterForWeekRpt.ToDateColumn] = value;
                 }
             }
             
@@ -1784,63 +2450,134 @@ namespace DailyStatement {
             public string WeekOfYear {
                 get {
                     try {
-                        return ((string)(this[this.tableParameter.WeekOfYearColumn]));
+                        return ((string)(this[this.tableParameterForWeekRpt.WeekOfYearColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Parameter\' 中資料行 \'WeekOfYear\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForWeekRpt\' 中資料行 \'WeekOfYear\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableParameter.WeekOfYearColumn] = value;
+                    this[this.tableParameterForWeekRpt.WeekOfYearColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsEmployeeIdNull() {
-                return this.IsNull(this.tableParameter.EmployeeIdColumn);
+                return this.IsNull(this.tableParameterForWeekRpt.EmployeeIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetEmployeeIdNull() {
-                this[this.tableParameter.EmployeeIdColumn] = global::System.Convert.DBNull;
+                this[this.tableParameterForWeekRpt.EmployeeIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFromDateNull() {
-                return this.IsNull(this.tableParameter.FromDateColumn);
+                return this.IsNull(this.tableParameterForWeekRpt.FromDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFromDateNull() {
-                this[this.tableParameter.FromDateColumn] = global::System.Convert.DBNull;
+                this[this.tableParameterForWeekRpt.FromDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsToDateNull() {
-                return this.IsNull(this.tableParameter.ToDateColumn);
+                return this.IsNull(this.tableParameterForWeekRpt.ToDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetToDateNull() {
-                this[this.tableParameter.ToDateColumn] = global::System.Convert.DBNull;
+                this[this.tableParameterForWeekRpt.ToDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsWeekOfYearNull() {
-                return this.IsNull(this.tableParameter.WeekOfYearColumn);
+                return this.IsNull(this.tableParameterForWeekRpt.WeekOfYearColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetWeekOfYearNull() {
-                this[this.tableParameter.WeekOfYearColumn] = global::System.Convert.DBNull;
+                this[this.tableParameterForWeekRpt.WeekOfYearColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class ParameterForProjectRptRow : global::System.Data.DataRow {
+            
+            private ParameterForProjectRptDataTable tableParameterForProjectRpt;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ParameterForProjectRptRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableParameterForProjectRpt = ((ParameterForProjectRptDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ProjectNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableParameterForProjectRpt.ProjectNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForProjectRpt\' 中資料行 \'ProjectNo\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableParameterForProjectRpt.ProjectNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int WorkCategoryId {
+                get {
+                    try {
+                        return ((int)(this[this.tableParameterForProjectRpt.WorkCategoryIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForProjectRpt\' 中資料行 \'WorkCategoryId\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableParameterForProjectRpt.WorkCategoryIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProjectNoNull() {
+                return this.IsNull(this.tableParameterForProjectRpt.ProjectNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProjectNoNull() {
+                this[this.tableParameterForProjectRpt.ProjectNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWorkCategoryIdNull() {
+                return this.IsNull(this.tableParameterForProjectRpt.WorkCategoryIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWorkCategoryIdNull() {
+                this[this.tableParameterForProjectRpt.WorkCategoryIdColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1916,22 +2653,90 @@ namespace DailyStatement {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class ParameterRowChangeEvent : global::System.EventArgs {
+        public class WorkCategoriesRowChangeEvent : global::System.EventArgs {
             
-            private ParameterRow eventRow;
+            private WorkCategoriesRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterRowChangeEvent(ParameterRow row, global::System.Data.DataRowAction action) {
+            public WorkCategoriesRowChangeEvent(WorkCategoriesRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterRow Row {
+            public WorkCategoriesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class ParameterForWeekRptRowChangeEvent : global::System.EventArgs {
+            
+            private ParameterForWeekRptRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForWeekRptRowChangeEvent(ParameterForWeekRptRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForWeekRptRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class ParameterForProjectRptRowChangeEvent : global::System.EventArgs {
+            
+            private ParameterForProjectRptRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptRowChangeEvent(ParameterForProjectRptRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ParameterForProjectRptRow Row {
                 get {
                     return this.eventRow;
                 }
