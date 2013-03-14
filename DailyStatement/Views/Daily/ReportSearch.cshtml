@@ -9,7 +9,7 @@
         // jQuery
         $(function () {
             var weeksOfMonth;
-            @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員")))
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員") || User.IsInRole("助理")))
             {
                 @:$('#employeeId').attr('disabled', false);
             }
