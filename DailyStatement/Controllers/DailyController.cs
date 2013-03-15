@@ -368,6 +368,7 @@ namespace DailyStatement.Controllers
             }
         }
 
+        [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
         public ActionResult GenerateProjectReport(string projectNo = "", int workCategoryId = 0)
         {

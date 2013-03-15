@@ -32,7 +32,14 @@ namespace DailyStatement.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Daily");
+                    if (String.IsNullOrEmpty(returnUrl))
+                    {
+                        return RedirectToAction("Index", "Daily");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
                 }
             }
 
@@ -51,16 +58,16 @@ namespace DailyStatement.Controllers
             {
                 FormsAuthentication.SetAuthCookie(account, false);
 
-                return RedirectToAction("Index", "Daily");
+                //return RedirectToAction("Index", "Daily");
 
-                //if (String.IsNullOrEmpty(returnUrl))
-                //{
-                //    return RedirectToAction("Index", "Daily");
-                //}
-                //else
-                //{
-                //    return RedirectToAction(returnUrl);
-                //}
+                if (String.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction("Index", "Daily");
+                }
+                else
+                {
+                    return Redirect(returnUrl);
+                }
             }
 
             return View();
