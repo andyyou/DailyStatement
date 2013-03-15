@@ -161,15 +161,22 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult Edit(int DailyInfoId, string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
+        public ActionResult Edit(int DailyInfoId, string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList, byte[] RowVersion)
         {
-            DailyInfo dailyinfo = db.Dailies.Where(d => d.DailyInfoId == DailyInfoId).FirstOrDefault();
+            DailyInfo dailyinfo = db.Dailies.Where(d => d.DailyInfoId == DailyInfoId && d.RowVersion == RowVersion).FirstOrDefault();
+            
+            if (dailyinfo == null)
+            {
+                return View("Error");
+            };
+            
             dailyinfo.ProjectNo = ProjectNo;
             dailyinfo.WorkCategoryId = WorkCategoryId;
             dailyinfo.Customer = Customer;
             dailyinfo.WorkContent = WorkContent;
             dailyinfo.CreateDate = CreateDate;
             dailyinfo.WorkingHours = WorkingHours;
+            
             if (EmployeeList != null)
             {
                 dailyinfo.EmployeeId = Convert.ToInt32(EmployeeList);
