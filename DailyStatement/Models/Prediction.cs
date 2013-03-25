@@ -14,7 +14,7 @@ namespace DailyStatement.Models
 
         [ConcurrencyCheck]
         [DisplayName("工作類別")]
-        public WorkCategory WorkCategory { get; set; }
+        public virtual WorkCategory WorkCategory { get; set; }
 
         [DisplayName("預測工時")]
         public int PredictHours { get; set; }

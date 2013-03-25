@@ -11,7 +11,7 @@ namespace DailyStatement.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201303250200330_AddProjectModel"; }
+            get { return "201303250211552_AddProjectModel"; }
         }
         
         string IMigrationMetadata.Source
