@@ -413,6 +413,40 @@ namespace DailyStatement.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult GenerateProjectSummaryReport(string projectNo = "")
+        {
+            try
+            {
+                ReportDocument rpt = new ReportDocument();
+                rpt.Load(Server.MapPath("~/Report/ProjectSummaryReport.rpt"));
+
+                DailyStatementDS ds = new DailyStatementDS();
+
+                string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+                // Get data from DailyInfoes
+                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE [ProjectNo] = '{0}'", projectNo);
+                SqlDataAdapter da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.DailyInfoes);
+                // Get data from WorkCategories
+                condition = "SELECT * FROM [DailyStatement].[dbo].[WorkCategories]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.WorkCategories);
+                // Due to SetParameterValue always return error, so use datatable to store parameter
+                ds.ParameterForProjectRpt.Rows.Add(projectNo);
+
+                rpt.SetDataSource(ds);
+
+                Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+                return File(stream, "application/pdf");
+            }
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
+        }
+
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         protected override void Dispose(bool disposing)
         {
