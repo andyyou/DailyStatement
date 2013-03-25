@@ -413,7 +413,7 @@ namespace DailyStatement.Controllers
             }
         }
 
-        [HttpPost]
+        //[HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
         public ActionResult GenerateProjectSummaryReport(string projectNo = "")
         {
@@ -434,7 +434,7 @@ namespace DailyStatement.Controllers
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForProjectRpt.Rows.Add(projectNo);
+                ds.ParameterForProjectRpt.Rows.Add(projectNo, "");
 
                 rpt.SetDataSource(ds);
 

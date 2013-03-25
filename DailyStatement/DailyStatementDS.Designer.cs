@@ -2087,6 +2087,8 @@ namespace DailyStatement {
             
             private global::System.Data.DataColumn columnRowVersion;
             
+            private global::System.Data.DataColumn columnCustomerName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ProjectsDataTable() {
@@ -2170,6 +2172,14 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CustomerNameColumn {
+                get {
+                    return this.columnCustomerName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2205,7 +2215,7 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ProjectsRow AddProjectsRow(int ProjectId, string ProjectNo, string Comment, System.DateTime StartOn, System.DateTime EndOn, byte[] RowVersion) {
+            public ProjectsRow AddProjectsRow(int ProjectId, string ProjectNo, string Comment, System.DateTime StartOn, System.DateTime EndOn, byte[] RowVersion, string CustomerName) {
                 ProjectsRow rowProjectsRow = ((ProjectsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ProjectId,
@@ -2213,7 +2223,8 @@ namespace DailyStatement {
                         Comment,
                         StartOn,
                         EndOn,
-                        RowVersion};
+                        RowVersion,
+                        CustomerName};
                 rowProjectsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowProjectsRow);
                 return rowProjectsRow;
@@ -2242,6 +2253,7 @@ namespace DailyStatement {
                 this.columnStartOn = base.Columns["StartOn"];
                 this.columnEndOn = base.Columns["EndOn"];
                 this.columnRowVersion = base.Columns["RowVersion"];
+                this.columnCustomerName = base.Columns["CustomerName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2259,6 +2271,8 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnEndOn);
                 this.columnRowVersion = new global::System.Data.DataColumn("RowVersion", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRowVersion);
+                this.columnCustomerName = new global::System.Data.DataColumn("CustomerName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCustomerName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnProjectId}, false));
                 this.columnProjectId.Unique = true;
@@ -3308,6 +3322,22 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CustomerName {
+                get {
+                    try {
+                        return ((string)(this[this.tableProjects.CustomerNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'CustomerName\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableProjects.CustomerNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsProjectIdNull() {
                 return this.IsNull(this.tableProjects.ProjectIdColumn);
             }
@@ -3376,6 +3406,18 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRowVersionNull() {
                 this[this.tableProjects.RowVersionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCustomerNameNull() {
+                return this.IsNull(this.tableProjects.CustomerNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCustomerNameNull() {
+                this[this.tableProjects.CustomerNameColumn] = global::System.Convert.DBNull;
             }
         }
         
