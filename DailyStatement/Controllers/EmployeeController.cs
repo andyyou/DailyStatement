@@ -32,7 +32,14 @@ namespace DailyStatement.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Daily");
+                    if (String.IsNullOrEmpty(returnUrl))
+                    {
+                        return RedirectToAction("Index", "Daily");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
                 }
             }
 
@@ -51,16 +58,16 @@ namespace DailyStatement.Controllers
             {
                 FormsAuthentication.SetAuthCookie(account, false);
 
-                return RedirectToAction("Index", "Daily");
+                //return RedirectToAction("Index", "Daily");
 
-                //if (String.IsNullOrEmpty(returnUrl))
-                //{
-                //    return RedirectToAction("Index", "Daily");
-                //}
-                //else
-                //{
-                //    return RedirectToAction(returnUrl);
-                //}
+                if (String.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction("Index", "Daily");
+                }
+                else
+                {
+                    return Redirect(returnUrl);
+                }
             }
 
             return View();
@@ -128,9 +135,15 @@ namespace DailyStatement.Controllers
         // 執行編輯帳號
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, bool RecvNotify, bool Activity)
+        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, bool RecvNotify, bool Activity, byte[] RowVersion)
         {
-            Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
+            Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId && e.RowVersion == RowVersion).FirstOrDefault();
+
+            if (employee == null)
+            {
+                return View("Error");
+            };
+
             employee.Name = Name;
             employee.Email = Email;
             employee.RankId = RankId;
@@ -143,6 +156,7 @@ namespace DailyStatement.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(employee);
         }
 
