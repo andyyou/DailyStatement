@@ -2083,11 +2083,11 @@ namespace DailyStatement {
             
             private global::System.Data.DataColumn columnStartOn;
             
-            private global::System.Data.DataColumn columnEndOn;
-            
             private global::System.Data.DataColumn columnRowVersion;
             
             private global::System.Data.DataColumn columnCustomerName;
+            
+            private global::System.Data.DataColumn columnIsClosed;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -2156,14 +2156,6 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EndOnColumn {
-                get {
-                    return this.columnEndOn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn RowVersionColumn {
                 get {
                     return this.columnRowVersion;
@@ -2175,6 +2167,14 @@ namespace DailyStatement {
             public global::System.Data.DataColumn CustomerNameColumn {
                 get {
                     return this.columnCustomerName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IsClosedColumn {
+                get {
+                    return this.columnIsClosed;
                 }
             }
             
@@ -2215,16 +2215,16 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ProjectsRow AddProjectsRow(int ProjectId, string ProjectNo, string Comment, System.DateTime StartOn, System.DateTime EndOn, byte[] RowVersion, string CustomerName) {
+            public ProjectsRow AddProjectsRow(int ProjectId, string ProjectNo, string Comment, System.DateTime StartOn, byte[] RowVersion, string CustomerName, bool IsClosed) {
                 ProjectsRow rowProjectsRow = ((ProjectsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ProjectId,
                         ProjectNo,
                         Comment,
                         StartOn,
-                        EndOn,
                         RowVersion,
-                        CustomerName};
+                        CustomerName,
+                        IsClosed};
                 rowProjectsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowProjectsRow);
                 return rowProjectsRow;
@@ -2251,9 +2251,9 @@ namespace DailyStatement {
                 this.columnProjectNo = base.Columns["ProjectNo"];
                 this.columnComment = base.Columns["Comment"];
                 this.columnStartOn = base.Columns["StartOn"];
-                this.columnEndOn = base.Columns["EndOn"];
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnCustomerName = base.Columns["CustomerName"];
+                this.columnIsClosed = base.Columns["IsClosed"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2267,12 +2267,12 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnComment);
                 this.columnStartOn = new global::System.Data.DataColumn("StartOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStartOn);
-                this.columnEndOn = new global::System.Data.DataColumn("EndOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEndOn);
                 this.columnRowVersion = new global::System.Data.DataColumn("RowVersion", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRowVersion);
                 this.columnCustomerName = new global::System.Data.DataColumn("CustomerName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCustomerName);
+                this.columnIsClosed = new global::System.Data.DataColumn("IsClosed", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsClosed);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnProjectId}, false));
                 this.columnProjectId.Unique = true;
@@ -3290,22 +3290,6 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime EndOn {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableProjects.EndOnColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'EndOn\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tableProjects.EndOnColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public byte[] RowVersion {
                 get {
                     try {
@@ -3333,6 +3317,22 @@ namespace DailyStatement {
                 }
                 set {
                     this[this.tableProjects.CustomerNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsClosed {
+                get {
+                    try {
+                        return ((bool)(this[this.tableProjects.IsClosedColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'IsClosed\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableProjects.IsClosedColumn] = value;
                 }
             }
             
@@ -3386,18 +3386,6 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEndOnNull() {
-                return this.IsNull(this.tableProjects.EndOnColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEndOnNull() {
-                this[this.tableProjects.EndOnColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsRowVersionNull() {
                 return this.IsNull(this.tableProjects.RowVersionColumn);
             }
@@ -3418,6 +3406,18 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCustomerNameNull() {
                 this[this.tableProjects.CustomerNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsIsClosedNull() {
+                return this.IsNull(this.tableProjects.IsClosedColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetIsClosedNull() {
+                this[this.tableProjects.IsClosedColumn] = global::System.Convert.DBNull;
             }
         }
         
