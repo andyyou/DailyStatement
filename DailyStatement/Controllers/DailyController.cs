@@ -426,15 +426,23 @@ namespace DailyStatement.Controllers
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE [ProjectNo] = '{0}'", projectNo);
+                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}')", projectNo);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from WorkCategories
                 condition = "SELECT * FROM [DailyStatement].[dbo].[WorkCategories]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
+                // Get data from Projects
+                condition = "SELECT * FROM [DailyStatement].[dbo].[Projects]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Projects);
+                // Get data from Predictions
+                condition = "SELECT * FROM [DailyStatement].[dbo].[Predictions]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Predictions);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForProjectRpt.Rows.Add(projectNo, "");
+                ds.ParameterForProjectRpt.Rows.Add(projectNo, null);
 
                 rpt.SetDataSource(ds);
 
