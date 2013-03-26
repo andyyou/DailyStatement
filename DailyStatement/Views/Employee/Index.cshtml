@@ -34,6 +34,7 @@
                             Name: { type: 'string' },
                             Email: { type: 'string' },
                             Rank: { type: 'string' },
+                            Company: { type: 'string' },
                             RecvNotify: { type: 'boolean' },
                             Activity: { type: 'boolean' },
                             CreateDate: { type: 'date' },
@@ -60,6 +61,11 @@
                         width: 90
                     },
                     {
+                        title: "所屬公司",
+                        field: "Company",
+                        width: 80
+                    },
+                    {
                         title: "接收通知 ",
                         field: "RecvNotify",
                         template: "<input type='checkbox' #= (RecvNotify === true) ? checked='checked' : '' # disabled />",
@@ -75,13 +81,13 @@
                         title: "建立日期",
                         field: "CreateDate",
                         format: "{0:yyyy/MM/dd}",
-                        width: 110
+                        width: 100
                     },
                     {
                         title: "最後登入日期",
                         field: "LastLoginDate",
                         format: "{0:yyyy/MM/dd}",
-                        width: 110
+                        width: 100
                     },
                     {
                         title: "操作",
