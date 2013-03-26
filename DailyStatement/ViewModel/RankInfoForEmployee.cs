@@ -12,6 +12,7 @@ namespace DailyStatement.ViewModel
         public string Name { get; set; }
         public string Email { get; set; }
         public string Rank { get; set; }
+        public string Company { get; set; }
         public bool RecvNotify { get; set; }
         public bool Activity { get; set; }
         public DateTime CreateDate { get; set; }

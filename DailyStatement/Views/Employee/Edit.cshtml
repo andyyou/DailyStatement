@@ -63,6 +63,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Company)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Company)
+            @Html.ValidationMessageFor(model => model.Company)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.RecvNotify)
         </div>
         <div class="editor-field">
