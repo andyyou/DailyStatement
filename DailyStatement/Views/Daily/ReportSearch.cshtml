@@ -12,13 +12,15 @@
             var weeksOfMonth;
             @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員") || User.IsInRole("助理")))
             {
-                @:$('#employeeId').attr('disabled', false);
+                @:$('#employeeId').removeAttr('readonly');
 
             }
             @if (User.Identity.IsAuthenticated && User.IsInRole("一般人員"))
             {
-                 // @:$("#tab-item-2").remove();
-                 // @:$("#tabs-2").remove();
+                @:$("#tab-item-2").remove();
+                @:$("#tabs-2").remove();
+                @:$("#tab-item-3").remove();
+                @:$("#tabs-3").remove();
             }
             @*var window = $("#dialog").kendoWindow({
                 draggable: true,
@@ -101,8 +103,7 @@
                             User: 
                         </div>
                         <div class="editor-field">
-                            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
-
+                            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @readonly = "readonly" })
                         </div>
                         <div class="editor-label">
                             Month:
