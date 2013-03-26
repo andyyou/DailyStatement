@@ -135,7 +135,7 @@ namespace DailyStatement.Controllers
         // 執行編輯帳號
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, bool RecvNotify, bool Activity, byte[] RowVersion)
+        public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, string Company, bool RecvNotify, bool Activity, byte[] RowVersion)
         {
             Employee employee = db.Employees.Where(e => e.EmployeeId == EmployeeId && e.RowVersion == RowVersion).FirstOrDefault();
 
@@ -147,6 +147,7 @@ namespace DailyStatement.Controllers
             employee.Name = Name;
             employee.Email = Email;
             employee.RankId = RankId;
+            employee.Company = Company;
             employee.RecvNotify = RecvNotify;
             employee.Activity = Activity;
 
@@ -231,6 +232,7 @@ namespace DailyStatement.Controllers
                                  Name = e.Name,
                                  Email = e.Email,
                                  Rank = e.Rank.Name,
+                                 Company = e.Company,
                                  RecvNotify = e.RecvNotify,
                                  Activity = e.Activity,
                                  CreateDate = e.CreateDate,

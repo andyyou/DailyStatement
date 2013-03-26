@@ -61,6 +61,7 @@ namespace DailyStatement.Models
 
         public virtual List<DailyInfo> DailyInfos { get; set; }
 
+        [DisplayName("所屬公司")]
         public string Company { get; set; }
     }
 
