@@ -29,6 +29,7 @@
                         fields: {
                             ProjectId: { editable: false },
                             ProjectNo: { type: 'string' },
+                            CustomerCode: { type: 'string' },
                             CustomerName: { type: 'string' },
                             Comment: { type: 'string' },
                             StartOn: { type: 'date' },
@@ -40,10 +41,12 @@
             });
             
             $('#grid').kendoGrid({
-                columns: [{ title: "案號", field: "ProjectNo", width: 100 },
-                    { title: "客戶名稱", field: "CustomerName", width: 150 },
+                columns: [
+                    { title: "案號", field: "ProjectNo", width: 100 },
+                    { title: "客戶代碼", field: "CustomerCode", width: 100 },
+                    { title: "公司及案件名稱", field: "CustomerName", width: 150 },
                     { title: "起始日", field: "StartOn", format: "{0:yyyy/MM/dd}", width: 100 },
-                    { title: "結案", field: "IsClosed", width: 150,  template: "<input type='checkbox' #= (IsClosed === true) ? checked='checked' : '' # disabled />" },
+                    { title: "結案", field: "IsClosed", width: 50,  template: "<input type='checkbox' #= (IsClosed === true) ? checked='checked' : '' # disabled />" },
                     { title: "備註", field: "Comment", width: 300 },
                     {
                          title: "操作",

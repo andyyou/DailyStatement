@@ -21,6 +21,7 @@ namespace DailyStatement.Models
         {
             // Fluent API 設定建置在此
             HasRequired(d => d.Employee).WithMany(e => e.DailyInfos).WillCascadeOnDelete(false);
+            HasRequired(d => d.Project).WithMany(p => p.DailyInfoes).WillCascadeOnDelete(false);
         }
     }
 
@@ -37,6 +38,7 @@ namespace DailyStatement.Models
         public ProjectConfigurations()
         {
             // Fluent API 設定建置在此
+            HasMany(p => p.DailyInfoes).WithRequired(d => d.Project).WillCascadeOnDelete(false);
         }
     }
 
