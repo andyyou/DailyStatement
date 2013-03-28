@@ -733,13 +733,12 @@ namespace DailyStatement {
                                 this.columnDailyInfoId}, false));
                 this.columnDailyInfoId.AllowDBNull = false;
                 this.columnDailyInfoId.Unique = true;
-                this.columnProjectNo.AllowDBNull = false;
-                this.columnCustomer.AllowDBNull = false;
                 this.columnCreateDate.AllowDBNull = false;
                 this.columnWorkingHours.AllowDBNull = false;
                 this.columnRowVersion.AllowDBNull = false;
                 this.columnEmployeeId.AllowDBNull = false;
                 this.columnWorkContent.AllowDBNull = false;
+                this.columnProject_ProjectId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2303,7 +2302,10 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnCustomerCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnProjectId}, false));
+                this.columnProjectId.AllowDBNull = false;
                 this.columnProjectId.Unique = true;
+                this.columnRowVersion.AllowDBNull = false;
+                this.columnIsClosed.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2593,6 +2595,8 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnWorkCategory_WorkCategoryId);
                 this.columnProject_ProjectId = new global::System.Data.DataColumn("Project_ProjectId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProject_ProjectId);
+                this.columnPredictionId.AllowDBNull = false;
+                this.columnPredictHours.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2748,7 +2752,12 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string ProjectNo {
                 get {
-                    return ((string)(this[this.tableDailyInfoes.ProjectNoColumn]));
+                    try {
+                        return ((string)(this[this.tableDailyInfoes.ProjectNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'DailyInfoes\' 中資料行 \'ProjectNo\' 的值是 DBNull。", e);
+                    }
                 }
                 set {
                     this[this.tableDailyInfoes.ProjectNoColumn] = value;
@@ -2759,7 +2768,12 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Customer {
                 get {
-                    return ((string)(this[this.tableDailyInfoes.CustomerColumn]));
+                    try {
+                        return ((string)(this[this.tableDailyInfoes.CustomerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'DailyInfoes\' 中資料行 \'Customer\' 的值是 DBNull。", e);
+                    }
                 }
                 set {
                     this[this.tableDailyInfoes.CustomerColumn] = value;
@@ -2841,16 +2855,35 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Project_ProjectId {
                 get {
-                    try {
-                        return ((int)(this[this.tableDailyInfoes.Project_ProjectIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'DailyInfoes\' 中資料行 \'Project_ProjectId\' 的值是 DBNull。", e);
-                    }
+                    return ((int)(this[this.tableDailyInfoes.Project_ProjectIdColumn]));
                 }
                 set {
                     this[this.tableDailyInfoes.Project_ProjectIdColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProjectNoNull() {
+                return this.IsNull(this.tableDailyInfoes.ProjectNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProjectNoNull() {
+                this[this.tableDailyInfoes.ProjectNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCustomerNull() {
+                return this.IsNull(this.tableDailyInfoes.CustomerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCustomerNull() {
+                this[this.tableDailyInfoes.CustomerColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2863,18 +2896,6 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetWorkCategoryIdNull() {
                 this[this.tableDailyInfoes.WorkCategoryIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsProject_ProjectIdNull() {
-                return this.IsNull(this.tableDailyInfoes.Project_ProjectIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetProject_ProjectIdNull() {
-                this[this.tableDailyInfoes.Project_ProjectIdColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3284,12 +3305,7 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int ProjectId {
                 get {
-                    try {
-                        return ((int)(this[this.tableProjects.ProjectIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'ProjectId\' 的值是 DBNull。", e);
-                    }
+                    return ((int)(this[this.tableProjects.ProjectIdColumn]));
                 }
                 set {
                     this[this.tableProjects.ProjectIdColumn] = value;
@@ -3348,12 +3364,7 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public byte[] RowVersion {
                 get {
-                    try {
-                        return ((byte[])(this[this.tableProjects.RowVersionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'RowVersion\' 的值是 DBNull。", e);
-                    }
+                    return ((byte[])(this[this.tableProjects.RowVersionColumn]));
                 }
                 set {
                     this[this.tableProjects.RowVersionColumn] = value;
@@ -3380,12 +3391,7 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsClosed {
                 get {
-                    try {
-                        return ((bool)(this[this.tableProjects.IsClosedColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Projects\' 中資料行 \'IsClosed\' 的值是 DBNull。", e);
-                    }
+                    return ((bool)(this[this.tableProjects.IsClosedColumn]));
                 }
                 set {
                     this[this.tableProjects.IsClosedColumn] = value;
@@ -3406,18 +3412,6 @@ namespace DailyStatement {
                 set {
                     this[this.tableProjects.CustomerCodeColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsProjectIdNull() {
-                return this.IsNull(this.tableProjects.ProjectIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetProjectIdNull() {
-                this[this.tableProjects.ProjectIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3458,18 +3452,6 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsRowVersionNull() {
-                return this.IsNull(this.tableProjects.RowVersionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetRowVersionNull() {
-                this[this.tableProjects.RowVersionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCustomerNameNull() {
                 return this.IsNull(this.tableProjects.CustomerNameColumn);
             }
@@ -3478,18 +3460,6 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCustomerNameNull() {
                 this[this.tableProjects.CustomerNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsIsClosedNull() {
-                return this.IsNull(this.tableProjects.IsClosedColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetIsClosedNull() {
-                this[this.tableProjects.IsClosedColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3523,12 +3493,7 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int PredictionId {
                 get {
-                    try {
-                        return ((int)(this[this.tablePredictions.PredictionIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Predictions\' 中資料行 \'PredictionId\' 的值是 DBNull。", e);
-                    }
+                    return ((int)(this[this.tablePredictions.PredictionIdColumn]));
                 }
                 set {
                     this[this.tablePredictions.PredictionIdColumn] = value;
@@ -3539,12 +3504,7 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int PredictHours {
                 get {
-                    try {
-                        return ((int)(this[this.tablePredictions.PredictHoursColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'Predictions\' 中資料行 \'PredictHours\' 的值是 DBNull。", e);
-                    }
+                    return ((int)(this[this.tablePredictions.PredictHoursColumn]));
                 }
                 set {
                     this[this.tablePredictions.PredictHoursColumn] = value;
@@ -3581,30 +3541,6 @@ namespace DailyStatement {
                 set {
                     this[this.tablePredictions.Project_ProjectIdColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPredictionIdNull() {
-                return this.IsNull(this.tablePredictions.PredictionIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPredictionIdNull() {
-                this[this.tablePredictions.PredictionIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPredictHoursNull() {
-                return this.IsNull(this.tablePredictions.PredictHoursColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPredictHoursNull() {
-                this[this.tablePredictions.PredictHoursColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -419,19 +419,19 @@ namespace DailyStatement.Controllers
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT * FROM [DailyStatementDev].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}')", projectNo);
+                string condition = String.Format("SELECT T1.* FROM [dbo].[DailyInfoes] T1 INNER JOIN [dbo].[Projects] T2 on T2.[ProjectId] = T1.[Project_ProjectId] WHERE (('{0}' = '' AND T2.[ProjectNo] >= '') OR T2.[ProjectNo] = '{0}')", projectNo);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from WorkCategories
-                condition = "SELECT * FROM [DailyStatementDev].[dbo].[WorkCategories]";
+                condition = "SELECT * FROM [dbo].[WorkCategories]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
                 // Get data from Projects
-                condition = "SELECT * FROM [DailyStatementDev].[dbo].[Projects]";
+                condition = "SELECT * FROM [dbo].[Projects]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Projects);
                 // Get data from Predictions
-                condition = "SELECT * FROM [DailyStatementDev].[dbo].[Predictions]";
+                condition = "SELECT * FROM [dbo].[Predictions]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Predictions);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
