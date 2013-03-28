@@ -17,8 +17,8 @@
             @Html.LabelFor(model => model.Project.ProjectNo)
         </div>
         <div class="editor-field">
-            <input type="text" name="projectid" id="projectid" />
-            <span class="field-validation-valid" data-valmsg-for="projectid" data-valmsg-replace="true"></span>
+            <input type="text" name="projectid" id="projectid" data-val-required="案號 欄位是必要項。" data-val="true" />
+            @Html.ValidationMessageFor(model => model.Project.ProjectId)
         </div>
 
         <div class="editor-label">
