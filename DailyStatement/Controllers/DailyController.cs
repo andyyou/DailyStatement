@@ -250,8 +250,8 @@ namespace DailyStatement.Controllers
             ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
 
             ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
-            var projectNoList = db.Dailies.Select(d => d.ProjectNo).Distinct();
-            ViewBag.ProjectNoList = new SelectList(projectNoList);
+
+            ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
             return View();
         }
 
