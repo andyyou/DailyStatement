@@ -455,12 +455,29 @@ namespace DailyStatement.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult ReportSummaryOfYear()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReportSummaryOfYear(int projectid = 0)
         {
-            
+            if (projectid == 0)
+            {
+
+            }
+            else
+            {
+                var project = db.Projects.Find(projectid);
+                var current = from daily in db.Dailies.Include("WorkCategory")
+                        group daily by new { daily.WorkCategory } into g
+                              select new { Category = g.Key.WorkCategory.Name, SumHours = g.Sum(daily => daily.WorkingHours) };
+               
+                ViewBag.Predictions = project.Predictions.ToList();
+                ViewBag.Current = current;
+
+            }
             return View();
         }
 
+        
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         private int UserId(string account)
         {
