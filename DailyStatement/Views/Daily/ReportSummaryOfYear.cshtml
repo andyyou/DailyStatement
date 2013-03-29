@@ -8,7 +8,7 @@
     @Scripts.Render("~/Scripts/flot/jquery.flot.js")
     @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
     <script>
-        @if(ViewBag.TotalOfAll != 0)
+        @if (ViewBag.TotalOfAll != 0)
         {
             @:$('#print').attr('disabled', false);
         }
@@ -18,15 +18,22 @@
         $(function () {
             var prediction = [];
             var current = [];
-            @foreach(var i in ViewBag.Predictions as List<DailyStatement.Models.Prediction>)
+            @if (ViewBag.Predictions != null)
             {
-                @:prediction.push(['@i.WorkCategory.Name', @i.PredictHours]);
-                
+                foreach (var i in ViewBag.Predictions as List<DailyStatement.Models.Prediction>)
+                {
+                    @:prediction.push(['@i.WorkCategory.Name', @i.PredictHours]);
+                }
             }
-            @foreach (var i in ViewBag.Current)
+            
+            @if (ViewBag.Current != null)
             {
-                 @:current.push(['@i.GetType().GetProperty("Category").GetValue(i, null)', @i.GetType().GetProperty("SumHours").GetValue(i, null)]);
+                foreach (var i in ViewBag.Current)
+                {
+                   @:current.push(['@i.GetType().GetProperty("Category").GetValue(i, null)', @i.GetType().GetProperty("SumHours").GetValue(i, null)]);
+                }
             }
+            
 
             $.plot("#placeholder",
                 [{ label: "預測工時", data: prediction, bars: {show: true, barWidth: 0.5, align: "center"}},
