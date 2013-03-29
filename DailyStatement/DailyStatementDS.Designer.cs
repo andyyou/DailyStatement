@@ -1827,7 +1827,7 @@ namespace DailyStatement {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class ParameterForProjectRptDataTable : global::System.Data.TypedTableBase<ParameterForProjectRptRow> {
             
-            private global::System.Data.DataColumn columnProjectNo;
+            private global::System.Data.DataColumn columnProjectId;
             
             private global::System.Data.DataColumn columnWorkCategoryId;
             
@@ -1866,9 +1866,9 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ProjectNoColumn {
+            public global::System.Data.DataColumn ProjectIdColumn {
                 get {
-                    return this.columnProjectNo;
+                    return this.columnProjectId;
                 }
             }
             
@@ -1917,10 +1917,10 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterForProjectRptRow AddParameterForProjectRptRow(string ProjectNo, int WorkCategoryId) {
+            public ParameterForProjectRptRow AddParameterForProjectRptRow(int ProjectId, int WorkCategoryId) {
                 ParameterForProjectRptRow rowParameterForProjectRptRow = ((ParameterForProjectRptRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ProjectNo,
+                        ProjectId,
                         WorkCategoryId};
                 rowParameterForProjectRptRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowParameterForProjectRptRow);
@@ -1944,15 +1944,15 @@ namespace DailyStatement {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnProjectNo = base.Columns["ProjectNo"];
+                this.columnProjectId = base.Columns["ProjectId"];
                 this.columnWorkCategoryId = base.Columns["WorkCategoryId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnProjectNo = new global::System.Data.DataColumn("ProjectNo", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnProjectNo);
+                this.columnProjectId = new global::System.Data.DataColumn("ProjectId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProjectId);
                 this.columnWorkCategoryId = new global::System.Data.DataColumn("WorkCategoryId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWorkCategoryId);
             }
@@ -3232,17 +3232,17 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ProjectNo {
+            public int ProjectId {
                 get {
                     try {
-                        return ((string)(this[this.tableParameterForProjectRpt.ProjectNoColumn]));
+                        return ((int)(this[this.tableParameterForProjectRpt.ProjectIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForProjectRpt\' 中資料行 \'ProjectNo\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForProjectRpt\' 中資料行 \'ProjectId\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableParameterForProjectRpt.ProjectNoColumn] = value;
+                    this[this.tableParameterForProjectRpt.ProjectIdColumn] = value;
                 }
             }
             
@@ -3264,14 +3264,14 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsProjectNoNull() {
-                return this.IsNull(this.tableParameterForProjectRpt.ProjectNoColumn);
+            public bool IsProjectIdNull() {
+                return this.IsNull(this.tableParameterForProjectRpt.ProjectIdColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetProjectNoNull() {
-                this[this.tableParameterForProjectRpt.ProjectNoColumn] = global::System.Convert.DBNull;
+            public void SetProjectIdNull() {
+                this[this.tableParameterForProjectRpt.ProjectIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
