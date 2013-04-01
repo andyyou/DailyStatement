@@ -8,12 +8,10 @@
     @Scripts.Render("~/Scripts/flot/jquery.flot.js")
     @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
     <script>
-        @if (ViewBag.TotalOfAll != 0)
+        @if (ViewBag.Predictions.Count != 0)
         {
             @:$('#print').attr('disabled', false);
         }
-
-        
 
         $(function () {
             var prediction = [];
@@ -135,7 +133,7 @@
             </form>
         </div>
            
-
+        
         <!---->
     </div>
 </div>
