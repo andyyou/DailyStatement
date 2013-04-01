@@ -409,9 +409,9 @@ namespace DailyStatement.Controllers
             }
         }
 
-        //[HttpPost]
+        [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateProjectSummaryReport(string projectNo = "")
+        public ActionResult GenerateProjectSummaryReport(int projectId = 0)
         {
             try
             {
@@ -422,7 +422,7 @@ namespace DailyStatement.Controllers
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT T1.* FROM [dbo].[DailyInfoes] T1 INNER JOIN [dbo].[Projects] T2 on T2.[ProjectId] = T1.[Project_ProjectId] WHERE (('{0}' = '' AND T2.[ProjectNo] >= '') OR T2.[ProjectNo] = '{0}')", projectNo);
+                string condition = String.Format("SELECT T1.* FROM [dbo].[DailyInfoes] T1 INNER JOIN [dbo].[Projects] T2 on T2.[ProjectId] = T1.[Project_ProjectId] WHERE (({0} = 0 AND T2.[ProjectId] >= 0) OR T2.[ProjectId] = {0})", projectId);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from WorkCategories
@@ -430,15 +430,15 @@ namespace DailyStatement.Controllers
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
                 // Get data from Projects
-                condition = "SELECT * FROM [dbo].[Projects]";
+                condition = String.Format("SELECT * FROM [dbo].[Projects] WHERE (({0} = 0 AND [ProjectId] >= 0) OR [ProjectId] = {0})", projectId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Projects);
                 // Get data from Predictions
-                condition = "SELECT * FROM [dbo].[Predictions]";
+                condition = String.Format("SELECT * FROM [dbo].[Predictions] WHERE (({0} = 0 AND [Project_ProjectId] >= 0) OR [Project_ProjectId] = {0})", projectId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Predictions);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForProjectRpt.Rows.Add(projectNo, null);
+                ds.ParameterForProjectRpt.Rows.Add(projectId, null);
 
                 rpt.SetDataSource(ds);
 
@@ -465,7 +465,7 @@ namespace DailyStatement.Controllers
            
             if (projectid == 0)
             {
-                
+                return GenerateProjectSummaryReport(projectid);
             }
             else
             {
@@ -476,6 +476,7 @@ namespace DailyStatement.Controllers
                
                 ViewBag.Predictions = project.Predictions.ToList();
                 ViewBag.Current = current;
+                ViewBag.ProjectId = projectid;
 
             }
             return View();
