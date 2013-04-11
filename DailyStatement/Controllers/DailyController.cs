@@ -260,19 +260,24 @@ namespace DailyStatement.Controllers
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         public ActionResult ReportWeekForSingle(int employeeId, DateTime fromDate, DateTime toDate )
         {
-            string query = String.Format(@"Select A.ProjectNo + ' - ' +
-                                        (Select top 1 B.customer From DailyInfoes B where B.ProjectNo = A.ProjectNo) as [WorkName],
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '1' THEN WorkingHours ELSE 0 END) AS [Sunday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '2' THEN WorkingHours ELSE 0 END) AS [Monday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '3' THEN WorkingHours ELSE 0 END) AS [Tuesday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '4' THEN WorkingHours ELSE 0 END) AS [Wednesday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '5' THEN WorkingHours ELSE 0 END) AS [Thursday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '6' THEN WorkingHours ELSE 0 END) AS [Friday] ,
-                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '7' THEN WorkingHours ELSE 0 END) AS [Saturday]
-                                        From DailyInfoes A
-	                                    Where EmployeeId = {0}
-	                                    AND CreateDate Between '{1}' AND '{2}'
-	                                    Group By EmployeeId, ProjectNo", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
+            string query = String.Format(@"Select T2.[ProjectNo] + ' - ' +
+                                        (Select top 1 T3.[CustomerName] From [dbo].[Projects] T3 Where T3.[ProjectId] = T1.[Project_ProjectId]) as [WorkName],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '1' THEN T1.[WorkingHours] ELSE 0 END) AS [Sunday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '2' THEN T1.[WorkingHours] ELSE 0 END) AS [Monday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '3' THEN T1.[WorkingHours] ELSE 0 END) AS [Tuesday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '4' THEN T1.[WorkingHours] ELSE 0 END) AS [Wednesday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '5' THEN T1.[WorkingHours] ELSE 0 END) AS [Thursday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '6' THEN T1.[WorkingHours] ELSE 0 END) AS [Friday],
+                                        SUM(CASE (DATEPART(Weekday, T1.[CreateDate])) WHEN '7' THEN T1.[WorkingHours] ELSE 0 END) AS [Saturday]
+                                        From
+                                            [dbo].[DailyInfoes] T1,
+                                            [dbo].[Projects] T2
+	                                    Where 
+                                            T2.[ProjectId] = T1.[Project_ProjectId]
+                                            AND T1.[EmployeeId] = {0}
+	                                        AND T1.[CreateDate] Between '{1}' AND '{2}'
+	                                    Group By
+                                            T1.[EmployeeId], T1.[Project_ProjectId], T2.[ProjectNo]", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
             var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
             ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
@@ -283,7 +288,7 @@ namespace DailyStatement.Controllers
             ViewBag.WeekNum = weekNum;
             ViewBag.FromDate = fromDate;
             ViewBag.ToDate = toDate;
-            ViewBag.Date = fromDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
+            ViewBag.Date = fromDate.ToString("yyyy 年 MM 月 dd 日") + " ~ " + toDate.ToString("yyyy 年 MM 月 dd 日");
             var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
 
             if (reportList != null)
@@ -335,29 +340,22 @@ namespace DailyStatement.Controllers
                 DailyStatementDS ds = new DailyStatementDS();
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
-                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE [EmployeeId] = {0} AND ([CreateDate] >= '{1}' AND [CreateDate] <= '{2}')", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
+                // Get data from DailyInfoes
+                string condition = String.Format("SELECT * FROM [dbo].[DailyInfoes] WHERE [EmployeeId] = {0} AND ([CreateDate] >= '{1}' AND [CreateDate] <= '{2}')", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
-                condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[Employees] WHERE [EmployeeId] = {0}", employeeId);
+                // Get data from Employees
+                condition = String.Format("SELECT * FROM [dbo].[Employees] WHERE [EmployeeId] = {0}", employeeId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Employees);
+                // Get data from Projects
+                condition = "SELECT * FROM [dbo].[Projects]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Projects);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
                 ds.ParameterForWeekRpt.Rows.Add(employeeId, fromDate, toDate, weekOfYear);
                 
                 rpt.SetDataSource(ds);
-
-                //CrystalDecisions.Shared.TableLogOnInfo dbLoginInfo = new CrystalDecisions.Shared.TableLogOnInfo();
-                //System.Data.Common.DbConnectionStringBuilder builder = new System.Data.Common.DbConnectionStringBuilder();
-                //builder.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
-
-                //foreach (CrystalDecisions.CrystalReports.Engine.Table table in rpt.Database.Tables)
-                //{
-                //    dbLoginInfo.ConnectionInfo.ServerName = builder["Data Source"].ToString();
-                //    dbLoginInfo.ConnectionInfo.DatabaseName = builder["Initial Catalog"].ToString();
-                //    dbLoginInfo.ConnectionInfo.UserID = builder["User ID"].ToString();
-                //    dbLoginInfo.ConnectionInfo.Password = builder["Password"].ToString();
-                //    table.ApplyLogOnInfo(dbLoginInfo);
-                //}
 
                 Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
                 return File(stream, "application/pdf");
@@ -370,28 +368,33 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateProjectReport(string projectNo = "", int workCategoryId = 0)
+        public ActionResult GenerateProjectReport(int projectNo = 0, int workCategoryId = 0)
         {
             try
             {
                 ReportDocument rpt = new ReportDocument();
                 rpt.Load(Server.MapPath("~/Report/ProjectReport.rpt"));
+                //rpt.Load(Server.MapPath("~/Report/Test.rpt"));
 
                 DailyStatementDS ds = new DailyStatementDS();
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}') AND (({1} = 0 AND [WorkCategoryId] >= 0) OR [WorkCategoryId] = {1})", projectNo, workCategoryId);
+                string condition = String.Format("SELECT * FROM [dbo].[DailyInfoes] WHERE (({0} = 0 AND [Project_ProjectId] >= 0) OR [Project_ProjectId] = {0}) AND (({1} = 0 AND [WorkCategoryId] >= 0) OR [WorkCategoryId] = {1})", projectNo, workCategoryId);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from Employees
-                condition = "SELECT * FROM [DailyStatement].[dbo].[Employees]";
+                condition = "SELECT * FROM [dbo].[Employees]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Employees);
                 // Get data from WorkCategories
-                condition = "SELECT * FROM [DailyStatement].[dbo].[WorkCategories]";
+                condition = "SELECT * FROM [dbo].[WorkCategories]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
+                // Get data from Projects
+                condition = String.Format("SELECT * FROM [dbo].[Projects] WHERE [ProjectId] = {0}", projectNo);
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.Projects);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
                 ds.ParameterForProjectRpt.Rows.Add(projectNo, workCategoryId);
 
@@ -406,9 +409,9 @@ namespace DailyStatement.Controllers
             }
         }
 
-        //[HttpPost]
+        [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateProjectSummaryReport(string projectNo = "")
+        public ActionResult GenerateProjectSummaryReport(int projectId = 0)
         {
             try
             {
@@ -419,23 +422,23 @@ namespace DailyStatement.Controllers
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}')", projectNo);
+                string condition = String.Format("SELECT T1.* FROM [dbo].[DailyInfoes] T1 INNER JOIN [dbo].[Projects] T2 on T2.[ProjectId] = T1.[Project_ProjectId] WHERE (({0} = 0 AND T2.[ProjectId] >= 0) OR T2.[ProjectId] = {0})", projectId);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from WorkCategories
-                condition = "SELECT * FROM [DailyStatement].[dbo].[WorkCategories]";
+                condition = "SELECT * FROM [dbo].[WorkCategories]";
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
                 // Get data from Projects
-                condition = "SELECT * FROM [DailyStatement].[dbo].[Projects]";
+                condition = String.Format("SELECT * FROM [dbo].[Projects] WHERE (({0} = 0 AND [ProjectId] >= 0) OR [ProjectId] = {0})", projectId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Projects);
                 // Get data from Predictions
-                condition = "SELECT * FROM [DailyStatement].[dbo].[Predictions]";
+                condition = String.Format("SELECT * FROM [dbo].[Predictions] WHERE (({0} = 0 AND [Project_ProjectId] >= 0) OR [Project_ProjectId] = {0})", projectId);
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Predictions);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForProjectRpt.Rows.Add(projectNo, null);
+                ds.ParameterForProjectRpt.Rows.Add(projectId, null);
 
                 rpt.SetDataSource(ds);
 
@@ -462,7 +465,7 @@ namespace DailyStatement.Controllers
            
             if (projectid == 0)
             {
-                
+                return GenerateProjectSummaryReport(projectid);
             }
             else
             {
@@ -473,6 +476,7 @@ namespace DailyStatement.Controllers
                
                 ViewBag.Predictions = project.Predictions.ToList();
                 ViewBag.Current = current;
+                ViewBag.ProjectId = projectid;
 
             }
             return View();
