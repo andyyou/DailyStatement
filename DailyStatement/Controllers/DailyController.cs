@@ -470,13 +470,23 @@ namespace DailyStatement.Controllers
             else
             {
                 var project = db.Projects.Find(projectid);
-                var current = from daily in db.Dailies.Include("WorkCategory")
-                        group daily by new { daily.WorkCategory } into g
-                              select new { Category = g.Key.WorkCategory.Name, SumHours = g.Sum(daily => daily.WorkingHours) };
-               
+                //var current = from daily in db.Dailies.Include("WorkCategory")
+                //              group daily by new { daily.WorkCategory } into g
+                //              select new { Category = g.Key.WorkCategory.Name, SumHours = g.Sum(daily => daily.WorkingHours) };
+                var current = from category in db.Categories
+                              join daily in db.Dailies on category.WorkCategoryId equals daily.WorkCategoryId into daily_join
+                              from daily2 in daily_join.Where(d => d.Project.ProjectId == projectid).DefaultIfEmpty()
+                              group new { category, daily2 } by new { category.Name } into g
+                              select new
+                              {
+                                  Category = g.Key.Name,
+                                  SumHours = g.Sum(p => p.daily2.WorkingHours) == null ? 0 : g.Sum(p => p.daily2.WorkingHours)
+                              };
+
                 ViewBag.Predictions = project.Predictions.ToList();
                 ViewBag.Current = current;
                 ViewBag.ProjectId = projectid;
+                ViewBag.ProjectNo = project.ProjectNo;
 
             }
             return View();

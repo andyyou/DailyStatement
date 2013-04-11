@@ -93,6 +93,11 @@
                     logic: "or",
                     filters: [
                         {
+                            field: "ProjectNo",
+                            operator: "contains",
+                            value: val
+                        },
+                        {
                             field: "Customer",
                             operator: "contains",
                             value: val
