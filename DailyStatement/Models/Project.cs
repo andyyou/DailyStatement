@@ -32,6 +32,9 @@ namespace DailyStatement.Models
         [DisplayName("是否結案")]
         public bool IsClosed { get; set; }
 
+        [DisplayName("專案金額")]
+        public int Price { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
