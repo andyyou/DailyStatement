@@ -476,7 +476,8 @@ namespace DailyStatement.Controllers
                 var current = from category in db.Categories
                               join daily in db.Dailies on category.WorkCategoryId equals daily.WorkCategoryId into daily_join
                               from daily2 in daily_join.Where(d => d.Project.ProjectId == projectid).DefaultIfEmpty()
-                              group new { category, daily2 } by new { category.Name } into g
+                              orderby category.WorkCategoryId ascending
+                              group new { category, daily2 } by new { category.WorkCategoryId, category.Name } into g
                               select new
                               {
                                   Category = g.Key.Name,
