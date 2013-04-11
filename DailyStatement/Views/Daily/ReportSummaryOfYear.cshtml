@@ -8,12 +8,10 @@
     @Scripts.Render("~/Scripts/flot/jquery.flot.js")
     @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
     <script>
-        @if (ViewBag.TotalOfAll != 0)
+        @if (ViewBag.Predictions.Count != 0)
         {
             @:$('#print').attr('disabled', false);
         }
-
-        
 
         $(function () {
             var prediction = [];
@@ -92,41 +90,50 @@
 <div class="row">
     <div class="span12">
         <!---->
-            <style>
-                .demo-container {
-                    box-sizing: border-box;
-                    width: 850px;
-                    height: 450px;
-                    padding: 20px 15px 15px 15px;
-                    margin: 15px auto 30px auto;
-                    border: 1px solid #ddd;
-                    background: #fff;
-                    background: linear-gradient(#f6f6f6 0, #fff 50px);
-                    background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-                    background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-                    background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-                    background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
-                    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-                    -o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-                    -ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-                    -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-                    -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-                }
+        <style>
+            .demo-container
+            {
+                box-sizing: border-box;
+                width: 850px;
+                height: 450px;
+                padding: 20px 15px 15px 15px;
+                margin: 15px auto 30px auto;
+                border: 1px solid #ddd;
+                background: #fff;
+                background: linear-gradient(#f6f6f6 0, #fff 50px);
+                background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+                background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+                background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+                background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+                -o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                -ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            }
 
-                .demo-placeholder {
-                    width: 100%;
-                    height: 100%;
-                    font-size: 14px;
-                    line-height: 12px;
-                }
+            .demo-placeholder
+            {
+                width: 100%;
+                height: 100%;
+                font-size: 14px;
+                line-height: 12px;
+            }
+        </style>
 
-            </style>
+        <div class="demo-container">
+            <div id="placeholder" class="demo-placeholder"></div>
+        </div>
+
+        <div>
+            @Html.ActionLink("返回", "ReportSearch", null, new { @class = "btn btn-small pull-right" })
+            <form action="/Daily/GenerateProjectSummaryReport" method="post">
+                <input name="projectId" type="hidden" value="@ViewBag.ProjectId" />
+                <input id="print" type="submit" value="列印" class="btn btn-small pull-right" disabled="disabled" />
+            </form>
+        </div>
            
-            <div class="demo-container">
-                <div id="placeholder" class="demo-placeholder"></div>
-            </div>
-           
-
-            <!---->
+        
+        <!---->
     </div>
 </div>
