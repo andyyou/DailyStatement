@@ -49,9 +49,10 @@
                     { title: "結案", field: "IsClosed", width: 50,  template: "<input type='checkbox' #= (IsClosed === true) ? checked='checked' : '' # disabled />" },
                     { title: "備註", field: "Comment", width: 300 },
                     {
-                         title: "操作",
-                         field: "ProjectId",
-                         template: "<a href='@Url.Action("Details")/#=ProjectId#' class='btn btn-small'>預估資料</a> <a href='@Url.Action("Edit")/#=ProjectId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=ProjectId#);'>刪除</button>", width: 190
+                        title: "操作",
+                        field: "ProjectId",
+                        template: "<a href='@Url.Action("Details")/#=ProjectId#' class='btn btn-small'>預估資料</a> <a href='@Url.Action("Edit")/#=ProjectId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=ProjectId#);'>刪除</button>", width: 190,
+                        filterable: false
                     }
                 ],
                 toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
@@ -64,7 +65,41 @@
                 },
 
                 // editable: true,
-                sortable: true
+                sortable: true,
+                filterable: true
+            });
+
+            //change event
+            $("#category").keyup(function () {
+                var val = $('#category').val();
+                $("#grid").data("kendoGrid").dataSource.filter({
+                    logic: "or",
+                    filters: [
+                        {
+                            field: "ProjectNo",
+                            operator: "startswith",
+                            value: val
+                        },
+                        {
+                            field: "CustomerCode",
+                            operator: "contains",
+                            value: val
+                        },
+                        {
+                            field: "CustomerName",
+                            operator: "contains",
+                            value: val
+                        }
+                    ]
+                });
+
+
+            });
+
+            $('#reset').click(function () {
+                //not working yet
+                $('#category').val('');
+                $("#grid").data("kendoGrid").dataSource.filter([]);
             });
         });
 
@@ -87,6 +122,14 @@
 <div class="row">
     <div class="span12">
         <h4>專案資料一覽</h4>
+      
+        <div class="toolbar form-search" style="margin-bottom:5px;">
+            <div class="input-append">
+                <input type="search" id="category" class="span2 search-query" style="width: 230px" />
+                <button type="button" id="reset" class="btn">Reset</button>
+            </div>
+        </div>
+
         <div id="grid"></div>
     </div>
 </div>
