@@ -636,7 +636,8 @@ namespace DailyStatement.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
 		public ActionResult CategoryEdit(WorkCategory workCategory)
 		{
 			if (ModelState.IsValid)
@@ -649,8 +650,8 @@ namespace DailyStatement.Controllers
 			return View(workCategory);
 		}
 
-		[HttpPost, ActionName("CategoryDelete")]
-		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
+        [HttpPost, ActionName("CategoryDelete")]
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
 		public ActionResult CategoryDeleteConfirmed(int id)
 		{
 			WorkCategory workCategory = db.Categories.Find(id);
