@@ -1,0 +1,83 @@
+﻿@model IEnumerable<DailyStatement.Models.WorkCategory>
+
+@{
+    ViewBag.Title = "工作類型一覽";
+}
+
+@section scripts{
+    <script>
+
+        $(function () {
+            var urlRead = '@Url.Action("CategoryGrid")';
+
+            var dataSource = new kendo.data.DataSource({
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 15,
+                transport: {
+                    read: {
+                        url: urlRead,
+                        type: "post",
+                        dataType: 'json'
+                    }
+                },
+                batch: true,
+                schema: {
+                    //取出資料陣列
+                    data: function (d) { return d.data; },
+                    //取出資料總筆數(計算頁數用)
+                    total: function (d) { return d.total; },
+                    model: {
+                        id: 'WorkCategoryId',
+                        fields: {
+                            WorkCategoryId: { editable: false },
+                            Name: { type: 'string' }
+                        }
+                    }
+                }
+            });
+
+
+            $("#grid").kendoGrid({
+                columns: [
+                    { title: "工作類型", field: "Name" },
+                    {
+                        title: "操作",
+                        field: "WorkCategoryId",
+                        template: "<a href='@Url.Action("CategoryEdit")/#=WorkCategoryId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=WorkCategoryId#);'>刪除</button>", width: 120
+                    }
+                ],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("CategoryCreate")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
+                dataSource: dataSource,
+                height: 700,
+                scrollable: true,
+                pageable: true,
+                sortable: true
+            });
+        });
+
+        // functions --
+        function DeleteWithConfirm(did) {
+
+            var url = '@Url.Action("CategoryDelete", "Daily")';
+            var destination = url + '/' + did;
+            if (window.confirm('確認刪除?')) {
+                $.post(destination, function (data) {
+                }).done(function () { $("#grid").data("kendoGrid").dataSource.read(); });
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+    </script>
+    }
+
+<div class="row">
+    <div class="span12">
+        <h4>工作類型一覽</h4>
+        <div id="grid"></div>
+    </div>
+</div>
+
