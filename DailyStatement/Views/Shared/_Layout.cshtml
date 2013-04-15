@@ -44,7 +44,15 @@
                     
                     if (!User.IsInRole("一般人員"))
                     {
-                        <li><a href="@Url.Action("Index","Project")">Project</a></li>
+                        <ul class="nav">
+                            <li>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Maintain</a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("Index", "Project")">Project</a></li>
+                                    <li><a href="@Url.Action("CategoryIndex", "Daily")">Category</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     }
                 }
             </ul>

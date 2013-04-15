@@ -54,6 +54,7 @@ namespace DailyStatement.Controllers
 			return View();
 		}
 
+        [HttpPost]
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
 		public JsonResult Grid(KendoGridRequest request)
 		{
@@ -112,7 +113,7 @@ namespace DailyStatement.Controllers
 		public ActionResult Create()
 		{
 			ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-			ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
+			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			if (!User.IsInRole("一般人員"))
 			{
 				int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
@@ -163,7 +164,7 @@ namespace DailyStatement.Controllers
 			}
 
 			ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-			ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
+            ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			if (!User.IsInRole("一般人員"))
 			{
 				ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
@@ -273,7 +274,7 @@ namespace DailyStatement.Controllers
 
 			ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
 
-			ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
+            ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			return View();
 		}
 
@@ -473,13 +474,6 @@ namespace DailyStatement.Controllers
 			}
 		}
 
-		[Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
-		protected override void Dispose(bool disposing)
-		{
-			db.Dispose();
-			base.Dispose(disposing);
-		}
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult ReportSummaryOfYear(int projectid = 0)
@@ -515,6 +509,86 @@ namespace DailyStatement.Controllers
 			return View();
 		}
 
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult CategoryIndex()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult CategoryCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult CategoryCreate(WorkCategory workCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Categories.Add(workCategory);
+                db.SaveChanges();
+                return RedirectToAction("CategoryIndex");
+            }
+
+            return View(workCategory);
+        }
+
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public ActionResult CategoryEdit(int id = 0)
+        {
+            WorkCategory workCategory = db.Categories.Find(id);
+            if (workCategory == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(workCategory);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CategoryEdit(WorkCategory workCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(workCategory).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("CategoryIndex");
+            }
+
+            return View(workCategory);
+        }
+
+        [HttpPost, ActionName("CategoryDelete")]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
+        public ActionResult CategoryDeleteConfirmed(int id)
+        {
+            WorkCategory workCategory = db.Categories.Find(id);
+            db.Categories.Remove(workCategory);
+            db.SaveChanges();
+            return RedirectToAction("CategoryIndex");
+        }
+
+        // 回傳所有帳號相關資料
+        [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+        public JsonResult CategoryGrid(KendoGridRequest request)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var categories = (from c in db.Categories
+                              select new CategoryForIndex
+                              {
+                                  WorkCategoryId = c.WorkCategoryId,
+                                  Name = c.Name
+                              }).ToList();
+
+            var grid = new KendoGrid<CategoryForIndex>(request, categories);
+
+            return Json(grid);
+        }
 		
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
 		private int UserId(string account)
@@ -526,5 +600,12 @@ namespace DailyStatement.Controllers
 			}
 			return emp.EmployeeId;
 		}
+
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
 	}
 }
