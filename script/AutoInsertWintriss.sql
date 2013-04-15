@@ -14,15 +14,12 @@ IF OBJECT_ID('insert_wintriss_everyday') IS NOT NULL
 GO
 CREATE PROCEDURE insert_wintriss_everyday
 AS
-	Declare @empid int
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-	Insert Into [dbo].[DailyInfoes]([WorkCategoryId],[Project_ProjectId],[WorkContent],[CreateDate],[WorkingHours]) 
-Values (10,2,'N/A',(getdate()),0);
-	SELECT <@Param1, sysname, @p1>, <@Param2, sysname, @p2>
+INSERT INTO [dbo].[DailyInfoes]
+    ([WorkCategoryId], [WorkContent], [CreateDate], [EmployeeId], [WorkingHours], [Project_ProjectId])
+SELECT
+    10, 'N/A', Current_Timestamp, [EmployeeId], 0, 2
+FROM [dbo].[Employees]
+WHERE [EmployeeId] > 1;
 END
 GO
