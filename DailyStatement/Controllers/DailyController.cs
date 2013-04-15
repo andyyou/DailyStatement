@@ -32,10 +32,14 @@ namespace DailyStatement.Controllers
 			var emp = db.Employees.Include("Rank").Where(e => e.Account == User.Identity.Name).FirstOrDefault();
 			DateTime today = DateTime.Today;
 			DateTime tomorrow = DateTime.Today.AddDays(1);
+            DateTime weekAgo = DateTime.Today.AddDays(-7);
 			var todaySumHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
 
 			var todayWintrissHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow && d.Project.ProjectId == 2).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-			
+
+            var unClassifyDailies = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.Project.ProjectId == 306);
+
+            string[] noDailyEmployee = db.Employees.Where(e => e.DailyInfos.Where(d => d.WorkingHours > 0 && (d.CreateDate >= weekAgo && d.CreateDate <= today)).Count() < 1 && e.Rank.RankId == 3).Select(d => d.Name).ToArray();
 
 			if (emp.Rank.Name == "一般人員")
 			{
@@ -51,6 +55,17 @@ namespace DailyStatement.Controllers
 				}
 				
 			}
+
+            if (unClassifyDailies.Count() > 0)
+            {
+                ViewBag.NotifyOfUnClassify = "請盡速修正案號為 N/A 之工時日誌。";
+            }
+
+            if (noDailyEmployee.Count() > 0 && emp.Rank.Name != "一般人員")
+            {
+                ViewBag.NotifyOfNoDaily = "以下人員本週未依規定填寫工作日誌：" + string.Join(", ", noDailyEmployee);
+            }
+
 			return View();
 		}
 
@@ -591,7 +606,7 @@ namespace DailyStatement.Controllers
 								  d.CreateDate <= lastDay &&
 								  !holidays.Contains(d.CreateDate)
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-
+                pwh.Add(p);
 			}
 			return View(pwh);
 		}

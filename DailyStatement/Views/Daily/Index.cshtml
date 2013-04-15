@@ -137,6 +137,14 @@
         {
             @:$.pnotify({ text: '@ViewBag.NotifyOfInternal', delay: 3500 });
         }
+        @if (ViewBag.NotifyOfUnClassify != null)
+        {
+            @:$.pnotify({ text: '@ViewBag.NotifyOfUnClassify', delay: 3500 });
+        }
+        @if (ViewBag.NotifyOfNoDaily != null)
+        {
+            @:$.pnotify({ text: '@ViewBag.NotifyOfNoDaily', delay: 3500 });
+        }
         
 
         // functions --
