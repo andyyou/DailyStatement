@@ -10,6 +10,7 @@ using KendoGridBinder;
 
 namespace DailyStatement.Controllers
 {
+    [Authorize(Roles = "超級管理員,一般管理員,助理")]
     public class ProjectController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
@@ -143,7 +144,6 @@ namespace DailyStatement.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult DeleteConfirmed(int id)
         {
             Project project = db.Projects.Find(id);

@@ -39,7 +39,7 @@ namespace DailyStatement.Controllers
 
             var unClassifyDailies = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.Project.ProjectId == 306);
 
-            string[] noDailyEmployee = db.Employees.Where(e => e.DailyInfos.Where(d => d.WorkingHours > 0 && (d.CreateDate >= weekAgo && d.CreateDate <= today)).Count() < 1 && e.Rank.RankId == 3).Select(d => d.Name).ToArray();
+            string[] noDailyEmployee = db.Employees.Where(e => e.DailyInfos.Where(d => d.WorkingHours > 0 && (d.CreateDate >= weekAgo && d.CreateDate <= today)).Count() < 1 && e.Rank.RankId == 3 && e.Activity == true).Select(d => d.Name).ToArray();
 
 			if (emp.Rank.Name == "一般人員")
 			{
