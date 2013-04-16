@@ -95,6 +95,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="ParameterForAnalysisRpt" msprop:Generator_TableClassName="ParameterForAnalysisRptDataTable" msprop:Generator_TableVarName="tableParameterForAnalysisRpt" msprop:Generator_RowChangedName="ParameterForAnalysisRptRowChanged" msprop:Generator_TablePropName="ParameterForAnalysisRpt" msprop:Generator_RowDeletingName="ParameterForAnalysisRptRowDeleting" msprop:Generator_RowChangingName="ParameterForAnalysisRptRowChanging" msprop:Generator_RowEvHandlerName="ParameterForAnalysisRptRowChangeEventHandler" msprop:Generator_RowDeletedName="ParameterForAnalysisRptRowDeleted" msprop:Generator_RowClassName="ParameterForAnalysisRptRow" msprop:Generator_UserTableName="ParameterForAnalysisRpt" msprop:Generator_RowEvArgName="ParameterForAnalysisRptRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Year" msprop:Generator_ColumnVarNameInTable="columnYear" msprop:Generator_ColumnPropNameInRow="Year" msprop:Generator_ColumnPropNameInTable="YearColumn" msprop:Generator_UserColumnName="Year" type="xs:int" minOccurs="0" />
+              <xs:element name="Month" msprop:Generator_ColumnVarNameInTable="columnMonth" msprop:Generator_ColumnPropNameInRow="Month" msprop:Generator_ColumnPropNameInTable="MonthColumn" msprop:Generator_UserColumnName="Month" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1">
