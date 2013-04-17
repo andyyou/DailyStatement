@@ -6,7 +6,6 @@
 
 <div class="row">
     <div class="span6 offset3">
-<h4>新增帳號</h4>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -14,7 +13,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Employee</legend>
+        <legend>新增帳號</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Account)
