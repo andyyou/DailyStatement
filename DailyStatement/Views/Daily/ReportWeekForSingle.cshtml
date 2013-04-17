@@ -2,15 +2,7 @@
 @{
     ViewBag.Title = "ReportWeekForSingle";
 }
-@section scripts
-{
-    <script>
-        @if(ViewBag.TotalOfAll != 0)
-        {
-            @:$('#print').attr('disabled', false);
-        }
-    </script>
-}
+
 <style>
     .bg-mark {
          background:#eee;
@@ -152,7 +144,7 @@
             <input name="weekOfYear" type="hidden" value="@ViewBag.WeekNum" />
             <input name="fromDate" type="hidden" value="@ViewBag.FromDate" />
             <input name="toDate" type="hidden" value="@ViewBag.ToDate" />
-            <input id="print" type="submit" value="列印" class="btn btn-small pull-right" disabled="disabled" />
+            <input id="print" type="submit" value="列印" class="btn btn-small pull-right" />
         </form>
     </div>
 </div>

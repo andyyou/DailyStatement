@@ -608,7 +608,7 @@ namespace DailyStatement.Controllers
 								  d.Project.ProjectId == 2 &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-								  d.CreateDate <= lastDay
+                                  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
                 internalTotal += p.InternalHours;
 				// CN,CP,CO,C*,LINPO
@@ -620,7 +620,7 @@ namespace DailyStatement.Controllers
 								  // d.Project.ProjectId != 13 &&
 								  d.Project.ProjectId != 2 &&
 								  d.CreateDate >= startDay &&
-								  d.CreateDate <= lastDay
+                                  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
                 projectTotal += p.ProjectHours;
 				// ST
@@ -628,7 +628,7 @@ namespace DailyStatement.Controllers
 								  d.Project.ProjectNo.StartsWith("ST") &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-								  d.CreateDate <= lastDay
+                                  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
                 undefineTotal += p.UndefineHours;
 				// DO
@@ -636,7 +636,7 @@ namespace DailyStatement.Controllers
 								  d.Project.ProjectNo.StartsWith("DO") &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-								  d.CreateDate <= lastDay
+                                  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
                 demoTotal += p.DemoHours;
 				// CR
@@ -649,11 +649,11 @@ namespace DailyStatement.Controllers
                 researchTotal += p.ResearchHours;
 				// 加班
 				p.Overtime = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
-								  d.WorkCategoryId == 13 &&
+								  (d.WorkCategoryId == 13 ||
+								  holidays.Contains(d.CreateDate)) &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-								  d.CreateDate <= lastDay &&
-								  !holidays.Contains(d.CreateDate)
+								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
                 overtimeTotal += p.Overtime;
                 pwh.Add(p);
@@ -666,7 +666,7 @@ namespace DailyStatement.Controllers
             ViewBag.DemoTotal = demoTotal;
             ViewBag.ResearchTotal = researchTotal;
             ViewBag.OvertimeTotal = overtimeTotal;
-            ViewBag.GrandTotal = internalTotal + projectTotal + undefineTotal + demoTotal + researchTotal + overtimeTotal;
+            ViewBag.GrandTotal = internalTotal + projectTotal + undefineTotal + demoTotal + researchTotal;
 
 			return View(pwh);
 		}
