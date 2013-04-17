@@ -223,7 +223,16 @@
                         <div class="editor-field">
                             @Html.DropDownList("months", (SelectList)ViewBag.Months)
                         </div>
-                       
+                        <div class="editor-label">
+                            Company:
+                        </div>
+                        <div class="editor-field">
+                            <select id="company" name="company">
+                                <option value="台灣">台灣</option>
+                                <option value="大陸">大陸</option>
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="pull-right span2">
                                 <input type="submit" value="查詢" class="btn btn-small btn-success" />
