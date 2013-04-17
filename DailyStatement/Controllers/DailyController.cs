@@ -299,8 +299,9 @@ namespace DailyStatement.Controllers
 
 			ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
 
-			 ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
-			return View();
+			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+			
+            return View();
 		}
 
 
@@ -501,7 +502,7 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateWorkHoursAnalysisReport(int year, int month)
+        public ActionResult GenerateWorkHoursAnalysisReport(int year, int month, string company)
         {
             try
             {
@@ -524,7 +525,7 @@ namespace DailyStatement.Controllers
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.Projects);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForAnalysisRpt.Rows.Add(year, month);
+                ds.ParameterForAnalysisRpt.Rows.Add(year, month, company);
 
                 rpt.SetDataSource(ds);
 
@@ -574,7 +575,7 @@ namespace DailyStatement.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "超級管理員,一般管理員,助理")]
-		public ActionResult AnalysisHoursPersonal(int years, int months)
+		public ActionResult AnalysisHoursPersonal(int years, int months, string company)
 		{
 			// TODO: here
 			int numberOfDays = DateTime.DaysInMonth(years, months);
@@ -598,7 +599,10 @@ namespace DailyStatement.Controllers
 
 			List<PersonalWorkingHours> pwh = new List<PersonalWorkingHours>();
 			List<Employee> employee = new List<Employee>();
-			employee = db.Employees.Where(e => e.EmployeeId > 1 && e.Activity == true && e.Rank.Name != "助理").ToList();
+			employee = db.Employees.Where(e => e.EmployeeId > 1 &&
+                       e.Activity == true &&
+                       e.Rank.Name != "助理" &&
+                       e.Company == company).ToList();
 			foreach (var emp in employee)
 			{
 				PersonalWorkingHours p = new PersonalWorkingHours();
@@ -660,6 +664,7 @@ namespace DailyStatement.Controllers
 			}
             ViewBag.Year = years;
             ViewBag.Month = months;
+            ViewBag.Company = company;
             ViewBag.InternalTotal = internalTotal;
             ViewBag.ProjectTotal = projectTotal;
             ViewBag.UndefineTotal = undefineTotal;

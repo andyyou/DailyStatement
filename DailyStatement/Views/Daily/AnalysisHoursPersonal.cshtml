@@ -4,7 +4,7 @@
 }
 <div class="row">
     <div class="span12">
-        <h4>個人工時分析 - @ViewBag.Year 年 @ViewBag.Month 月</h4>
+        <h4>個人工時分析(@ViewBag.Company) - @ViewBag.Year 年 @ViewBag.Month 月</h4>
         <table class="table table-bordered table-hover table-condensed">
             <thead>
                 <tr>
@@ -53,6 +53,7 @@
         <form action="/Daily/GenerateWorkHoursAnalysisReport" method="post">
             <input name="year" type="hidden" value="@ViewBag.Year" />
             <input name="month" type="hidden" value="@ViewBag.Month" />
+            <input name="company" type="hidden" value="@ViewBag.Company" />
             <input id="print" type="submit" value="列印" class="btn btn-small pull-right" />
         </form>
     </div>

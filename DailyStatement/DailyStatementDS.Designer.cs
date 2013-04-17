@@ -929,6 +929,8 @@ namespace DailyStatement {
             
             private global::System.Data.DataColumn columnRankId;
             
+            private global::System.Data.DataColumn columnCompany;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EmployeesDataTable() {
@@ -1052,6 +1054,14 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CompanyColumn {
+                get {
+                    return this.columnCompany;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1087,7 +1097,7 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EmployeesRow AddEmployeesRow(int EmployeeId, string Account, string Password, System.DateTime CreateDate, System.DateTime LastLoginDate, string Name, string Email, bool RecvNotify, bool Activity, byte[] RowVersion, int RankId) {
+            public EmployeesRow AddEmployeesRow(int EmployeeId, string Account, string Password, System.DateTime CreateDate, System.DateTime LastLoginDate, string Name, string Email, bool RecvNotify, bool Activity, byte[] RowVersion, int RankId, string Company) {
                 EmployeesRow rowEmployeesRow = ((EmployeesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         EmployeeId,
@@ -1100,7 +1110,8 @@ namespace DailyStatement {
                         RecvNotify,
                         Activity,
                         RowVersion,
-                        RankId};
+                        RankId,
+                        Company};
                 rowEmployeesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEmployeesRow);
                 return rowEmployeesRow;
@@ -1134,6 +1145,7 @@ namespace DailyStatement {
                 this.columnActivity = base.Columns["Activity"];
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnRankId = base.Columns["RankId"];
+                this.columnCompany = base.Columns["Company"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1161,6 +1173,8 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnRowVersion);
                 this.columnRankId = new global::System.Data.DataColumn("RankId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRankId);
+                this.columnCompany = new global::System.Data.DataColumn("Company", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCompany);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnEmployeeId}, false));
                 this.columnEmployeeId.AllowDBNull = false;
@@ -2769,6 +2783,8 @@ namespace DailyStatement {
             
             private global::System.Data.DataColumn columnMonth;
             
+            private global::System.Data.DataColumn columnCompany;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ParameterForAnalysisRptDataTable() {
@@ -2820,6 +2836,14 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CompanyColumn {
+                get {
+                    return this.columnCompany;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2855,11 +2879,12 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ParameterForAnalysisRptRow AddParameterForAnalysisRptRow(int Year, int Month) {
+            public ParameterForAnalysisRptRow AddParameterForAnalysisRptRow(int Year, int Month, string Company) {
                 ParameterForAnalysisRptRow rowParameterForAnalysisRptRow = ((ParameterForAnalysisRptRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Year,
-                        Month};
+                        Month,
+                        Company};
                 rowParameterForAnalysisRptRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowParameterForAnalysisRptRow);
                 return rowParameterForAnalysisRptRow;
@@ -2884,6 +2909,7 @@ namespace DailyStatement {
             internal void InitVars() {
                 this.columnYear = base.Columns["Year"];
                 this.columnMonth = base.Columns["Month"];
+                this.columnCompany = base.Columns["Company"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2893,6 +2919,8 @@ namespace DailyStatement {
                 base.Columns.Add(this.columnYear);
                 this.columnMonth = new global::System.Data.DataColumn("Month", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMonth);
+                this.columnCompany = new global::System.Data.DataColumn("Company", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCompany);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3337,6 +3365,22 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Company {
+                get {
+                    try {
+                        return ((string)(this[this.tableEmployees.CompanyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'Employees\' 中資料行 \'Company\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableEmployees.CompanyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsLastLoginDateNull() {
                 return this.IsNull(this.tableEmployees.LastLoginDateColumn);
             }
@@ -3345,6 +3389,18 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetLastLoginDateNull() {
                 this[this.tableEmployees.LastLoginDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCompanyNull() {
+                return this.IsNull(this.tableEmployees.CompanyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCompanyNull() {
+                this[this.tableEmployees.CompanyColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3912,6 +3968,22 @@ namespace DailyStatement {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Company {
+                get {
+                    try {
+                        return ((string)(this[this.tableParameterForAnalysisRpt.CompanyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'ParameterForAnalysisRpt\' 中資料行 \'Company\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableParameterForAnalysisRpt.CompanyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsYearNull() {
                 return this.IsNull(this.tableParameterForAnalysisRpt.YearColumn);
             }
@@ -3932,6 +4004,18 @@ namespace DailyStatement {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetMonthNull() {
                 this[this.tableParameterForAnalysisRpt.MonthColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCompanyNull() {
+                return this.IsNull(this.tableParameterForAnalysisRpt.CompanyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCompanyNull() {
+                this[this.tableParameterForAnalysisRpt.CompanyColumn] = global::System.Convert.DBNull;
             }
         }
         
