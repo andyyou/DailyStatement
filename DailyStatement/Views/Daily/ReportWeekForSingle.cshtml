@@ -34,9 +34,17 @@
                 
             </thead>
             <tbody>
-                
+                @{
+                    int[] overheads = new int[5] { 0, 0, 0, 0, 0 };
+                    }
                 @foreach (var record in Model)
                 {
+                    
+                    overheads[0] += 8 - record.Monday;
+                    overheads[1] += 8 - record.Tuesday;
+                    overheads[2] += 8 - record.Wednesday;
+                    overheads[3] += 8 - record.Thursday;
+                    overheads[4] += 8 - record.Friday;
                 <tr >
                     <td>@record.WorkName</td>
                     <td class="bg-mark">@record.Sunday</td>
@@ -49,6 +57,19 @@
                     <td>@record.Total</td>
                 </tr>
                 }
+                <tr>
+                    <td>*</td>
+                    <td class="bg-mark"></td>
+                    <td>@overheads[0]</td>
+                    <td>@overheads[1]</td>
+                    <td>@overheads[2]</td>
+                    <td>@overheads[3]</td>
+                    <td>@overheads[4]</td>
+                    <td class="bg-mark"></td>
+                    <td>
+                        @overheads.Sum()
+                    </td>
+                </tr>
                 <tr class="success">
                     <td colspan="7"></td>
                     <td><strong>Total</strong></td>
