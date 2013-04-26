@@ -198,6 +198,10 @@
     <Compile Include="Migrations\201304260632178_WorkCategory Cascade Delete prediction.Designer.cs">
       <DependentUpon>201304260632178_WorkCategory Cascade Delete prediction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304260742343_Add OrderBy column to workcategory.cs" />
+    <Compile Include="Migrations\201304260742343_Add OrderBy column to workcategory.Designer.cs">
+      <DependentUpon>201304260742343_Add OrderBy column to workcategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
@@ -1032,6 +1036,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304260632178_WorkCategory Cascade Delete prediction.resx">
       <DependentUpon>201304260632178_WorkCategory Cascade Delete prediction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304260742343_Add OrderBy column to workcategory.resx">
+      <DependentUpon>201304260742343_Add OrderBy column to workcategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
