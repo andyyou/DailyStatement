@@ -19,5 +19,6 @@ namespace DailyStatement.Models
         public string Name { get; set; }
 
         public virtual List<DailyInfo> DailyInfos { get; set; }
+        public virtual List<Prediction> Predictions { get; set; }
     }
 }
