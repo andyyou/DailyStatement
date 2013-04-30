@@ -127,9 +127,18 @@ namespace DailyStatement.Controllers
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
 		public ActionResult Create()
 		{
-			ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
-			if (!User.IsInRole("一般人員"))
+            var projects = from p in db.Projects
+                           orderby p.ProjectNo
+                           select new
+                           {
+                               ProjectId = p.ProjectId,
+                               ProjectNo = p.ProjectNo + "(" + p.CustomerName + ")"
+                           };
+
+            ViewData["Categories"] = new SelectList(db.Categories.OrderBy(c => c.OrderBy).ThenBy(c => c.Name).ToList(), "WorkCategoryId", "Name", "");
+            //ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+            ViewData["Projects"] = new SelectList(projects, "ProjectId", "ProjectNo", "");
+            if (!User.IsInRole("一般人員"))
 			{
 				int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
 				ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", empId);
@@ -178,9 +187,18 @@ namespace DailyStatement.Controllers
 				return HttpNotFound();
 			}
 
-			ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
-			if (!User.IsInRole("一般人員"))
+            var projects = from p in db.Projects
+                           orderby p.ProjectNo
+                           select new
+                           {
+                               ProjectId = p.ProjectId,
+                               ProjectNo = p.ProjectNo + "(" + p.CustomerName + ")"
+                           };
+
+			ViewData["Categories"] = new SelectList(db.Categories.OrderBy(c => c.OrderBy).ThenBy(c => c.Name).ToList(), "WorkCategoryId", "Name", "");
+            //ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+            ViewData["Projects"] = new SelectList(projects, "ProjectId", "ProjectNo", "");
+            if (!User.IsInRole("一般人員"))
 			{
 				ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
 			}
@@ -297,9 +315,18 @@ namespace DailyStatement.Controllers
 
 			ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
 
-			ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
+            ViewBag.WorkCategory = new SelectList(db.Categories.OrderBy(c => c.OrderBy).ThenBy(c => c.Name), "WorkCategoryId", "Name");
 
-			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+            var projects = from p in db.Projects
+                           orderby p.ProjectNo
+                           select new
+                           {
+                               ProjectId = p.ProjectId,
+                               ProjectNo = p.ProjectNo + "(" + p.CustomerName + ")"
+                           };
+
+            //ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+            ViewData["Projects"] = new SelectList(projects, "ProjectId", "ProjectNo", "");
 			
 			return View();
 		}
@@ -747,6 +774,7 @@ namespace DailyStatement.Controllers
 		{
 			db.Configuration.ProxyCreationEnabled = false;
 			var categories = (from c in db.Categories
+                              orderby c.OrderBy, c.Name
 							  select new CategoryForIndex
 							  {
 								  WorkCategoryId = c.WorkCategoryId,

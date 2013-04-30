@@ -36,7 +36,7 @@
             <tbody>
                 @{
                     int[] overheads = new int[5] { 8, 8, 8, 8, 8 };
-                    }
+                }
                 @foreach (var record in Model)
                 {
                     overheads[0] -= record.Monday;
@@ -60,10 +60,10 @@
                     <td>閒置工時</td>
                     <td class="bg-mark"></td>
                     <td>@(overheads[0] >= 0 ? overheads[0] : 0)</td>
-                    <td>@(overheads[1] >= 0 ? overheads[0] : 0)</td>
-                    <td>@(overheads[2] >= 0 ? overheads[0] : 0)</td>
-                    <td>@(overheads[3] >= 0 ? overheads[0] : 0)</td>
-                    <td>@(overheads[4] >= 0 ? overheads[0] : 0)</td>
+                    <td>@(overheads[1] >= 0 ? overheads[1] : 0)</td>
+                    <td>@(overheads[2] >= 0 ? overheads[2] : 0)</td>
+                    <td>@(overheads[3] >= 0 ? overheads[3] : 0)</td>
+                    <td>@(overheads[4] >= 0 ? overheads[4] : 0)</td>
                     <td class="bg-mark"></td>
                     <td>
                         @(overheads.Sum() >= 0 ? overheads.Sum() : 0)
