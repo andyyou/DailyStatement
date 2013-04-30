@@ -964,6 +964,7 @@
     <Content Include="Views\Daily\CategoryIndex.cshtml" />
     <Content Include="Views\Daily\CategoryCreate.cshtml" />
     <Content Include="Views\Daily\CategoryEdit.cshtml" />
+    <Content Include="Views\Employee\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

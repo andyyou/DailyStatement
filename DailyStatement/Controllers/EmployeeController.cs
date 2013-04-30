@@ -12,7 +12,7 @@ using DailyStatement.ViewModel;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize(Roles = "超級管理員,一般管理員")]
+    [Authorize]
     public class EmployeeController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
@@ -87,12 +87,14 @@ namespace DailyStatement.Controllers
         }
 
         // 顯示帳號列表頁面
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public ActionResult Index()
         {
             return View();
         }
 
         // 顯示帳號建立頁面
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public ActionResult Create()
         {
             ViewData["Ranks"] = new SelectList(db.Ranks.ToList(), "RankId", "Name", 3);
@@ -101,6 +103,7 @@ namespace DailyStatement.Controllers
         }
 
         // 執行帳號建立
+        [Authorize(Roles = "超級管理員,一般管理員")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "CreateDate")]Employee employee)
@@ -120,6 +123,7 @@ namespace DailyStatement.Controllers
         }
 
         // 顯示編輯帳號頁面
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public ActionResult Edit(int id = 0)
         {
             Employee employee = db.Employees.Find(id);
@@ -133,6 +137,7 @@ namespace DailyStatement.Controllers
         }
 
         // 執行編輯帳號
+        [Authorize(Roles = "超級管理員,一般管理員")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int EmployeeId, string Name, string Email, int RankId, string Company, bool RecvNotify, bool Activity, byte[] RowVersion)
@@ -161,14 +166,33 @@ namespace DailyStatement.Controllers
             return View(employee);
         }
 
+        [Authorize(Roles = "超級管理員,一般管理員")]
         [HttpPost]
-        public ActionResult ChangePassword(int EmployeeId, string Password)
+        public ActionResult ChangePasswordByAdmin(int EmployeeId, string Password)
         {
             var emp = db.Employees.Where(e => e.EmployeeId == EmployeeId).FirstOrDefault();
             emp.Password = GetHashPassword(Password);
             db.SaveChanges();
 
             return Content("");
+        }
+
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        [HttpPost]
+        public ActionResult ChangePassword(string Password)
+        {
+            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+            emp.Password = GetHashPassword(Password);
+            db.SaveChanges();
+            ViewBag.Result = "Success";
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)
@@ -221,6 +245,7 @@ namespace DailyStatement.Controllers
         }
 
         // 回傳所有帳號相關資料
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public JsonResult Grid(KendoGridRequest request)
         {
             db.Configuration.ProxyCreationEnabled = false;
@@ -245,6 +270,7 @@ namespace DailyStatement.Controllers
         }
 
         // 檢查帳號是否已存在
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public JsonResult CheckAccountDup(string Account, int EmployeeId = 0)
         {
             var employee = db.Employees.Where(e => e.EmployeeId != EmployeeId && e.Account == Account).FirstOrDefault();
@@ -260,6 +286,7 @@ namespace DailyStatement.Controllers
         }
 
         // 檢查電子郵件是否已存在
+        [Authorize(Roles = "超級管理員,一般管理員")]
         public JsonResult CheckEmailDup(string Email, int EmployeeId = 0)
         {
             var employee = db.Employees.Where(e => e.EmployeeId != EmployeeId && e.Email == Email).FirstOrDefault();

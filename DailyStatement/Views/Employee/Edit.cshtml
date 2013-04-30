@@ -116,7 +116,7 @@
                 alert("兩次輸入的密碼不同！");
                 return false;
             }
-            $.post("@Url.Action("ChangePassword", "Employee")", { EmployeeId: "@Model.EmployeeId", Password: password })
+            $.post("@Url.Action("ChangePasswordByAdmin", "Employee")", { EmployeeId: "@Model.EmployeeId", Password: password })
                 .done(function (data) {
                     $('input[name="Password"]').val("");
                     $('input[name="PasswordConfirm"]').val("");
