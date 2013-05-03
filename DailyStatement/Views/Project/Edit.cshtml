@@ -67,6 +67,22 @@
                 </div>
 
                 <div class="editor-label">
+                    @Html.LabelFor(model => model.WarrantyStart)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.WarrantyStart)
+                    @Html.ValidationMessageFor(model => model.WarrantyStart)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WarrantyEnd)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.WarrantyEnd)
+                    @Html.ValidationMessageFor(model => model.WarrantyEnd)
+                </div>
+
+                <div class="editor-label">
                     @Html.LabelFor(model => model.IsClosed)
                 </div>
                 <div class="editor-field">
@@ -89,9 +105,17 @@
     <script>
         $(function () {
             $('#StartOn').kendoDatePicker({
-                    culture: "zh-TW",
-                    format: "yyyy/MM/dd"
-                });
+                culture: "zh-TW",
+                format: "yyyy/MM/dd"
+            });
+            $('#WarrantyStart').kendoDatePicker({
+                culture: "zh-TW",
+                format: "yyyy/MM/dd"
+            });
+            $('#WarrantyEnd').kendoDatePicker({
+                culture: "zh-TW",
+                format: "yyyy/MM/dd"
+            });
         }); 
     </script>
 }

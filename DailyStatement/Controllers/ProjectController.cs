@@ -23,9 +23,15 @@ namespace DailyStatement.Controllers
         public JsonResult Grid(KendoGridRequest request)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            var proj = db.Projects.Include("Predictions").OrderByDescending(d => d.StartOn).ToList();
-            
-            var grid = new KendoGrid<Project>(request, proj);
+            var projects = db.Projects.Include("Predictions").OrderByDescending(d => d.StartOn).ToList();
+            foreach (var x in projects)
+            {
+                if (x.ProjectNo == null) x.ProjectNo = "";
+                if (x.CustomerCode == null) x.CustomerCode = "";
+                if (x.CustomerName == null) x.CustomerName = ""; 
+            }
+
+            var grid = new KendoGrid<Project>(request, projects);
             return Json(grid);
         }
 

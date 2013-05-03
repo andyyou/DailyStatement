@@ -30,6 +30,7 @@ namespace DailyStatement.Models
         public WorkCategoryConfigurations()
         {
             // Fluent API 設定建置在此
+            HasMany(w => w.Predictions).WithRequired(p => p.WorkCategory).WillCascadeOnDelete(true);
         }
     }
 

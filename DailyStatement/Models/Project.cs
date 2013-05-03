@@ -26,8 +26,14 @@ namespace DailyStatement.Models
         [DisplayName("備註")]
         public string Comment { get; set; }
 
-        [DisplayName("開始日")]
+        [DisplayName("專案起始日")]
         public DateTime? StartOn { get; set; }
+
+        [DisplayName("保固起始日")]
+        public DateTime? WarrantyStart { get; set; }
+
+        [DisplayName("保固迄止日")]
+        public DateTime? WarrantyEnd { get; set; }
 
         [DisplayName("是否結案")]
         public bool IsClosed { get; set; }

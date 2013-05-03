@@ -30,7 +30,9 @@
         </div>
         <div class="editor-field">
             <div id="change_password" class="hide">
-                <input type="password" name="Password" />&nbsp;
+                新密碼
+                <input type="password" name="Password" /><br />
+                再次確認<input type="password" name="PasswordConfirm" /><br />
                 <a href="#" id="save_password" class="btn btn-small btn-success">修改</a>&nbsp;
                 <a href="#" id="cancel_password" class="btn btn-small">取消</a>
             </div>
@@ -105,13 +107,19 @@
 
         $("#save_password").click(function () {
             var password = $('input[name="Password"]').val();
+            var passwordConfirm = $('input[name="PasswordConfirm"]').val();
             if (password == "") {
                 alert("請輸入要修改的密碼！");
                 return false;
             }
-            $.post("@Url.Action("ChangePassword", "Employee")", { EmployeeId: "@Model.EmployeeId", Password: password })
+            else if (password != passwordConfirm) {
+                alert("兩次輸入的密碼不同！");
+                return false;
+            }
+            $.post("@Url.Action("ChangePasswordByAdmin", "Employee")", { EmployeeId: "@Model.EmployeeId", Password: password })
                 .done(function (data) {
                     $('input[name="Password"]').val("");
+                    $('input[name="PasswordConfirm"]').val("");
                     alert("密碼修改成功！");
                 })
                 .fail(function () {
