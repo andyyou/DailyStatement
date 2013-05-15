@@ -47,9 +47,9 @@ namespace DailyStatement
 
             
             // Kendo Scripts
-            bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/kendoui.2013.1.319/kendo.web.min.js", "~/Scripts/kendoui.2013.1.319/cultures/kendo.culture.zh-TW.min.js", "~/Scripts/bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/kendo/2013.1.319/kendo.web.min.js", "~/Scripts/kendo/2013.1.319/cultures/kendo.culture.zh-TW.min.js", "~/Scripts/bootstrap.min.js"));
             // Kendo CSS
-            bundles.Add(new StyleBundle("~/Content/kendo/css").Include("~/Content/kendoui.2013.1.319/kendo.common.min.css", "~/Content/kendoui.2013.1.319/kendo.bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include("~/Content/kendo/kendo.common.min.css", "~/Content/kendo/kendo.bootstrap.min.css"));
             // Bootstrap
             bundles.Add(new StyleBundle("~/Content/bootstrap/css").Include("~/Content/bootstrap.css", "~/Content/bootstrap-responsive.css"));
 
