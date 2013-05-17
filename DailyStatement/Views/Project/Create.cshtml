@@ -20,10 +20,10 @@
         <div class="basic">
             <div class="alert alert-error">必需</div>
             
-            <div class="input-prepend offset1">
+            <div class="input-prepend offset1 input-append">
                 @Html.LabelFor(model => model.ProjectNo, new { @class="add-on"})
                 @Html.EditorFor(model => model.ProjectNo)
-                @Html.ValidationMessageFor(model => model.ProjectNo)
+                @Html.ValidationMessageFor(model => model.ProjectNo, null, new { @class="add-on"})
             </div>
             
             <div class="input-prepend offset1">
@@ -46,7 +46,7 @@
             <!--UNDONE: use DropdownList-->
             <div class="input-prepend offset1">
                 @Html.LabelFor(model => model.Sale, new { @class = "add-on" })
-                @Html.DropDownList("project.sale.employeeId", (SelectList)ViewBag.Sales, null, new {})
+                @Html.DropDownList("SalesId", (SelectList)ViewBag.Sales, "請選擇", new {})
             </div>
 
             <div class="input-prepend offset1">
@@ -130,7 +130,7 @@
             <!--UNDONE: use DropdownList-->
             <div class="input-prepend offset1">
                 @Html.LabelFor(model => model.Engineer, new { @class = "add-on" })
-                @Html.DropDownList("project.sale.employeeId", (SelectList)ViewBag.Engineeers, null, new {})
+                @Html.DropDownList("EngineeersId", (SelectList)ViewBag.Engineeers, "請選擇", new {})
             </div>
 
             <div class="input-prepend offset1">
@@ -247,18 +247,26 @@
     @Scripts.Render("~/bundles/jqueryui")
     <script>
         $(function () {
-            /*
-            $('#StartOn').kendoDatePicker({
-                    culture: "zh-TW",
-                    format: "yyyy/MM/dd"
-            });*/
+            $('.datebox').val('');
             $('.datebox').datepicker({
-                //culture: "zh-TW",
                 dateFormat: "yy/mm/dd",
                 changeYear: true,
                 changeMonth: true
             });
-           
+            @{
+                if(User.IsInRole("業務"))
+                {
+                    
+                }
+                else if(User.IsInRole("助理"))
+                {
+                    
+                }
+                else if(User.IsInRole("會計"))
+                {
+                    
+                }
+            }
         }); 
     </script>
 }

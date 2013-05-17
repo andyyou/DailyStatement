@@ -11,6 +11,12 @@ namespace DailyStatement.Models
 {
     public class Project
     {
+        public Project()
+        {
+            this.Sale = new Employee();
+            this.Engineer = new Employee();
+        }
+
         #region Basic Required 
         [Key]
         public int ProjectId { get; set; }

@@ -26,9 +26,13 @@ namespace DailyStatement.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (User.IsInRole("助理"))
+                if (User.IsInRole("助理") || User.IsInRole("會計"))
                 {
                     return RedirectToAction("ReportSearch", "Daily");
+                }
+                else if (User.IsInRole("業務"))
+                {
+                    return RedirectToAction("Index", "Project");
                 }
                 else
                 {
@@ -177,13 +181,13 @@ namespace DailyStatement.Controllers
             return Content("");
         }
 
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        [Authorize(Roles = "超級管理員,一般管理員,工程師,助理")]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        [Authorize(Roles = "超級管理員,一般管理員,工程師,助理")]
         [HttpPost]
         public ActionResult ChangePassword(string Password)
         {
