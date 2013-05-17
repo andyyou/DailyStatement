@@ -26,73 +26,248 @@
                 @Html.ValidationMessageFor(model => model.ProjectNo)
             </div>
             
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CustomerName, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CustomerName)
+                @Html.ValidationMessageFor(model => model.CustomerName)
+            </div>
+
         </div>
         <!--/ basic-->
         <div class="sales">
             <div class="alert">業務</div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CustomerCode, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CustomerCode)
+                @Html.ValidationMessageFor(model => model.CustomerCode)
+            </div>
+
+            <!--UNDONE: use DropdownList-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.Sale, new { @class = "add-on" })
+                @Html.EditorFor(model => model.Sale)
+                @Html.ValidationMessageFor(model => model.Sale)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.Price, new { @class = "add-on" })
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.DownPayment, new { @class = "add-on" })
+                @Html.EditorFor(model => model.DownPayment)
+                @Html.ValidationMessageFor(model => model.DownPayment)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.OrderOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.OrderOn)
+                @Html.ValidationMessageFor(model => model.OrderOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.GetDownPaymentOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.GetDownPaymentOn)
+                @Html.ValidationMessageFor(model => model.GetDownPaymentOn)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.HandoverPrice, new { @class = "add-on" })
+                @Html.EditorFor(model => model.HandoverPrice)
+                @Html.ValidationMessageFor(model => model.HandoverPrice)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.HandoverPriceExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.HandoverPriceExpectOn)
+                @Html.ValidationMessageFor(model => model.HandoverPriceExpectOn)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ConstitutePrice, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ConstitutePrice)
+                @Html.ValidationMessageFor(model => model.ConstitutePrice)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ConstitutePriceExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ConstitutePriceExpectOn)
+                @Html.ValidationMessageFor(model => model.ConstitutePriceExpectOn)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CheckPrice, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CheckPrice)
+                @Html.ValidationMessageFor(model => model.CheckPrice)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CheckPriceExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CheckPriceExpectOn)
+                @Html.ValidationMessageFor(model => model.CheckPriceExpectOn)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.WarrantyPrice, new { @class = "add-on" })
+                @Html.EditorFor(model => model.WarrantyPrice)
+                @Html.ValidationMessageFor(model => model.WarrantyPrice)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.WarrantyPriceExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.WarrantyPriceExpectOn)
+                @Html.ValidationMessageFor(model => model.WarrantyPriceExpectOn)
+            </div>
+
+
         </div>
         <!--/ sales-->
-         <div class="engineer">
+        <div class="engineer">
             <div class="alert alert-info">工程師</div>
+
+            <!--UNDONE: use DropdownList-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.Engineer, new { @class = "add-on" })
+                @Html.EditorFor(model => model.Engineer)
+                @Html.ValidationMessageFor(model => model.Engineer)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.StartOn)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.StartOn)
+                @Html.ValidationMessageFor(model => model.StartOn)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.WarrantyStart)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.WarrantyStart)
+                @Html.ValidationMessageFor(model => model.WarrantyStart)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.WarrantyEnd)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.WarrantyEnd)
+                @Html.ValidationMessageFor(model => model.WarrantyEnd)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ClosedOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ClosedOn)
+                @Html.ValidationMessageFor(model => model.ClosedOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.HandoverExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.HandoverExpectOn)
+                @Html.ValidationMessageFor(model => model.HandoverExpectOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.HandoverOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.HandoverOn)
+                @Html.ValidationMessageFor(model => model.HandoverOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ConstituteExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ConstituteExpectOn)
+                @Html.ValidationMessageFor(model => model.ConstituteExpectOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ConstituteOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ConstituteOn)
+                @Html.ValidationMessageFor(model => model.ConstituteOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CheckExpectOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CheckExpectOn)
+                @Html.ValidationMessageFor(model => model.CheckExpectOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CheckOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CheckOn)
+                @Html.ValidationMessageFor(model => model.CheckOn)
+            </div>
+
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.Comment, new { @class = "add-on" })
+                @Html.EditorFor(model => model.Comment)
+                @Html.ValidationMessageFor(model => model.Comment)
+            </div>
         </div>
         <!--/ engineer-->
          <div class="account">
             <div class="alert alert-success">會計</div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.HandoverPriceOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.HandoverPriceOn)
+                @Html.ValidationMessageFor(model => model.HandoverPriceOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ConstitutePriceOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.ConstitutePriceOn)
+                @Html.ValidationMessageFor(model => model.ConstitutePriceOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.CheckPriceOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.CheckPriceOn)
+                @Html.ValidationMessageFor(model => model.CheckPriceOn)
+            </div>
+
+            <!--UNDONE: use Date & kendoUI error-->
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.WarrantyPriceOn, new { @class = "add-on" })
+                @Html.EditorFor(model => model.WarrantyPriceOn)
+                @Html.ValidationMessageFor(model => model.WarrantyPriceOn)
+            </div>
         </div>
         <!--/ account-->
         
 
-        <div class="input-prepend offset1">
-            @Html.LabelFor(model => model.CustomerCode, new { @class="add-on" })
-            @Html.EditorFor(model => model.CustomerCode)
-            @Html.ValidationMessageFor(model => model.CustomerCode)
-        </div>
+        
         
 
-        <div class="input-prepend offset1">
-            @Html.LabelFor(model => model.CustomerName, new { @class="add-on" })
-            @Html.EditorFor(model => model.CustomerName)
-            @Html.ValidationMessageFor(model => model.CustomerName)
-        </div>
+        
         
 
-        <div class="input-prepend offset1">
-            @Html.LabelFor(model => model.Comment, new { @class="add-on" })
-            @Html.EditorFor(model => model.Comment)
-            @Html.ValidationMessageFor(model => model.Comment)
-        </div>
+        
         
 
-        <div class="input-prepend offset1">
-            @Html.LabelFor(model => model.Price, new { @class="add-on" })
-            @Html.EditorFor(model => model.Price)
-            @Html.ValidationMessageFor(model => model.Price)
-        </div>
+       
         
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StartOn)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartOn)
-            @Html.ValidationMessageFor(model => model.StartOn)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.WarrantyStart)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.WarrantyStart)
-            @Html.ValidationMessageFor(model => model.WarrantyStart)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.WarrantyEnd)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.WarrantyEnd)
-            @Html.ValidationMessageFor(model => model.WarrantyEnd)
-        </div>
+        
 
 
 
@@ -110,9 +285,14 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
+            /*
             $('#StartOn').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
+            });*/
+            $('.datebox').kendoDatePicker({
+                culture: "zh-TW",
+                format: "yyyy/MM/dd"
             });
            
         }); 
