@@ -109,8 +109,13 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Project project)
+        public ActionResult Create([Bind(Exclude = "Sale, Engineer")]Project project, int SalesId = 0, int EngineeersId = 0)
         {
+            if (SalesId != 0)
+                project.Sale = db.Employees.Where(e => e.EmployeeId == SalesId).SingleOrDefault();
+            if (EngineeersId != 0)
+                project.Engineer = db.Employees.Where(e => e.EmployeeId == EngineeersId).SingleOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
