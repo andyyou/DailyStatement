@@ -35,7 +35,7 @@ namespace DailyStatement.Models
         public int RankId { get; set; }
 
         [DisplayName("權限")]
-        [Description("1: 超級管理員, 2: 一般管理員, 3: 一般人員")]
+        [Description("1: 超級管理員, 2: 一般管理員, 3: 工程師, 4: 助理, 5: 業務, 6: 會計")]
         public Rank Rank { get; set; }
 
         [Required, MaxLength(50)]

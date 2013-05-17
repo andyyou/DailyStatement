@@ -247,19 +247,26 @@
     @Scripts.Render("~/bundles/jqueryui")
     <script>
         $(function () {
-            /*
-            $('#StartOn').kendoDatePicker({
-                    culture: "zh-TW",
-                    format: "yyyy/MM/dd"
-            });*/
             $('.datebox').val('');
             $('.datebox').datepicker({
-                //culture: "zh-TW",
                 dateFormat: "yy/mm/dd",
                 changeYear: true,
                 changeMonth: true
             });
-           
+            @{
+                if(User.IsInRole("業務"))
+                {
+                    
+                }
+                else if(User.IsInRole("助理"))
+                {
+                    
+                }
+                else if(User.IsInRole("會計"))
+                {
+                    
+                }
+            }
         }); 
     </script>
 }
