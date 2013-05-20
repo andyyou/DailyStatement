@@ -180,7 +180,6 @@ namespace DailyStatement.Controllers
                 if (EngineersId > 0)
                 {
                     project.EngineerId = EngineersId;
-                    
                 }
                
                 db.Entry(project).State = EntityState.Modified;
