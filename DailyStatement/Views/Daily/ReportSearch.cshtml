@@ -87,18 +87,11 @@
                 }
             });
 
-            $("#projectNo").chosen({
+            $("#projectNo, #projectid").chosen({
                 no_results_text: "無此案號",
                 enable_split_word_search: true,
                 search_contains: true
             });
-            $(".chosn").chosen({
-                no_results_text: "無此案號",
-                enable_split_word_search: true,
-                search_contains: true
-            });
-            
-            
         });
     </script>
 }
@@ -199,7 +192,7 @@
                             Project No: 
                         </div>
                         <div class="editor-field">
-                            @Html.DropDownList("projectid", (SelectList)ViewData["Projects"], "全部", new {@class="chosn" })
+                            @Html.DropDownList("projectid", (SelectList)ViewData["Projects"], "全部")
                         </div>
                         <div class="row">
                             <div class="pull-right span2">
