@@ -33,7 +33,6 @@
                             StartOn: { type: 'date' },
                             WarrantyStart: { type: 'date' },
                             WarrantyEnd: { type: 'date' },
-                            IsClosed: { type: 'bool' },
                             Price: { type: 'int' }
                         }
                        
@@ -49,7 +48,6 @@
                     { title: "專案起始日", field: "StartOn", format: "{0:yyyy/MM/dd}", width: 80 },
                     { title: "保固起始日", field: "WarrantyStart", format: "{0:yyyy/MM/dd}", width: 80 },
                     { title: "保固迄止日", field: "WarrantyEnd", format: "{0:yyyy/MM/dd}", width: 80 },
-                    { title: "結案", field: "IsClosed", width: 40, filterable: false, template: "<input type='checkbox' #= (IsClosed === true) ? checked='checked' : '' # disabled />" },
                     { title: "備註", field: "Comment", width: 140 },
                     { title: "專案金額", field: "Price", format: "{0:c0}", filterable: false, attributes: { style: "text-align:right;" }, width: 90 },
                     {
@@ -99,7 +97,6 @@
             });
 
             $('#reset').click(function () {
-                //not working yet
                 $('#category').val('');
                 $("#grid").data("kendoGrid").dataSource.filter([]);
             });
