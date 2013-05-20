@@ -10,7 +10,7 @@ using KendoGridBinder;
 
 namespace DailyStatement.Controllers
 {
-    [Authorize(Roles = "超級管理員,一般管理員,助理")]
+    [Authorize(Roles = "超級管理員,一般管理員,助理,業務,會計")]
     public class ProjectController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
@@ -99,8 +99,8 @@ namespace DailyStatement.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.RankId == 3), "EmployeeId", "Name");
-            ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.RankId == 5), "EmployeeId", "Name");
+            ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name");
+            ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name");
             return View();
         }
 
@@ -109,15 +109,22 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Project project)
+        public ActionResult Create([Bind(Exclude = "Sale, Engineer")]Project project, int SalesId = 0, int EngineeersId = 0)
         {
+            if (SalesId != 0)
+                project.Sale = db.Employees.Where(e => e.EmployeeId == SalesId).SingleOrDefault();
+            if (EngineeersId != 0)
+                project.Engineer = db.Employees.Where(e => e.EmployeeId == EngineeersId).SingleOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name");
+            ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name");
+            
             return View(project);
         }
 
@@ -126,11 +133,17 @@ namespace DailyStatement.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Project project = db.Projects.Find(id);
+            Project project = db.Projects.Include("Sale").Include("Engineer").Where(p => p.ProjectId == id).FirstOrDefault();
             if (project == null)
             {
                 return HttpNotFound();
             }
+
+            if (project.Sale != null)
+                ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name", project.Sale.EmployeeId);
+            if (project.Engineer != null)
+                ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name", project.Engineer.EmployeeId);
+            
             return View(project);
         }
 
@@ -139,14 +152,22 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Project project)
+        public ActionResult Edit([Bind(Exclude = "Sale, Engineer")]Project project)
         {
+            if (project.Sale.EmployeeId != 0)
+                project.Sale = db.Employees.Where(e => e.EmployeeId == project.Sale.EmployeeId).SingleOrDefault();
+            if (project.Engineer.EmployeeId != 0)
+                project.Engineer = db.Employees.Where(e => e.EmployeeId == project.Engineer.EmployeeId).SingleOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name");
+            ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name");
+            
             return View(project);
         }
 
@@ -180,7 +201,7 @@ namespace DailyStatement.Controllers
         }
 
 
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        [Authorize(Roles = "超級管理員,一般管理員,工程師,助理,業務")]
         private int UserId(string account)
         {
             var emp = db.Employees.Where(e => e.Account == account).SingleOrDefault();

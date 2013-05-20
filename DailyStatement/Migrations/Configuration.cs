@@ -67,7 +67,10 @@ namespace DailyStatement.Migrations
                 context.Ranks.AddOrUpdate(
                     //new Rank { RankId = 1, Name = "超級管理員" },
                     new Rank { RankId = 2, Name = "一般管理員" },
-                    new Rank { RankId = 3, Name = "一般人員" }
+                    new Rank { RankId = 3, Name = "工程師" },
+                    new Rank { RankId = 4, Name = "助理" },
+                    new Rank { RankId = 5, Name = "業務" },
+                    new Rank { RankId = 6, Name = "會計" }
                 );
             }
 
