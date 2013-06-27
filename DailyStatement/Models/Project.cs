@@ -21,7 +21,7 @@ namespace DailyStatement.Models
         public int ProjectId { get; set; }
 
         [DisplayName("案號")]
-        [Remote("CheckProjectNoDup", "Project", HttpMethod = "POST", ErrorMessage = "您輸入案號已經有了！", AdditionalFields = "ProjectId")]
+        [Remote("CheckProjectNoDup", "Project", HttpMethod = "POST", ErrorMessage = "您輸入的案號已經存在！", AdditionalFields = "ProjectId")]
         public string ProjectNo { get; set; }
 
         [DisplayName("公司及案件名稱")]
