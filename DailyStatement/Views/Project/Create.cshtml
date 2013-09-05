@@ -256,15 +256,15 @@
             @{
                 if(User.IsInRole("業務"))
                 {
-                    
+                    @:$('.engineer, .account').find('input, select').attr('disabled', true);
                 }
-                else if(User.IsInRole("助理"))
+                else if (User.IsInRole("助理"))
                 {
-                    
+                    @:$('.sales, .account').find('input, select').attr('disabled', true);
                 }
-                else if(User.IsInRole("會計"))
+                else if (User.IsInRole("會計"))
                 {
-                    
+                    @:$('.sales, .engineer').find('input, select').attr('disabled', true);
                 }
             }
         }); 
